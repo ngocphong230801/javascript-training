@@ -7,40 +7,39 @@ const form = document.getElementById('registration-form');
       event.preventDefault();
       let isValid = true;
       if (fullname.value.trim() === '') {
-        document.getElementById('fullname-error').textContent = 'Vui lòng nhập họ và tên';
+        document.getElementById('fullname-error').textContent = 'Please enter your fullname';
         isValid = false;
       } else {
         document.getElementById('fullname-error').textContent = '';
       }
       if (email.value.trim() === '') {
-        document.getElementById('email-error').textContent = 'Vui lòng nhập email';
+        document.getElementById('email-error').textContent = 'Please enter your email';
         isValid = false;
       } else {
         document.getElementById('email-error').textContent = '';
       }
       if (password.value.trim() === '') {
-        document.getElementById('password-error').textContent = 'Vui lòng nhập mật khẩu';
+        document.getElementById('password-error').textContent = 'Please enter your password';
         isValid = false;
       } else if (password.value.trim().length < 6) {
-        document.getElementById('password-error').textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
+        document.getElementById('password-error').textContent = 'Password must be more than 6 characters';
         isValid = false;
       }
       else {
         document.getElementById('password-error').textContent = '';
       }
       if (confirmPassword.value.trim() === '') {
-        document.getElementById('confirm-password-error').textContent = 'Vui lòng xác nhận mật khẩu';
+        document.getElementById('confirm-password-error').textContent = 'Please confim the password';
         isValid = false;
       } else if (confirmPassword.value !== password.value) {
-        document.getElementById('confirm-password-error').textContent = 'Mật khẩu xác nhận không khớp';
+        document.getElementById('confirm-password-error').textContent = 'Password incorrect';
         isValid = false;
       }
       else{
         document.getElementById('confirm-password-error').textContent = '';
       }
       if (isValid) {
-        alert('Đăng kí thành công!');
+        alert('Successfull registration!');
         form.reset();
       }
     });
-    
