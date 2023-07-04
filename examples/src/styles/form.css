@@ -1,0 +1,34 @@
+h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+form {
+    margin: 100px 500px;
+    height: max-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+button {
+    width: 200px;
+    margin-left: 100px;
+}
+
+.error {
+    color: red;
+}
+
+#email {
+    margin-left: 80px;
+}
+
+#fullname {
+    margin-left: 54px;
+}
+
+#password {
+    margin-left: 60px;
+}
