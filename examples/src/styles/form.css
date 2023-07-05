@@ -36,3 +36,14 @@ button {
 #confirm-password {
     margin-left: 5px;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
