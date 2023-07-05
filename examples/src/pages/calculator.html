@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+        .calculator {
+        width: 200px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        }
+
+        .calculator input {
+        width: 100%;
+        margin-bottom: 5px;
+        }
+    </style>
+    </head>
+    <body>
+    <div class="calculator">
+        <input type="text" id="num1" placeholder="Số thứ nhất">
+        <input type="text" id="num2" placeholder="Số thứ hai">
+        <button onclick="add()">+</button>
+        <button onclick="subtract()">-</button>
+        <button onclick="multiply()">*</button>
+        <button onclick="divide()">/</button>
+        <h3 id="result"></h3>
+        <button onclick="reset()">Reset</button>
+    </div>
+    <script src="../js/calculator.js"></script>
+    </body>
+</html>
