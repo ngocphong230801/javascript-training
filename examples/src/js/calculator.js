@@ -1,33 +1,33 @@
 function add() {
-    var num1 = parseFloat(document.getElementById('num1').value);
-    var num2 = parseFloat(document.getElementById('num2').value);
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
 
-    var result = num1 + num2;
-    document.getElementById('result').textContent = 'Kết quả: ' + result;
+    const result = num1 + num2;
+    document.getElementById('result').textContent = 'result: ' + result;
 }
 
 function subtract() {
-    var num1 = parseFloat(document.getElementById('num1').value);
-    var num2 = parseFloat(document.getElementById('num2').value);
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
 
-    var result = num1 - num2;
-    document.getElementById('result').textContent = 'Kết quả: ' + result;
+    const result = num1 - num2;
+    document.getElementById('result').textContent = 'result: ' + result;
 }
 
 function multiply() {
-    var num1 = parseFloat(document.getElementById('num1').value);
-    var num2 = parseFloat(document.getElementById('num2').value);
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
 
-    var result = num1 * num2;
-    document.getElementById('result').textContent = 'Kết quả: ' + result;
+    const result = num1 * num2;
+    document.getElementById('result').textContent = 'result: ' + result;
 }
 
 function divide() {
-    var num1 = parseFloat(document.getElementById('num1').value);
-    var num2 = parseFloat(document.getElementById('num2').value);
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
 
-    var result = num1 / num2;
-    document.getElementById('result').textContent = 'Kết quả: ' + result;
+    const result = num1 / num2;
+    document.getElementById('result').textContent = 'result: ' + result;
 }
 
 function reset() {
