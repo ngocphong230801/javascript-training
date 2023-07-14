@@ -47,3 +47,14 @@ table, th, td {
     padding: 8px;
 }
 
+#address {
+    margin-left: 66px;
+}
+
+#male {
+    margin-left: 69px;
+}
+
+#female {
+    margin-left: 15px;
+}
