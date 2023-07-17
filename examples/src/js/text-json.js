@@ -1,6 +1,7 @@
 const url = 'http://localhost:3000/users';
 const addModalForm = document.querySelector('.form-user')
-
+const editModalForm = document.querySelector('#editModal .form-user')
+let id = '';
 fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -32,6 +33,18 @@ const renderUser = (user) => {
         .then(res => res.json())
         .then(() => location.reload())
     })
+    //edit
+    const btnEdit = document.querySelector(`[data-id = '${user.id}'] .btn-edit`)
+    btnEdit.addEventListener('click', (e) => {
+        id = user.id;
+        e.preventDefault();
+        $("#editModal").modal('show');
+        editModalForm.fullname.value = user.fullname;
+        editModalForm.phone.value = user.phone;
+        editModalForm.email.value = user.email;
+        editModalForm.age.value = user.age;
+        editModalForm.gender.value = user.gender;
+    })
 }
 
 addModalForm.addEventListener('submit',(e) => {
@@ -57,3 +70,26 @@ addModalForm.addEventListener('submit',(e) => {
         })
 })
 
+editModalForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    fetch(`${url}/${id}`,{
+        method : 'PATCH',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({
+            fullname : editModalForm.fullname.value,
+            phone : editModalForm.phone.value,
+            email : editModalForm.email.value,
+            age : editModalForm.age.value,
+            gender : editModalForm.gender.value
+        })
+    })
+    .then(res => res.JSON)
+    .then(() => location.reload())
+    editModalForm.fullname.value = '';
+    editModalForm.phone.value = '';
+    editModalForm.email.value = '';
+    editModalForm.age.value = '';
+    editModalForm.gender.value = '';
+})

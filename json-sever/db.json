@@ -4,17 +4,9 @@
       "fullname": "Ngoc Phong",
       "phone": "0382871156",
       "email": "nnphong962015@gmail.com",
-      "age": "22",
+      "age": "20",
       "gender": "Male",
-      "id": 3
-    },
-    {
-      "fullname": "Nguyen",
-      "phone": "0382397984",
-      "email": "nnphong962015@gmail.com",
-      "age": "22",
-      "gender": "Male",
-      "id": 5
+      "id": 1
     }
   ]
 }
