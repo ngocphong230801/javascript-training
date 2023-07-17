@@ -18,4 +18,3 @@ console.log(user);
 
 console.log(author.getName());
 console.log(user.getName());
-

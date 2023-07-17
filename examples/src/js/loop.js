@@ -26,6 +26,3 @@ const Countries = [
 for (let key in Countries) {
     console.log(Countries[key])
 };
-
-
-
