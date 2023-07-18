@@ -62,9 +62,9 @@ cd practice-one
 ~~~
 - Step 04: Open terminal and type:
 ~~~
-npm install
+pnpm install
 ~~~
 - Step 05: Finally run with:
 ~~~
-npm start
+pnpm start
 ~~~
