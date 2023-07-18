@@ -1,0 +1,60 @@
+h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+form {
+    margin: 100px 500px;
+    height: max-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+button {
+    width: 200px;
+    margin-left: 120px;
+}
+
+.error {
+    color: red;
+}
+
+#email {
+    margin-left: 80px;
+}
+
+#fullname {
+    margin-left: 54px;
+}
+
+#password {
+    margin-left: 57px;
+}
+
+#confirm-password {
+    margin-left: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+#address {
+    margin-left: 66px;
+}
+
+#male {
+    margin-left: 69px;
+}
+
+#female {
+    margin-left: 15px;
+}

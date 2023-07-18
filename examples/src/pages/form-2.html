@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation</title>
+  <style>
+    .error {
+      color: red;
+    }
+
+    table {
+        border: 1px solid #000;
+        width: 1000px;
+    }
+
+    tr th {
+        border: 1px solid #000;
+    }
+
+    td {
+        border: 1px solid #000;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Form Validation</h1>
+
+  <form id="myForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    <span id="nameError" class="error"></span>
+
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <span id="emailError" class="error"></span>
+
+    <br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="../js/form-2.js"></script>
+</body>
+</html>
