@@ -1,0 +1,67 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+    /* border: 1px solid #000; */
+    margin: 47px 255px;
+}
+
+.card-container .header-card-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.card-container .filter {
+    border-radius: 20px;
+    padding: 17px 82px;
+    background-color: var(--quinary-color);
+}
+
+.card-container .search {
+    height: 30px;
+    position: absolute;
+    top: 15px;
+    left: 21px;
+    background-color: var(--quinary-color);
+}
+
+.card-container .ascending {
+    position: absolute;
+    left: 378px;
+    top: 15px;
+    font-size: var(--font-size-text-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.card-container .descending {
+    position: absolute;
+    left: 500px;
+    top: 15px;
+    font-size: var(--font-size-text-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.card-container .create {
+    padding: 11px 47px 10px 47px;
+    align-items: center;
+}
+
+.card-container .page-navigation  {
+    margin-top: 60px;
+    margin-left: 40%;
+}
+
+.card-container .pagination {
+    border: 3px solid var(--secondary-color);
+    background-color: var(--secondary-color);
+    padding: 0px 10px;
+    border-radius: 5px;
+    font-size: var(--font-size-text-base);
+}
+
+.card-container .pagination:hover {
+    background-color: var(--tertiary-color);
+    color: var(--primary-color);
+    border: solid var(--tertiary-color);
+}
