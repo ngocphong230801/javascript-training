@@ -1,9 +1,9 @@
 .btn {
-    font-size: var(--font-size-text-sm);
     border-radius: 20px;
-    background-color: var(--tertiary-color);
     color: var(--primary-color);
+    font-size: var(--font-size-text-sm);
     font-weight: var(--font-weight-bold);
+    background-color: var(--tertiary-color);
 }
 
 .btn-primary {
