@@ -30,10 +30,44 @@
             </div>  
             <ul class="list-card"></ul>
             <div class="page-navigation ">
-                <span class="pagination">1</span>
-                <span class="pagination">2</span>
-                <span class="pagination">3</span>
+                <a href="#" class="pagination">1</a>
+                <a href="#" class="pagination">2</a>
+                <a href="#" class="pagination">3</a>
             </div>
         </div>
+        <form class="validation-form">
+            <h2 class="form-title">Create a new book marker</h2>
+            <div class="form-content">
+                <div class="bookname">
+                    <p class="label" >Book name</p>
+                    <input type="text" id="bookname" name="bookname" placeholder="Book name" class="form-input">
+                    <span id="bookname-error" class="error"></span>
+                </div>
+                <div class="author">
+                    <p class="label">Author</p>
+                    <input type="text" id="author" name="author" placeholder="Author" class="form-input">
+                    <span id="author-error" class="error"></span>
+                </div>
+                <div class="date">
+                    <p class="label">Published date</p>
+                    <input type="text" id="date" name="date" placeholder="MM/DD/YYYY" class="form-input" >
+                    <span id="date-error" class="error"></span>
+                </div>
+                <div class="image">
+                    <p class="label">Image</p>
+                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload"> Upload</button>
+                    <span id="date-error" class="error"></span>
+                </div>
+                <div class="description">
+                    <p class="label">Description</p>
+                    <input type="text" id="description" name="description" placeholder="Description" class="form-input description-input">
+                    <span id="description" class="error"></span>
+                </div>
+            </div>
+            <div class="form-btn">
+                <button class="btn btn-form cancel">Cancel</button>
+                <button class="btn  btn-form save">Save</button>
+            </div>
+        </form>
     </body>
 </html>
