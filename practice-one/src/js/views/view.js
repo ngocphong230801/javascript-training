@@ -8,18 +8,21 @@ class BookView {
 
         document.getElementById("create").addEventListener("click", this.handleShowValidationForm);
         document.getElementById("cancel").addEventListener("click", this.handleHideValidationForm);
-        this.validationForm.addEventListener("submit", this.handleFormSubmit);
+        document.getElementById("save").addEventListener("click", this.handleSaveButtonClick)
         this.overlay.addEventListener("click", this.handleHideValidationForm.bind(this));
     }
 
     init = () => {
         this.validationForm.style.display = "none";
         this.overlay.style.display = "none";
+        console.log(validateForm);
     }
 
     handleShowValidationForm = () => {
         this.validationForm.style.display = "block";
         this.overlay.style.display = "block";
+        this.clearErrorMessages();
+        this.validationForm.reset();
     };
 
     handleHideValidationForm = () => {
@@ -27,14 +30,21 @@ class BookView {
         this.overlay.style.display = "none";
     };
 
-    handleFormSubmit = (event) => {
+    handleSaveButtonClick = (event) => {
         event.preventDefault();
         if (validateForm(this.validationForm)) {
-            
+            this.validationForm.style.display = "none";
+            this.overlay.style.display = "none";
+            this.validationForm.reset();
         }
     }
 
-
+    clearErrorMessages = () => {
+        const errorElements = this.validationForm.querySelectorAll(".error");
+        errorElements.forEach((errorElement) => {
+            errorElement.textContent = "";
+        });
+    };
 }
 
 

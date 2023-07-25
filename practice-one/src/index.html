@@ -35,7 +35,7 @@
                 <a href="#" class="pagination">3</a>
             </div>
         </div>
-        <form class="validation-form" id="validation-form">
+        <form class="validation-form" id="validation-form" onsubmit="return false;">
             <h2 class="form-title">Create a new book marker</h2>
             <div class="form-content">
                 <div class="bookname">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="image">
                     <p class="label">Image</p>
-                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image" onclick="upload()"> Upload</button>
+                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image"> Upload</button>
                     <span id="image-error" class="error"></span>
                 </div>
                 <div class="description">
@@ -66,7 +66,7 @@
             </div>
             <div class="form-btn">
                 <button class="btn btn-form cancel" id="cancel">Cancel</button>
-                <button class="btn  btn-form save" onclick="submit()" type ="submit" id="save">Save</button>
+                <button class="btn  btn-form save" type="button" id="save">Save</button>
             </div>
         </form>
         <div class="overlay" id="overlay"></div>
