@@ -30,5 +30,4 @@ class BookModel {
     }
 }
 
-const bookModel = new BookModel();
-export default bookModel;
+export default BookModel;
