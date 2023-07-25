@@ -15,7 +15,7 @@ class BookModel {
     }
 
     saveBook(book) {
-        const books = this.getAllBooks();
+        const books = this.book;
         books.push(book);
         this.saveBooks(books);
     }
