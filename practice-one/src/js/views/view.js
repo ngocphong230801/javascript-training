@@ -8,35 +8,28 @@ class BookView {
 
         document.getElementById("create").addEventListener("click", this.handleShowValidationForm);
         document.getElementById("cancel").addEventListener("click", this.handleHideValidationForm);
-        this.overlay.addEventListener("click", this.handleHideValidationForm);
+        this.overlay.addEventListener("click", this.handleHideValidationForm.bind(this));
     }
 
-    renderBookList = (books) => {
-        this.bookListElement.innerHTML = '';
-
-        if (books && books.length > 0) {
-            books.forEach((book) => {
-                const listItem = document.createElement('li');
-                listItem.textContent = book.name;
-                this.bookListElement.appendChild(listItem);
-            });
-        } else {
-            const noBookItem = document.createElement('li');
-            noBookItem.textContent = 'No books found.';
-            this.bookListElement.appendChild(noBookItem);
-        }
-    };
+    init = () => {
+        this.validationForm.style.display = "none";
+        this.overlay.style.display = "none";
+    }
 
     handleShowValidationForm = () => {
         this.validationForm.style.display = "block";
         this.overlay.style.display = "block";
+        console.log('Show fomr');
     };
 
     handleHideValidationForm = () => {
         this.validationForm.style.display = "none";
         this.overlay.style.display = "none";
+        console.log('Hide form');
     };
+
 }
 
 const bookView = new BookView();
+
 export default bookView;
