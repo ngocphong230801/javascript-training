@@ -1,25 +1,28 @@
-// model.js
-import storage from "../services/localStorage";
+// models/bookModel.js
 
 class BookModel {
     constructor() {
-        const books = storage.get('books');
-        this.books = books || [];
+        this.localStorageKey = 'books'; 
+    }
+
+    saveBook(book) {
+        const books = this.getAllBooks();
+        books.push(book);
+        this.saveBooks(books);
     }
 
     getAllBooks() {
-        return this.books;
+        const booksString = localStorage.getItem(this.localStorageKey);
+        if (booksString) {
+            return JSON.parse(booksString);
+        }
+        return [];
     }
 
-    addBook(bookData) {
-        this.books.push(bookData);
-        storage.save('books', this.books);
-    }
-
-    removeBook(bookIndex) {
-        this.books.splice(bookIndex, 1);
-        storage.save('books', this.books);
+    saveBooks(books) {
+        localStorage.setItem(this.localStorageKey, JSON.stringify(books));
     }
 }
 
-export default BookModel;
+const bookModel = new BookModel();
+export default bookModel;

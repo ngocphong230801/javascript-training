@@ -1,3 +1,8 @@
-import BookController from "./controller/user-controller";
+// main.js
 
-const bookController = new BookController;
+import bookController from "./controller/controller";
+
+const initApp = () => {
+  
+};
+window.addEventListener('DOMContentLoaded', initApp);
