@@ -1,5 +1,5 @@
 // views/bookView.js
-
+import { validateForm } from "../helper/validator";
 class BookView {
     constructor() {
         this.bookListElement = document.getElementById('book-list');
@@ -8,6 +8,7 @@ class BookView {
 
         document.getElementById("create").addEventListener("click", this.handleShowValidationForm);
         document.getElementById("cancel").addEventListener("click", this.handleHideValidationForm);
+        this.validationForm.addEventListener("submit", this.handleFormSubmit);
         this.overlay.addEventListener("click", this.handleHideValidationForm.bind(this));
     }
 
@@ -25,6 +26,14 @@ class BookView {
         this.validationForm.style.display = "none";
         this.overlay.style.display = "none";
     };
+
+    handleFormSubmit = (event) => {
+        event.preventDefault();
+        if (validateForm(this.validationForm)) {
+            
+        }
+    }
+
 
 }
 

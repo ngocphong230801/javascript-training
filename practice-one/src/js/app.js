@@ -4,9 +4,6 @@ import BookModel from "./models/model";
 
 
 export class App {
-
-    constructor() {}
-
     startApp() {
         const bookModel = new BookModel();
         const bookView = new BookView();

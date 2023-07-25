@@ -1,7 +1,7 @@
 // controllers/bookController.js
 class BookController {
     constructor(bookModel,bookView) {
-        this.bookModel = bookModel;
+        bookModel = bookModel;
         this.bookView = bookView;
         this.init();
     }
