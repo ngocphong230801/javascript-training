@@ -8,6 +8,7 @@ class BookView {
 
         document.getElementById("create").addEventListener("click", this.handleShowValidationForm);
         document.getElementById("cancel").addEventListener("click", this.handleHideValidationForm);
+        document.getElementById("save").addEventListener("submit", this)
         this.overlay.addEventListener("click", this.handleHideValidationForm.bind(this));
     }
 
@@ -19,13 +20,13 @@ class BookView {
     handleShowValidationForm = () => {
         this.validationForm.style.display = "block";
         this.overlay.style.display = "block";
-        console.log('Show fomr');
+        // console.log('Show fomr');
     };
 
     handleHideValidationForm = () => {
         this.validationForm.style.display = "none";
         this.overlay.style.display = "none";
-        console.log('Hide form');
+        // console.log('Hide form');
     };
 
 }

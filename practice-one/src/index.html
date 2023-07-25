@@ -55,21 +55,22 @@
                 </div>
                 <div class="image">
                     <p class="label">Image</p>
-                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image"> Upload</button>
+                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image" onclick="upload()"> Upload</button>
                     <span id="image-error" class="error"></span>
                 </div>
                 <div class="description">
                     <p class="label">Description</p>
                     <input type="text" id="description" name="description" placeholder="Description" class="form-input description-input">
-                    <span id="description" class="error"></span>
+                    <span id="description-error" class="error"></span>
                 </div>
             </div>
             <div class="form-btn">
                 <button class="btn btn-form cancel" id="cancel">Cancel</button>
-                <button class="btn  btn-form save" onclick="submit()">Save</button>
+                <button class="btn  btn-form save" onclick="submit()" type ="submit">Save</button>
             </div>
         </form>
         <div class="overlay" id="overlay"></div>
         <script type="module" src="./js/index.js"></script>
         <script  type="module" src="./js/views/view.js"></script>
+        <script type="module" src="./js/helpers/validation.js"></script>
 </html>
