@@ -3,30 +3,29 @@ import storage from '../services/localStorage';
 
 class BookModel {
     constructor() {
-        this.localStorageKey = this.getBookFromLocalStorage() || []; 
+        this.books = this.getBookFromLocalStorage() || [];
     }
 
-    getBookFromLocalStorage () {
+    getBookFromLocalStorage() {
         return storage.get('books');
     }
 
     saveBooksToLocalStorage(books) {
-        storage.save('books', books)
+        storage.save('books', books);
     }
 
     saveBook(book) {
-        const books = this.book;
-        books.push(book);
-        this.saveBooks(books);
+        this.books.push(book);
+        this.saveBooksToLocalStorage(this.books);
     }
 
     getAllBooks() {
         return this.books;
     }
-    
+
     saveBooks(books) {
-        this.books.push(bookData);
-        this.saveBooksToLocalStorage(this.books)
+        this.books = books;
+        this.saveBooksToLocalStorage(this.books);
     }
 }
 
