@@ -1,1 +1,1 @@
-export const getId = (id) => document.getElementById(id)
+export const getId = (id) => document.getElementById(id);
