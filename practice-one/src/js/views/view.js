@@ -1,43 +1,47 @@
-// views/bookView.js
 import { validateForm } from "../helper/validator";
+
+import { getId } from "../helper/dom-helper";
+
 class BookView {
     constructor() {
-        this.bookListElement = document.getElementById('book-list');
-        this.validationForm = document.querySelector(".validation-form");
-        this.overlay = document.getElementById("overlay");
+        this.bookListElement = getId('book-list');
+        this.validationForm = getId("validation-form");
+        this.overlay = getId("overlay");
 
-        document.getElementById("create").addEventListener("click", this.handleShowValidationForm);
-        document.getElementById("cancel").addEventListener("click", this.handleHideValidationForm);
-        document.getElementById("save").addEventListener("click", this.handleSaveButtonClick)
-        this.overlay.addEventListener("click", this.handleHideValidationForm.bind(this));
+        getId("create").addEventListener("click", this.showValidationForm);
+        getId("cancel").addEventListener("click", this.hideValidationForm);
+        getId("save").addEventListener("click", this.handleSaveButtonClick)
+        this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
+
+        this.init();
     }
 
     init = () => {
-        this.validationForm.style.display = "none";
-        this.overlay.style.display = "none";
-        console.log(validateForm);
-    }
+        this.hideValidationForm();
+    };
 
-    handleShowValidationForm = () => {
-        this.validationForm.style.display = "block";
-        this.overlay.style.display = "block";
+    showValidationForm = () => {
+        this.setDisplay('block');
         this.clearErrorMessages();
         this.validationForm.reset();
     };
 
-    handleHideValidationForm = () => {
-        this.validationForm.style.display = "none";
-        this.overlay.style.display = "none";
+    hideValidationForm = () => {
+        this.setDisplay('none');
     };
 
     handleSaveButtonClick = (event) => {
         event.preventDefault();
         if (validateForm(this.validationForm)) {
-            this.validationForm.style.display = "none";
-            this.overlay.style.display = "none";
+            this.hideValidationForm();
             this.validationForm.reset();
         }
-    }
+    };
+
+    setDisplay = (displayValue) => {
+        this.validationForm.style.display = displayValue;
+        this.overlay.style.display = displayValue;
+    };
 
     clearErrorMessages = () => {
         const errorElements = this.validationForm.querySelectorAll(".error");
@@ -46,6 +50,5 @@ class BookView {
         });
     };
 }
-
 
 export default BookView;
