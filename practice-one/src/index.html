@@ -26,16 +26,16 @@
                 <img src="./assets/icon/search.png" alt="search" class="search">
                 <a href="#" class="ascending">Ascending</a>
                 <a href="#" class="descending">Descending</a>
-                <button type="button" onclick="submit()" class="btn create">+ Create</button>
+                <button type="button" class="btn create" id="create">+ Create</button>
             </div>  
-            <ul class="list-card"></ul>
+            <ul class="list-book"></ul>
             <div class="page-navigation ">
                 <a href="#" class="pagination">1</a>
                 <a href="#" class="pagination">2</a>
                 <a href="#" class="pagination">3</a>
             </div>
         </div>
-        <form class="validation-form">
+        <form class="validation-form" id="validation-form" onsubmit="return false;">
             <h2 class="form-title">Create a new book marker</h2>
             <div class="form-content">
                 <div class="bookname">
@@ -55,19 +55,20 @@
                 </div>
                 <div class="image">
                     <p class="label">Image</p>
-                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload"> Upload</button>
-                    <span id="date-error" class="error"></span>
+                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image"> Upload</button>
+                    <span id="image-error" class="error"></span>
                 </div>
                 <div class="description">
                     <p class="label">Description</p>
                     <input type="text" id="description" name="description" placeholder="Description" class="form-input description-input">
-                    <span id="description" class="error"></span>
+                    <span id="description-error" class="error"></span>
                 </div>
             </div>
             <div class="form-btn">
-                <button class="btn btn-form cancel">Cancel</button>
-                <button class="btn  btn-form save">Save</button>
+                <button class="btn btn-form cancel" id="cancel">Cancel</button>
+                <button class="btn  btn-form save" type="button" id="save">Save</button>
             </div>
         </form>
-    </body>
+        <div class="overlay" id="overlay"></div>
+        <script type="module" src="./js/index.js"></script>
 </html>
