@@ -2,10 +2,12 @@
 import { validateForm } from "../helper/validator";
 import { getId } from "../helper/dom-helper";
 import storage from "../services/localStorage";
+import imgDelete from "../../assets/icon/delete.png"
+import imgDetail from "../../assets/icon/detail.jpg"
 
 class BookView {
     constructor() {
-        this.bookListElement = getId('book-list');
+        this.bookListElement = getId('list-books');
         this.validationForm = getId("validation-form");
         this.overlay = getId("overlay");
 
@@ -14,12 +16,12 @@ class BookView {
         getId("save").addEventListener("click", this.handleSaveButtonClick);
         this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
-        this.showDataFromLocalStorage(); // Display data from Local Storage
         this.init();
     }
 
     init = () => {
         this.hideValidationForm();
+        this.loadSavedBooks();
     };
 
     showValidationForm = () => {
@@ -38,7 +40,20 @@ class BookView {
             this.saveDataToLocalStorage();
             this.hideValidationForm();
             this.validationForm.reset();
+            this.loadSavedBooks(); 
         }
+    };
+
+    setDisplay = (displayValue) => {
+        this.validationForm.style.display = displayValue;
+        this.overlay.style.display = displayValue;
+    };
+    
+    clearErrorMessages = () => {
+        const errorElements = this.validationForm.querySelectorAll(".error");
+        errorElements.forEach((errorElement) => {
+            errorElement.textContent = "";
+        });
     };
 
     saveDataToLocalStorage = () => {
@@ -51,57 +66,36 @@ class BookView {
             dataToSave[fieldName] = fieldValue;
         });
 
-        const existingData = storage.get("books") || []; // Get existing data or create a new empty array
-        existingData.push(dataToSave); // Add new data to the array
+        const existingData = storage.get("savedBooks") || []; 
+        existingData.push(dataToSave); 
 
-        storage.save("books", existingData); // Save the new array to Local Storage
+        storage.save("savedBooks", existingData); 
     };
 
-    setDisplay = (displayValue) => {
-        this.validationForm.style.display = displayValue;
-        this.overlay.style.display = displayValue;
-    };
-
-    clearErrorMessages = () => {
-        const errorElements = this.validationForm.querySelectorAll(".error");
-        errorElements.forEach((errorElement) => {
-            errorElement.textContent = "";
-        });
-    };
-
-
-    showDataFromLocalStorage = () => {
-        const formData = storage.get("formData");
-        if (formData) {
-            const formInputs = this.validationForm.querySelectorAll(".form-input");
-            formInputs.forEach((input) => {
-                const fieldName = input.getAttribute("name");
-                if (formData[fieldName]) {
-                    input.value = formData[fieldName];
-                }
-            });
+    loadSavedBooks = () => {
+        const savedBooks = storage.get("savedBooks");
+        if (savedBooks) {
+            this.displayAllBooks(savedBooks);
         }
     };
 
-    renderBookCard = (bookData) => {
-        const bookCardTemplate = `
-            <li class="book-card">
-                <div class="book-info">
-                    <h2 class="book-title">${bookData.bookname}</h2>
-                    <p class="book-author">Author: ${bookData.author}</p>
-                    <p class="book-description">${bookData.description}</p>
-                </div>
-                <img src="${bookData.image}" alt="${bookData.bookname}" class="book-image">
-            </li>
-        `;
-        return bookCardTemplate;
-    };
+    displayAllBooks = (books) => {
+        let html = '';
+        books.forEach((bookInfo) => {
+            html += `
+                <li class = "book">
+                <h3 class = "book-title">${bookInfo.bookname}</h3>
+                <p class = "book-author">${bookInfo.author}</p>
+                <p class = "book-date">${bookInfo.date}</p>
+                <p class = "book-description">${bookInfo.description}</p>
+                <img src="${imgDetail}" alt="delete" class="detail">
+                <img src="${imgDelete}" alt="delete" class="delete">
+                </li>
+            `;
+        });
 
-    renderBookList = (books) => {
-        const bookListHTML = books.map((bookData) => this.renderBookCard(bookData)).join("");
-        this.bookListElement.innerHTML = bookListHTML;
+        this.bookListElement.innerHTML = html;
     };
-
 }
 
 export default BookView;
