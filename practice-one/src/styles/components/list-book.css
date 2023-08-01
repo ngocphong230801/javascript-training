@@ -1,0 +1,54 @@
+.list-books {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 22px;
+    list-style: none;
+}
+
+.list-books .book {
+    background-color: var(--secondary-color);
+    height: 232px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    position: relative;
+}
+
+.list-books .book-title {
+    display: block;
+    margin: 0;
+    padding: 40px;
+    padding-bottom: 10px;
+    font-size: var(--font-size-text-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.list-books .book-author {
+    display: none;
+}
+
+.list-books .book-date {
+    margin: 0;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    font-size: var(--font-size-text-sm);
+}
+
+.list-books .book-description {
+    margin: 0;
+    display: block;
+    padding-left: 40px;
+    width: 211px;
+}
+
+.list-books .delete {
+    position: absolute;
+    bottom: 40px;
+    left: 98px;
+}
+
+.list-books .detail {
+    position: absolute;
+    left: 40;
+    bottom: 40px;
+}
