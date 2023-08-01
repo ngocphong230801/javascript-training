@@ -10,9 +10,9 @@ class BookView {
     this.validationForm = getElementById("validation-form");
     this.overlay = getElementById("overlay");
 
-    querySelector("create").addEventListener("click", this.showValidationForm);
-    querySelector("cancel").addEventListener("click", this.hideValidationForm);
-    querySelector("save").addEventListener("click", this.handleSaveButtonClick);
+    querySelector(".create").addEventListener("click", this.showValidationForm);
+    querySelector(".cancel").addEventListener("click", this.hideValidationForm);
+    querySelector(".save").addEventListener("click", this.handleSaveButtonClick);
     this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
     this.init();
