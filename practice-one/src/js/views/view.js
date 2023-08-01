@@ -1,19 +1,20 @@
 // views/bookView.js
 import { validateForm } from "../helper/validator";
-import { getId } from "../helper/dom-helper";
+import { getElementById } from "../helper/dom-helper";
+import { querySelector } from "../helper/dom-helper";
 import storage from "../services/localStorage";
 import imgDelete from "../../assets/icon/delete.png";
 import imgDetail from "../../assets/icon/detail.jpg";
 
 class BookView {
     constructor() {
-        this.bookListElement = getId("list-books");
-        this.validationForm = getId("validation-form");
-        this.overlay = getId("overlay");
+        this.bookListElement = getElementById("list-books");
+        this.validationForm = getElementById("validation-form");
+        this.overlay = getElementById("overlay");
 
-        document.querySelector(".create").addEventListener("click", this.showValidationForm);
-        document.querySelector(".cancel").addEventListener("click", this.hideValidationForm);
-        document.querySelector(".save").addEventListener("click", this.handleSaveButtonClick);
+        querySelector(".create").addEventListener("click", this.showValidationForm);
+        querySelector(".cancel").addEventListener("click", this.hideValidationForm);
+        querySelector(".save").addEventListener("click", this.handleSaveButtonClick);
         this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
         this.init();
