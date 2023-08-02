@@ -3,8 +3,13 @@ import storage from '../services/localStorage';
 
 class BookModel {
     getSavedBooks = () => {
-        const savedBooks = storage.get("savedBooks");
-        return savedBooks || [];
+        try {
+            const savedBooks = storage.get("savedBooks");
+            return savedBooks || [];
+        } catch (error) {
+            console.error("Error while retrieving saved books:", error);
+            return [];
+        }
     };
 
     deleteBook = (bookIndex) => {

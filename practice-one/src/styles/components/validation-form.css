@@ -71,3 +71,9 @@
     background-color: var(--quinary-color);
     color: var(--tertiary-color);
 }
+
+.validation-form .calendar {
+    position: absolute;
+    top: 280px;
+    left: 350px;
+}
