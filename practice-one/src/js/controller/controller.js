@@ -8,39 +8,43 @@ class BookController {
 
     init = () => {
         this.bookView.init();
-        this.loadSavedBooks();
+        this.showBooks();
     };
 
-    loadSavedBooks = () => {
-        const savedBooks = this.bookModel.getSavedBooks();
-        this.bookView.displayAllBooks(savedBooks);
+    showBooks = async () => {
+        try {
+            const savedBooks = await this.bookModel.getSavedBooks();
+            this.bookView.displayAllBooks(savedBooks);
+        } catch (error) {
+            console.error("Error while fetching saved books:", error);
+        }
     };
-
-    handleSaveButtonClick = (event) => {
+    
+    handleSaveButtonClick = async (event) => {
         event.preventDefault();
-        this.bookView.handleSaveButtonClick(event);
+        await this.bookView.handleSaveButtonClick(event); 
     };
-
+    
     handleEditBook = (event) => {
         this.bookView.handleEditBook(event);
     };
-
+    
     handleDeleteBook = (event) => {
         const bookIndex = event.target.dataset.bookIndex;
         this.bookModel.deleteBook(bookIndex);
-        this.loadSavedBooks();
+        this.showBooks();
     };
-
-    handlePaginationClick = (event) => {
+    
+    handlePaginationClick = async (event) => {
         event.preventDefault();
         const currentPage = parseInt(event.target.dataset.page);
         this.bookModel.setCurrentPage(currentPage);
-        this.loadSavedBooks();
+        await this.showBooks(); 
     };
-
-    handleSearch = () => {
+    
+    handleSearch = async () => {
         const searchTerm = this.bookView.getSearchTerm();
-        const filteredBooks = this.bookModel.getFilteredBooks(searchTerm);
+        const filteredBooks = await this.bookModel.getFilteredBooks(searchTerm);
         this.bookView.displayFilteredBooks(filteredBooks);
     };
 }

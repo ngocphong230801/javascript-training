@@ -20,7 +20,7 @@ class BookView {
 
   init = () => {
     this.hideValidationForm();
-    this.loadSavedBooks();
+    this.showBooks();
     this.setupSearch();
   };
 
@@ -64,7 +64,7 @@ class BookView {
 
       this.hideValidationForm();
       this.validationForm.reset();
-      this.loadSavedBooks();
+      this.showBooks();
     }
   };
 
@@ -80,7 +80,7 @@ class BookView {
     });
   };
 
-  loadSavedBooks = () => {
+  showBooks = () => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
       this.displayAllBooks(savedBooks);
@@ -89,7 +89,6 @@ class BookView {
 
   displayAllBooks = (books) => {
     const itemsPerPage = 6;
-    const totalPages = Math.ceil(books.length / itemsPerPage);
     const maxPages = 3;
 
     const currentPage = parseInt(storage.get("currentPage")) || 1;
@@ -163,7 +162,7 @@ class BookView {
     if (savedBooks && savedBooks[bookIndex]) {
       savedBooks.splice(bookIndex, 1);
       storage.save("savedBooks", savedBooks);
-      this.loadSavedBooks();
+      this.showBooks();
     }
   };
 
@@ -171,7 +170,7 @@ class BookView {
     event.preventDefault();
     const currentPage = parseInt(event.target.dataset.page);
     storage.save("currentPage", currentPage);
-    this.loadSavedBooks();
+    this.showBooks();
   };
 
   setupSearch = () => {
