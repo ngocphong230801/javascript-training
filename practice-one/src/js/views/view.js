@@ -105,9 +105,7 @@ class BookView {
           <p class="book-date">${bookInfo.date}</p>
           <p class="book-description">${bookInfo.description}</p>
           <img src="${imgDetail}" alt="detail" class="detail">
-          <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${
-        startIndex + index
-      }">
+          <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${startIndex + index}">
         </li>
       `;
     });

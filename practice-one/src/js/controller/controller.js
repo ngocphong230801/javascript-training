@@ -16,7 +16,7 @@ class BookController {
             const savedBooks = await this.bookModel.getSavedBooks();
             this.bookView.displayAllBooks(savedBooks);
         } catch (error) {
-            console.error("Error while fetching saved books:", error);
+            alert("Error while fetching saved books: ", error);
         }
     };
     
