@@ -96,9 +96,9 @@ class BookView {
     const endIndex = startIndex + itemsPerPage;
     const booksToShow = books.slice(startIndex, endIndex);
 
-    let BookListHtml = "";
+    let bookListHtml = "";
     booksToShow.forEach((bookInfo, index) => {
-      BookListHtml += `
+      bookListHtml += `
         <li class="book" data-book-index="${startIndex + index}">
           <h3 class="book-title">${bookInfo.bookname}</h3>
           <p class="book-author">${bookInfo.author}</p>
@@ -114,7 +114,7 @@ class BookView {
       `;
     });
 
-    this.bookListElement.innerHTML = BookListHtml;
+    this.bookListElement.innerHTML = bookListHtml;
 
     const deleteButtons = document.querySelectorAll(".delete");
     deleteButtons.forEach((deleteButton) => {
