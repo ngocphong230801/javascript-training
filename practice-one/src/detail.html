@@ -29,14 +29,53 @@
         </div>
         <div class="book-details">
             <h2 id="book-title" class="book-title">Title</h2>
-            <p id="book-description" class="book-description">Description</p>
             <div class="article-info">
                 <p id="book-author" class="book-author article-info-item">Author</p>
                 <p id="book-date" class="book-date article-info-item">Published Date</p>
                 <p id="book-create" class="book-create article-info-item">Create At</p>
-                <p id="book-update" class="book-update article-info-item">Update At</p>
+                <p id="book-update" class="book-update article-info-item">Create At</p>
             </div>
+            <p id="book-description" class="book-description">Description</p>
         </div>
+        <form class="validation-form" id="validation-form" onsubmit="return false;">
+            <h2 class="form-title">Create a new book marker</h2>
+            <div class="form-content">
+                <div class="bookname">
+                    <p class="label">Book name</p>
+                    <input type="text" id="bookname" name="bookname" placeholder="Book name" class="form-input">
+                    <span id="bookname-error" class="error"></span>
+                </div>
+                <div class="author">
+                    <p class="label">Author</p>
+                    <input type="text" id="author" name="author" placeholder="Author" class="form-input">
+                    <span id="author-error" class="error"></span>
+                </div>
+                <div class="date">
+                    <p class="label">Published date</p>
+                    <input type="text" id="date" name="date" placeholder="MM/DD/YYYY" class="form-input">
+                    <span id="date-error" class="error"></span>
+                    <img src="./assets/icon/🦆 icon-calendar.png" alt="calendar" class="calendar" id="calendar">
+                    <div class="calendar-dropdown" id="calendar-dropdown"></div>
+                </div>
+                <div class="image">
+                    <p class="label">Image</p>
+                    <button class="btn upload"><img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image">
+                        Upload</button>
+                    <span id="image-error" class="error"></span>
+                </div>
+                <div class="description">
+                    <p class="label">Description</p>
+                    <input type="text" id="description" name="description" placeholder="Description"
+                        class="form-input description-input">
+                    <span id="description-error" class="error"></span>
+                </div>
+            </div>
+            <div class="form-btn">
+                <button class="btn btn-form cancel" id="cancel">Cancel</button>
+                <button class="btn  btn-form save" type="button" id="save">Save</button>
+            </div>
+        </form>
+        <div class="overlay" id="overlay"></div>
         <script type="module" src="./js/helper/book-detail.js"></script>
     </body>
 </html>

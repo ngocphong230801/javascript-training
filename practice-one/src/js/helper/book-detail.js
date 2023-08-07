@@ -1,6 +1,5 @@
 import BookModel from "../models/model";
-import { getElementById, querySelector } from "./dom-helper"
-import BookView from "../views/view";
+import { getElementById, querySelector } from "./dom-helper";
 
 const getQueryParameter = (parameterName) => {
   const queryString = window.location.search;
@@ -13,15 +12,11 @@ const deleteBookFromIndex = (bookInfo) => {
   bookModel.deleteBookByInfo(bookInfo);
 };
 
-const validateForm = getElementById("validation-form");
-
 document.addEventListener("DOMContentLoaded", () => {
-
   const bookInfoString = getQueryParameter("bookInfo");
 
   if (bookInfoString) {
     try {
-
       const bookInfo = JSON.parse(decodeURIComponent(bookInfoString));
 
       const bookTitleElement = getElementById("book-title");
@@ -37,6 +32,47 @@ document.addEventListener("DOMContentLoaded", () => {
       bookCreateElement.textContent = `Create At: ${bookInfo.date}`;
       bookUpdateElement.textContent = `Update At: ${bookInfo.date}`;
       bookDescriptionElement.textContent = bookInfo.description;
+
+      const editButton = querySelector(".edit-detail");
+      const cancelButton = querySelector(".cancel");
+      const validationForm = getElementById("validation-form");
+      const overlay = getElementById("overlay");
+
+      editButton.addEventListener("click", () => {
+        getElementById("bookname").value = bookInfo.bookname;
+        getElementById("author").value = bookInfo.author;
+        getElementById("date").value = bookInfo.date;
+        getElementById("description").value = bookInfo.description;
+        validationForm.style.display = "block";
+        overlay.style.display = "block";
+      });
+
+      cancelButton.addEventListener("click", () => {
+        validationForm.style.display = "none";
+        overlay.style.display = "none";
+      });
+
+      const saveButton = querySelector(".save");
+      saveButton.addEventListener("click", () => {
+        const updatedBookInfo = {
+          bookname: getElementById("bookname").value,
+          author: getElementById("author").value,
+          date: getElementById("date").value,
+          description: getElementById("description").value,
+        };
+        
+        const bookModel = new BookModel();
+        bookModel.updateBookByInfo(bookInfo, updatedBookInfo);
+        
+       
+        bookTitleElement.textContent = updatedBookInfo.bookname;
+        bookAuthorElement.textContent = `Author: ${updatedBookInfo.author}`;
+        bookDateElement.textContent = `Published Date: ${updatedBookInfo.date}`;
+        bookDescriptionElement.textContent = updatedBookInfo.description;
+
+        validationForm.style.display = "none";
+        overlay.style.display = "none";
+      });
 
       const deleteButton = querySelector(".delete-detail");
       deleteButton.addEventListener("click", () => {
