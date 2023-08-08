@@ -1,5 +1,5 @@
 import { querySelector,getElementById } from "./dom-helper";
-import { getQueryParameter } from "./queryParameter";
+import { getQueryParameter } from "./params";
 
 export {
     querySelector,

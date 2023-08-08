@@ -1,5 +1,5 @@
 import BookModel from "../models/book.model";
-import { querySelector, getElementById, getQueryParameter, } from "../helper";
+import { querySelector, getElementById, getQueryParameter } from "../helpers";
 
 class BookDetailPage {
   constructor() {
@@ -32,11 +32,15 @@ class BookDetailPage {
     const bookAuthorElement = getElementById("book-author");
     const bookDateElement = getElementById("book-date");
     const bookDescriptionElement = getElementById("book-description");
+    const bookCreateElement = getElementById("book-create");
+    const bookUpdateElement = getElementById("book-update");
 
     bookTitleElement.textContent = bookInfo.bookname;
     bookAuthorElement.textContent = `Author: ${bookInfo.author}`;
     bookDateElement.textContent = `Published Date: ${bookInfo.date}`;
     bookDescriptionElement.textContent = bookInfo.description;
+    bookCreateElement.textContent = `Create At: ${bookInfo.date}`;
+    bookUpdateElement.textContent = `Update At: ${bookInfo.date}`;
   }
 
   setupEditButton(bookInfo) {
