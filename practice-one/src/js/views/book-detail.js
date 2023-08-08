@@ -1,12 +1,5 @@
 import BookModel from "../models/model";
-import { getElementById, querySelector } from "./dom-helper";
-
-const getQueryParameter = (parameterName) => {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  return urlParams.get(parameterName);
-};
-
+import { querySelector,getElementById,getQueryParameter } from "../helper";
 const deleteBookFromIndex = (bookInfo) => {
   const bookModel = new BookModel();
   bookModel.deleteBookByInfo(bookInfo);
@@ -60,11 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
           date: getElementById("date").value,
           description: getElementById("description").value,
         };
-        
+
         const bookModel = new BookModel();
         bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
-        
-       
+
+
         bookTitleElement.textContent = updatedBookInfo.bookname;
         bookAuthorElement.textContent = `Author: ${updatedBookInfo.author}`;
         bookDateElement.textContent = `Published Date: ${updatedBookInfo.date}`;
@@ -80,9 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "./index.html";
       });
     } catch (error) {
-      console.error("Error parsing bookInfo:", error);
+      alert("Error parsing bookInfo:", error);
     }
   } else {
-    console.error("No bookInfo parameter found in the URL.");
+    alert("No bookInfo parameter found in the URL.");
   }
 });
