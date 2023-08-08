@@ -1,0 +1,50 @@
+.confirmation-box {
+    position: fixed;
+    top: 299px;
+    left: 560px;
+    width: 800px;
+    height: 252px;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    border: 1px solid var(--quaternary-color);
+    display: none;
+    z-index: 1000;
+}
+
+.confirmation-box .confirmation-title {
+    color: var(--color-text-default);
+    font-size: var(--font-size-text-xl);
+    font-weight: var(--font-weight-bold);
+    display: block;
+    margin: 0;
+    padding: 35px 135px;
+    padding-bottom: 2px;
+}
+
+.confirmation-box .confirmation-content {
+    color: var(--quaternary-color);
+    font-size:var(--font-size-text-base);
+    display: block;
+    margin: 0;
+    padding: 0 135px;
+}
+
+.confirmation-box .btn-cancel {
+    width: 197px;
+    height: 56px;
+    border-radius: 20px;
+    margin-top: 73px;
+    margin-left: 185px; 
+}
+
+.confirmation-box .btn-ok {
+    width: 197px;
+    height: 56px;
+    border-radius: 20px;
+    margin-left: 35px; 
+}
+
+.confirmation-box .btn:hover {
+    background-color: var(--quaternary-color);
+    border: 1px solid var(--quaternary-color);
+}

@@ -3,12 +3,14 @@ import { getElementById, querySelector } from "../helpers/dom-helper";
 import storage from "../services/localStorage";
 import imgDelete from "../../assets/icon/delete.png";
 import imgDetail from "../../assets/icon/detail.jpg";
+import imgClose from "../../assets/icon/close.png"
 
 class BookView {
   constructor() {
     this.bookListElement = getElementById("list-books");
     this.validationForm = getElementById("validation-form");
     this.overlay = getElementById("overlay");
+    this.confirmationBox = getElementById("confirmation-box");
 
     querySelector(".create").addEventListener("click", this.showValidationForm);
     querySelector(".cancel").addEventListener("click", this.hideValidationForm);
@@ -16,6 +18,8 @@ class BookView {
       "click",
       this.handleSaveButtonClick
     );
+    querySelector(".btn-ok").addEventListener("click", this.handleConfirmDelete);
+    querySelector(".btn-cancel").addEventListener("click", this.handleCancelDelete);
     this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
     this.init();
@@ -36,6 +40,21 @@ class BookView {
 
   hideValidationForm = () => {
     this.setDisplay("none");
+  };
+
+  showMention = (action, message) => {
+    const mentionContainer = getElementById("mention-container");
+    const mentionClass = action === "created" ? "mention-success" : "mention-danger"
+    mentionContainer.innerHTML = `
+    <div class="mention ${mentionClass}">
+    <h3 class="mention-title">Your actions executed successfully!</h3>
+    <p class="mention-message">${message}</p>
+    <img src="${imgClose}" alt="close" class="close-mention">
+    </div>
+    `;
+    setTimeout(() => {
+      mentionContainer.innerHTML = "";
+    },2000)
   };
 
   handleSaveButtonClick = (event) => {
@@ -67,6 +86,7 @@ class BookView {
 
       this.hideValidationForm();
       this.validationForm.reset();
+      this.showMention("created","Book created successfully!");
       this.showBooks();
     }
   };
@@ -108,13 +128,11 @@ class BookView {
           <p class="book-date">${bookInfo.date}</p>
           <p class="book-description">${bookInfo.description}</p>
           <a href="../../detail.html" class="book-detail-link">
-          <img src="${imgDetail}" alt="detail" class="detail" data-book-index="${
-        startIndex + index
-      }">
+          <img src="${imgDetail}" alt="detail" class="detail" data-book-index="${startIndex + index
+        }">
         </a>
-          <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${
-        startIndex + index
-      }">
+          <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${startIndex + index
+        }">
         </li>
       `;
     });
@@ -187,10 +205,29 @@ class BookView {
     const savedBooks = storage.get("savedBooks");
 
     if (savedBooks && savedBooks[bookIndex]) {
+      this.confirmationBox.style.display = "block";
+      this.overlay.style.display = "block";
+      this.confirmationBox.dataset.bookIndex = bookIndex;
+    }
+  };
+
+  handleConfirmDelete = () => {
+    const bookIndex = this.confirmationBox.dataset.bookIndex;
+    const savedBooks = storage.get("savedBooks");
+
+    if (savedBooks && savedBooks[bookIndex]) {
       savedBooks.splice(bookIndex, 1);
       storage.save("savedBooks", savedBooks);
       this.showBooks();
     }
+    this.confirmationBox.style.display = "none";
+    this.overlay.style.display = "none";
+    this.showMention("deleted","Book deleted successfully!");
+  };
+
+  handleCancelDelete = () => {
+    this.confirmationBox.style.display = "none";
+    this.overlay.style.display = "none";
   };
 
   handlePaginationClick = (event) => {
