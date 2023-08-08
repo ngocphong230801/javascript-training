@@ -85,3 +85,22 @@
     margin: 0;
     padding-left: 300px;
 }
+
+.card-container .mission {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+}
+
+.card-container .edit-detail {
+    display: inline-flex;
+    padding: 0 57px;
+    height: 56px;
+    align-items: center;
+    gap: 15px;
+}
+
+.card-container .delete-detail {
+    width: 56px;
+    height: 56px;
+}

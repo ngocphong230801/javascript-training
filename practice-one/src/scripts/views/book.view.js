@@ -1,5 +1,5 @@
-import { validateForm } from "../helper/validator";
-import { getElementById, querySelector } from "../helper/dom-helper";
+import { validateForm } from "../helpers/validator";
+import { getElementById, querySelector } from "../helpers/dom-helper";
 import storage from "../services/localStorage";
 import imgDelete from "../../assets/icon/delete.png";
 import imgDetail from "../../assets/icon/detail.jpg";
@@ -12,7 +12,10 @@ class BookView {
 
     querySelector(".create").addEventListener("click", this.showValidationForm);
     querySelector(".cancel").addEventListener("click", this.hideValidationForm);
-    querySelector(".save").addEventListener("click", this.handleSaveButtonClick);
+    querySelector(".save").addEventListener(
+      "click",
+      this.handleSaveButtonClick
+    );
     this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
     this.init();
@@ -104,8 +107,14 @@ class BookView {
           <p class="book-author">${bookInfo.author}</p>
           <p class="book-date">${bookInfo.date}</p>
           <p class="book-description">${bookInfo.description}</p>
-          <img src="${imgDetail}" alt="detail" class="detail">
-          <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${startIndex + index}">
+          <a href="../../detail.html" class="book-detail-link">
+          <img src="${imgDetail}" alt="detail" class="detail" data-book-index="${
+        startIndex + index
+      }">
+        </a>
+          <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${
+        startIndex + index
+      }">
         </li>
       `;
     });
@@ -128,6 +137,25 @@ class BookView {
       link.dataset.page = index + 1;
       link.addEventListener("click", this.handlePaginationClick);
     });
+
+    const bookDetailLinks = document.querySelectorAll(".book-detail-link");
+    bookDetailLinks.forEach((link) => {
+      link.addEventListener("click", this.handleBookDetailClick);
+    });
+  };
+
+  handleBookDetailClick = (event) => {
+    event.preventDefault();
+    const bookIndex = event.target.dataset.bookIndex;
+    const savedBooks = storage.get("savedBooks");
+
+    if (savedBooks && savedBooks[bookIndex]) {
+      const bookInfo = savedBooks[bookIndex];
+      const bookInfoString = JSON.stringify(bookInfo);
+      window.location.href = `../../detail.html?bookInfo=${encodeURIComponent(
+        bookInfoString
+      )}`;
+    }
   };
 
   handleEditBook = (event) => {
@@ -154,6 +182,7 @@ class BookView {
   };
 
   handleDeleteBook = (event) => {
+    event.preventDefault();
     const bookIndex = event.target.dataset.bookIndex;
     const savedBooks = storage.get("savedBooks");
 

@@ -1,0 +1,25 @@
+.book-details .book-title {
+    font-size:  var(--font-size-text-2xl);
+    position: absolute;
+    top: 145px;
+    left: 255px;
+}
+
+.book-details .book-description {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-text-lg);
+    position: absolute;
+    top: 260px;
+    left: 255px;
+}
+
+.book-details .article-info {
+    margin-top: 275px;
+    margin-left: 255px;
+}
+
+.book-details .article-info-item {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-text-lg);
+    font-weight: var(--font-weight-bold);
+}
