@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         
         const bookModel = new BookModel();
-        bookModel.updateBookByInfo(bookInfo, updatedBookInfo);
+        bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
         
        
         bookTitleElement.textContent = updatedBookInfo.bookname;
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const deleteButton = querySelector(".delete-detail");
       deleteButton.addEventListener("click", () => {
-        deleteBookFromIndex(bookInfo);
+        deleteBookFromIndex(bookInfo.id);
         window.location.href = "./index.html";
       });
     } catch (error) {

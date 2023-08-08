@@ -36,17 +36,10 @@ class BookModel {
         }
     };
 
-  deleteBookByInfo = (bookInfo) => {
+ deleteBookByInfo = (bookId) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
-      const bookIndex = savedBooks.findIndex(
-        (book) =>
-          book.bookname === bookInfo.bookname &&
-          book.author === bookInfo.author &&
-          book.date === bookInfo.date &&
-          book.description === bookInfo.description
-      );
-
+      const bookIndex = savedBooks.findIndex((book) => book.id === bookId);
       if (bookIndex !== -1) {
         savedBooks.splice(bookIndex, 1);
         storage.save("savedBooks", savedBooks);
@@ -54,24 +47,17 @@ class BookModel {
     }
   };
 
-  updateBookByInfo = (oldBookInfo, updatedBookInfo) => {
+  updateBookByInfo = (bookId, updatedBookInfo) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
-      const bookIndex = savedBooks.findIndex(
-        (book) =>
-          book.bookname === oldBookInfo.bookname &&
-          book.author === oldBookInfo.author &&
-          book.date === oldBookInfo.date &&
-          book.description === oldBookInfo.description
-      );
-
+      const bookIndex = savedBooks.findIndex((book) => book.id === bookId);
       if (bookIndex !== -1) {
-        savedBooks[bookIndex] = updatedBookInfo;
+        savedBooks[bookIndex] = { ...savedBooks[bookIndex], ...updatedBookInfo };
         storage.save("savedBooks", savedBooks);
       }
     }
   };
-
+  
   getBookByInfo = (bookInfo) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
