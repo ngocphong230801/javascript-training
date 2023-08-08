@@ -1,5 +1,6 @@
 import BookModel from "../models/model";
 import { querySelector,getElementById,getQueryParameter } from "../helper";
+
 const deleteBookFromIndex = (bookInfo) => {
   const bookModel = new BookModel();
   bookModel.deleteBookByInfo(bookInfo);
