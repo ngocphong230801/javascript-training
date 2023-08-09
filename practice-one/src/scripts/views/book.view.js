@@ -18,8 +18,6 @@ class BookView {
       "click",
       this.handleSaveButtonClick
     );
-    querySelector(".btn-confirm").addEventListener("click", this.handleConfirmDelete);
-    querySelector(".btn-cancel").addEventListener("click", this.handleCancelDelete);
     this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
     this.init();
@@ -29,6 +27,8 @@ class BookView {
     this.hideValidationForm();
     this.showBooks();
     this.setupSearch();
+    querySelector(".btn-confirm").addEventListener("click", this.handleConfirmDelete);
+    querySelector(".btn-cancel").addEventListener("click", this.handleCancelDelete);
   };
 
   showValidationForm = () => {
