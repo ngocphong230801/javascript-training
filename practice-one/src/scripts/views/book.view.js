@@ -11,6 +11,7 @@ class BookView {
     this.validationForm = getElementById("validation-form");
     this.overlay = getElementById("overlay");
     this.confirmationBox = getElementById("confirmation-box");
+    this.sortOrder = "ascending";
 
     querySelector(".create").addEventListener("click", this.showValidationForm);
     querySelector(".cancel").addEventListener("click", this.hideValidationForm);
@@ -18,6 +19,8 @@ class BookView {
       "click",
       this.handleSaveButtonClick
     );
+    querySelector(".ascending").addEventListener("click", this.handleAscendingClick);
+    querySelector(".descending").addEventListener("click", this.handleDescendingClick);
     this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
 
     this.init();
@@ -54,7 +57,7 @@ class BookView {
     `;
     setTimeout(() => {
       mentionContainer.innerHTML = "";
-    },2000)
+    }, 2000)
   };
 
   handleSaveButtonClick = (event) => {
@@ -86,7 +89,7 @@ class BookView {
 
       this.hideValidationForm();
       this.validationForm.reset();
-      this.showMention("created","Book created successfully!");
+      this.showMention("created", "Book created successfully!");
       this.showBooks();
     }
   };
@@ -222,7 +225,7 @@ class BookView {
     }
     this.confirmationBox.style.display = "none";
     this.overlay.style.display = "none";
-    this.showMention("deleted","Book deleted successfully!");
+    this.showMention("deleted", "Book deleted successfully!");
   };
 
   handleCancelDelete = () => {
@@ -280,6 +283,32 @@ class BookView {
     paginationLinks.forEach((link) => {
       link.style.display = "none";
     });
+  };
+
+  handleAscendingClick = () => {
+    this.sortOrder = "ascending";
+    this.applySorting();
+  };
+
+  handleDescendingClick = () => {
+    this.sortOrder = "descending";
+    this.applySorting();
+  };
+
+  applySorting = () => {
+    const savedBooks = storage.get("savedBooks");
+
+    if (savedBooks) {
+      const sortedBooks = savedBooks.slice().sort((a, b) => {
+        const bookNameA = a.bookname.toLowerCase();
+        const bookNameB = b.bookname.toLowerCase();
+        return this.sortOrder === "ascending" ?
+          bookNameA.localeCompare(bookNameB) :
+          bookNameB.localeCompare(bookNameA);
+      });
+
+      this.displayAllBooks(sortedBooks);
+    }
   };
 }
 
