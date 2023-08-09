@@ -300,11 +300,11 @@ class BookView {
 
     if (savedBooks) {
       const sortedBooks = savedBooks.slice().sort((a, b) => {
-        const titleA = a.bookname.toLowerCase();
-        const titleB = b.bookname.toLowerCase();
+        const bookNameA = a.bookname.toLowerCase();
+        const bookNameB = b.bookname.toLowerCase();
         return this.sortOrder === "ascending" ?
-          titleA.localeCompare(titleB) :
-          titleB.localeCompare(titleA);
+          bookNameA.localeCompare(bookNameB) :
+          bookNameB.localeCompare(bookNameA);
       });
 
       this.displayAllBooks(sortedBooks);
