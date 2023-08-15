@@ -55,8 +55,10 @@
                 </div>
                 <div class="image">
                     <p class="label">Image</p>
-                    <button class="btn upload" id="upload-button" >Upload</button>
-                    <img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image" class="upload-image">
+                    <!-- <button class="btn upload" id="upload-button" >Upload</button> -->
+                    <!-- <img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image" class="upload-image"> -->
+                    <input type="file" class="form-input" id="image" name="upload">
+                    <!-- <label for="upload" class="btn upload">Upload</label> -->
                     <span id="image-error" class="error"></span>
                 </div>
                 <div class="description">
@@ -80,5 +82,5 @@
         </div>
         <div class="mention-container" id="mention-container"></div>
         <script type="module" src="./scripts/index.js"></script>
-        <script type="module" src="./scripts/helpers/upload-img.js"></script>
+    </body>
 </html>

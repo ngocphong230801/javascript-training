@@ -72,25 +72,44 @@ class BookView {
         updatedBookInfo[fieldName] = fieldValue;
       });
 
-      const bookIndex = this.validationForm.dataset.bookIndex;
-      const savedBooks = storage.get("savedBooks");
+      let image = getElementById('image').files[0];
+      let data = new FormData();
+      data.append('image', image);
 
-      if (bookIndex !== undefined && savedBooks && savedBooks[bookIndex]) {
-        savedBooks[bookIndex] = {
-          ...savedBooks[bookIndex],
-          ...updatedBookInfo,
-        };
-        storage.save("savedBooks", savedBooks);
-      } else {
-        const existingData = savedBooks || [];
-        existingData.push(updatedBookInfo);
-        storage.save("savedBooks", existingData);
-      }
+      fetch('https://api.imgbb.com/1/upload?key=82001a9d3dcf15421a28667e049d69fd', {
+        method: 'POST',
+        body: data
+      }).then(
+        response => {
+          return response.json();          
+        }
+      ).then(
+        data => {
+          let url = data.data.url;
+          updatedBookInfo['image'] = url;
 
-      this.hideValidationForm();
-      this.validationForm.reset();
-      this.showMention("created", "Book created successfully!");
-      this.showBooks();
+          const bookIndex = this.validationForm.dataset.bookIndex;
+          const savedBooks = storage.get("savedBooks");
+
+          if (bookIndex !== undefined && savedBooks && savedBooks[bookIndex]) {
+            savedBooks[bookIndex] = {
+              ...savedBooks[bookIndex],
+              ...updatedBookInfo,
+            };
+            storage.save("savedBooks", savedBooks);
+          } else {
+            const existingData = savedBooks || [];
+            existingData.push(updatedBookInfo);
+            storage.save("savedBooks", existingData);
+          }
+
+          this.hideValidationForm();
+          this.validationForm.reset();
+          this.showMention("created", "Book created successfully!");
+          this.showBooks();
+        }
+      );
+      
     }
   };
 
