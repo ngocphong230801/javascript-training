@@ -11,6 +11,7 @@
     position: absolute;
     top: 260px;
     left: 255px;
+    margin: 0;
 }
 
 .book-details .article-info {
@@ -28,6 +29,6 @@
     width: 310px;
     height: 400px;
     position: absolute;
-    top: 139px;
-    right: 128px;   
+    top: 261px;
+    right: 255px;   
 }

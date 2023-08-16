@@ -1,32 +1,18 @@
 import BookModel from "../models/book.model";
 import { querySelector, getElementById, getQueryParameter } from "../helpers";
+import { initializePage } from "../helpers/init-detail";
 
 class BookDetailPage {
     constructor() {
-        this.initialize();
+        initializePage(this.initialize.bind(this));
     }
 
-    initialize() {
-        document.addEventListener("DOMContentLoaded", () => {
-            const bookInfoString = getQueryParameter("bookInfo");
-
-            if (bookInfoString) {
-                try {
-                    const bookInfo = JSON.parse(
-                        decodeURIComponent(bookInfoString)
-                    );
-                    this.displayBookInfo(bookInfo);
-                    this.setupEditButton(bookInfo);
-                    this.setupCancelButton();
-                    this.setupSaveButton(bookInfo);
-                    this.setupDeleteButton(bookInfo);
-                } catch (error) {
-                    alert("Error parsing bookInfo:", error);
-                }
-            } else {
-                alert("No bookInfo parameter found in the URL.");
-            }
-        });
+    initialize(bookInfo) {
+        this.displayBookInfo(bookInfo);
+        this.setupEditButton(bookInfo);
+        this.setupCancelButton();
+        this.setupSaveButton(bookInfo);
+        this.setupDeleteButton(bookInfo);
     }
 
     displayBookInfo(bookInfo) {
@@ -47,10 +33,16 @@ class BookDetailPage {
         bookImage.innerHTML = `<img class="image-detail" src="${bookInfo.image}"/>`;
     }
 
-    setupEditButton(bookInfo) {
-        const editButton = querySelector(".edit-detail");
+    toggleOverlayAndForm(displayValue) {
         const validationForm = getElementById("validation-form");
         const overlay = getElementById("overlay");
+
+        validationForm.style.display = displayValue;
+        overlay.style.display = displayValue;
+    }
+
+    setupEditButton(bookInfo) {
+        const editButton = querySelector(".edit-detail");
 
         editButton.addEventListener("click", () => {
             getElementById("bookname").value = bookInfo.bookname;
@@ -58,26 +50,25 @@ class BookDetailPage {
             getElementById("date").value = bookInfo.date;
             getElementById("description").value = bookInfo.description;
             getElementById("preview-link-image").innerText = bookInfo.image;
-            validationForm.style.display = "block";
-            overlay.style.display = "block";
+
+            this.toggleOverlayAndForm("block");
         });
     }
 
     setupCancelButton() {
         const cancelButton = querySelector(".cancel");
-        const validationForm = getElementById("validation-form");
         const overlay = getElementById("overlay");
 
-        cancelButton.addEventListener("click", () => {
-            validationForm.style.display = "none";
-            overlay.style.display = "none";
-        });
+        const hideFormAndOverlay = () => {
+            this.toggleOverlayAndForm("none");
+        };
+
+        cancelButton.addEventListener("click", hideFormAndOverlay);
+        overlay.addEventListener("click", hideFormAndOverlay);
     }
 
     setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
-        const validationForm = getElementById("validation-form");
-        const overlay = getElementById("overlay");
 
         saveButton.addEventListener("click", () => {
             const updatedBookInfo = {
@@ -92,8 +83,7 @@ class BookDetailPage {
 
             this.displayBookInfo(updatedBookInfo);
 
-            validationForm.style.display = "none";
-            overlay.style.display = "none";
+            this.toggleOverlayAndForm("none");
         });
     }
 
