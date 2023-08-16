@@ -11,6 +11,7 @@
     position: absolute;
     top: 260px;
     left: 255px;
+    margin: 0;
 }
 
 .book-details .article-info {
@@ -22,4 +23,12 @@
     color: var(--color-text-primary);
     font-size: var(--font-size-text-lg);
     font-weight: var(--font-weight-bold);
+}
+
+.book-details .image-detail {
+    width: 310px;
+    height: 400px;
+    position: absolute;
+    top: 261px;
+    right: 255px;   
 }

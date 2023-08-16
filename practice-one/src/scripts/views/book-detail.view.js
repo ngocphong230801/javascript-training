@@ -1,110 +1,111 @@
 import BookModel from "../models/book.model";
 import { querySelector, getElementById, getQueryParameter } from "../helpers";
+import { initializePage } from "../helpers/init-detail";
+import { toggleDisplay } from "../helpers/element-untils";
 
 class BookDetailPage {
-  constructor() {
-    this.initialize();
-  }
+    constructor() {
+        initializePage(this.initialize.bind(this));
+    }
 
-  initialize() {
-    document.addEventListener("DOMContentLoaded", () => {
-      const bookInfoString = getQueryParameter("bookInfo");
+    initialize(bookInfo) {
+        this.displayBookInfo(bookInfo);
+        this.setupEditButton(bookInfo);
+        this.setupCancelButton();
+        this.setupSaveButton(bookInfo);
+        this.setupDeleteButton(bookInfo);
+    }
 
-      if (bookInfoString) {
-        try {
-          const bookInfo = JSON.parse(decodeURIComponent(bookInfoString));
-          this.displayBookInfo(bookInfo);
-          this.setupEditButton(bookInfo);
-          this.setupCancelButton();
-          this.setupSaveButton(bookInfo);
-          this.setupDeleteButton(bookInfo);
-        } catch (error) {
-          alert("Error parsing bookInfo:", error);
-        }
-      } else {
-        alert("No bookInfo parameter found in the URL.");
-      }
-    });
-  }
+    displayBookInfo(bookInfo) {
+        const bookTitleElement = getElementById("book-title");
+        const bookAuthorElement = getElementById("book-author");
+        const bookDateElement = getElementById("book-date");
+        const bookDescriptionElement = getElementById("book-description");
+        const bookCreateElement = getElementById("book-create");
+        const bookUpdateElement = getElementById("book-update");
+        const bookImage = getElementById("img-detail-wp-render");
 
-  displayBookInfo(bookInfo) {
-    const bookTitleElement = getElementById("book-title");
-    const bookAuthorElement = getElementById("book-author");
-    const bookDateElement = getElementById("book-date");
-    const bookDescriptionElement = getElementById("book-description");
-    const bookCreateElement = getElementById("book-create");
-    const bookUpdateElement = getElementById("book-update");
+        bookTitleElement.textContent = bookInfo.bookname;
+        bookAuthorElement.textContent = `Author: ${bookInfo.author}`;
+        bookDateElement.textContent = `Published Date: ${bookInfo.date}`;
+        bookDescriptionElement.textContent = bookInfo.description;
+        bookCreateElement.textContent = `Create At: ${bookInfo.date}`;
+        bookUpdateElement.textContent = `Update At: ${bookInfo.date}`;
+        bookImage.innerHTML = `<img class="image-detail" src="${bookInfo.image}"/>`;
+    }
 
-    bookTitleElement.textContent = bookInfo.bookname;
-    bookAuthorElement.textContent = `Author: ${bookInfo.author}`;
-    bookDateElement.textContent = `Published Date: ${bookInfo.date}`;
-    bookDescriptionElement.textContent = bookInfo.description;
-    bookCreateElement.textContent = `Create At: ${bookInfo.date}`;
-    bookUpdateElement.textContent = `Update At: ${bookInfo.date}`;
-  }
+    toggleOverlayAndForm(displayValue) {
+        const validationForm = getElementById("validation-form");
+        const overlay = getElementById("overlay");
 
-  setupEditButton(bookInfo) {
-    const editButton = querySelector(".edit-detail");
-    const validationForm = getElementById("validation-form");
-    const overlay = getElementById("overlay");
+        validationForm.style.display = displayValue;
+        overlay.style.display = displayValue;
+    }
 
-    editButton.addEventListener("click", () => {
-      getElementById("bookname").value = bookInfo.bookname;
-      getElementById("author").value = bookInfo.author;
-      getElementById("date").value = bookInfo.date;
-      getElementById("description").value = bookInfo.description;
-      validationForm.style.display = "block";
-      overlay.style.display = "block";
-    });
-  }
+    setupEditButton(bookInfo) {
+        const editButton = querySelector(".edit-detail");
 
-  setupCancelButton() {
-    const cancelButton = querySelector(".cancel");
-    const validationForm = getElementById("validation-form");
-    const overlay = getElementById("overlay");
+        const showFormAndOverlay = () => {
+            getElementById("bookname").value = bookInfo.bookname;
+            getElementById("author").value = bookInfo.author;
+            getElementById("date").value = bookInfo.date;
+            getElementById("description").value = bookInfo.description;
+            getElementById("preview-link-image").innerText = bookInfo.image;
 
-    cancelButton.addEventListener("click", () => {
-      validationForm.style.display = "none";
-      overlay.style.display = "none";
-    });
-  }
+            toggleDisplay("validation-form", true);
+            toggleDisplay("overlay", true);
+        };
 
-  setupSaveButton(bookInfo) {
-    const saveButton = querySelector(".save");
-    const validationForm = getElementById("validation-form");
-    const overlay = getElementById("overlay");
+        editButton.addEventListener("click", showFormAndOverlay);
+    }
 
-    saveButton.addEventListener("click", () => {
-      const updatedBookInfo = {
-        bookname: getElementById("bookname").value,
-        author: getElementById("author").value,
-        date: getElementById("date").value,
-        description: getElementById("description").value,
-      };
+    setupCancelButton() {
+        const cancelButton = querySelector(".cancel");
+        const overlay = getElementById("overlay");
 
-      const bookModel = new BookModel();
-      bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
+        const hideFormAndOverlay = () => {
+            toggleDisplay("validation-form", false);
+            toggleDisplay("overlay", false);
+        };
 
-      this.displayBookInfo(updatedBookInfo);
+        cancelButton.addEventListener("click", hideFormAndOverlay);
+        overlay.addEventListener("click", hideFormAndOverlay);
+    }
 
-      validationForm.style.display = "none";
-      overlay.style.display = "none";
-    });
-  }
+    setupSaveButton(bookInfo) {
+        const saveButton = querySelector(".save");
 
-  setupDeleteButton(bookInfo) {
-    const deleteButton = querySelector(".delete-detail");
+        saveButton.addEventListener("click", () => {
+            const updatedBookInfo = {
+                bookname: getElementById("bookname").value,
+                author: getElementById("author").value,
+                date: getElementById("date").value,
+                description: getElementById("description").value,
+            };
 
-    deleteButton.addEventListener("click", () => {
-      this.deleteBookFromIndex(bookInfo.id);
-      window.location.href = "./index.html";
-    });
-  }
+            const bookModel = new BookModel();
+            bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
 
-  deleteBookFromIndex(bookId) {
-    const bookModel = new BookModel();
-    bookModel.deleteBookByInfo(bookId);
-  }
+            this.displayBookInfo(updatedBookInfo);
+
+            toggleDisplay("validation-form", "none");
+            toggleDisplay("overlay", "none");
+        });
+    }
+
+    setupDeleteButton(bookInfo) {
+        const deleteButton = querySelector(".delete-detail");
+
+        deleteButton.addEventListener("click", () => {
+            this.deleteBookFromIndex(bookInfo.id);
+            window.location.href = "./index.html";
+        });
+    }
+
+    deleteBookFromIndex(bookId) {
+        const bookModel = new BookModel();
+        bookModel.deleteBookByInfo(bookId);
+    }
 }
 
 const bookDetailPage = new BookDetailPage();
