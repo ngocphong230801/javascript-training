@@ -23,3 +23,11 @@
     font-size: var(--font-size-text-lg);
     font-weight: var(--font-weight-bold);
 }
+
+.book-details .image-detail {
+    width: 310px;
+    height: 400px;
+    position: absolute;
+    top: 139px;
+    right: 128px;   
+}
