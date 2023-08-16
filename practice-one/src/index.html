@@ -1,86 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="This website introduces Book Maker brand">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Styles index -->
-        <link rel="stylesheet" href="./styles/index.css">
-        <title>Book Maker</title>
-    </head>
-    <body>
-        <!-- Header -->
-        <header class="main-header">
-            <div class="brand">
-                <a href="">
-                    <img src="./assets/icon/Vector.png" alt="brand">
-                    <p class="brand-title">B</p>
-                    <img src="./assets/icon/box.png" alt="box" class="brand-box">
-                </a>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="This website introduces Book Maker brand" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles index -->
+    <link rel="stylesheet" href="./styles/index.css" />
+    <title>Book Maker</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="brand">
+            <a href="">
+                <img src="./assets/icon/Vector.png" alt="brand" />
+                <p class="brand-title">B</p>
+                <img src="./assets/icon/box.png" alt="box" class="brand-box" />
+            </a>
+        </div>
+        <h1 class="greeting">Hello! Welcome to the Book Marker</h1>
+    </header>
+    <div class="card-container">
+        <div class="header-card-container">
+            <input type="text" placeholder="Search something..." class="filter" id="filter" />
+            <img src="./assets/icon/search.png" alt="search" class="search" />
+            <a href="#" class="ascending">Ascending</a>
+            <a href="#" class="descending">Descending</a>
+            <button type="button" class="btn create" id="create">
+                + Create
+            </button>
+        </div>
+        <ul id="list-books" class="list-books"></ul>
+        <div class="page-navigation">
+            <a href="#" class="pagination">1</a>
+            <a href="#" class="pagination">2</a>
+            <a href="#" class="pagination">3</a>
+        </div>
+    </div>
+    <form class="validation-form" id="validation-form" onsubmit="return false;">
+        <h2 class="form-title">Create a new book marker</h2>
+        <div class="form-content">
+            <div class="bookname">
+                <p class="label">Book name</p>
+                <input type="text" id="bookname" name="bookname" placeholder="Book name" class="form-input" />
+                <span id="bookname-error" class="error"></span>
             </div>
-            <h1 class="greeting" >Hello! Welcome to the Book Marker</h1>
-        </header>
-        <div class="card-container">
-            <div class="header-card-container">
-                <input type="text" placeholder="Search something..." class="filter" id="filter" >
-                <img src="./assets/icon/search.png" alt="search" class="search">
-                <a href="#" class="ascending">Ascending</a>
-                <a href="#" class="descending">Descending</a>
-                <button type="button" class="btn create" id="create">+ Create</button>
-            </div>  
-            <ul id="list-books" class="list-books"></ul>
-            <div class="page-navigation ">
-                <a href="#" class="pagination">1</a>
-                <a href="#" class="pagination">2</a>
-                <a href="#" class="pagination">3</a>
+            <div class="author">
+                <p class="label">Author</p>
+                <input type="text" id="author" name="author" placeholder="Author" class="form-input" />
+                <span id="author-error" class="error"></span>
+            </div>
+            <div class="date">
+                <p class="label">Published date</p>
+                <input type="text" id="date" name="date" placeholder="MM/DD/YYYY" class="form-input" />
+                <span id="date-error" class="error"></span>
+            </div>
+            <div class="image">
+                <p class="label">Image</p>
+                <div style="display: flex; gap: 10px; align-items: center">
+                    <div style="position: relative">
+                        <input type="file" id="input-select-file" class="input-select-file"/>
+                        <button class="btn upload">
+                            <img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image" />Upload</button>
+                    </div>
+                    <div id="preview-image" class="preview-image"></div>
+                </div>
+                <span id="image-error" class="error"></span>
+            </div>
+            <div class="description">
+                <p class="label">Description</p>
+                <input type="text" id="description" name="description" placeholder="Description"
+                    class="form-input description-input" />
+                <span id="description-error" class="error"></span>
             </div>
         </div>
-        <form class="validation-form" id="validation-form" onsubmit="return false;">
-            <h2 class="form-title">Create a new book marker</h2>
-            <div class="form-content">
-                <div class="bookname">
-                    <p class="label" >Book name</p>
-                    <input type="text" id="bookname" name="bookname" placeholder="Book name" class="form-input">
-                    <span id="bookname-error" class="error"></span>
-                </div>
-                <div class="author">
-                    <p class="label">Author</p>
-                    <input type="text" id="author" name="author" placeholder="Author" class="form-input">
-                    <span id="author-error" class="error"></span>
-                </div>
-                <div class="date">
-                    <p class="label">Published date</p>
-                    <input type="text" id="date" name="date" placeholder="MM/DD/YYYY" class="form-input" >
-                    <span id="date-error" class="error"></span>
-                </div>
-                <div class="image">
-                    <p class="label">Image</p>
-                    <!-- <button class="btn upload" id="upload-button" >Upload</button> -->
-                    <!-- <img src="./assets/icon/🦆 icon-upload.png" alt="upload" id="image" class="upload-image"> -->
-                    <input type="file" class="form-input" id="image" name="upload">
-                    <!-- <label for="upload" class="btn upload">Upload</label> -->
-                    <span id="image-error" class="error"></span>
-                </div>
-                <div class="description">
-                    <p class="label">Description</p>
-                    <input type="text" id="description" name="description" placeholder="Description" class="form-input description-input">
-                    <span id="description-error" class="error"></span>
-                </div>
-            </div>
-            <div class="form-btn">
-                <button class="btn btn-form cancel" id="cancel">Cancel</button>
-                <button class="btn  btn-form save" type="button" id="save">Save</button>
-            </div>
-        </form>
-        <a href="./detail.html"></a>
-        <div class="overlay" id="overlay"></div>
-        <div class="confirmation-box" id="confirmation-box">
-            <h3 class="confirmation-title">Are you sure to deleted this book</h3>
-            <p class="confirmation-content">This action can not undo, so please careful with this action</p>
-            <button class="btn btn-cancel" id="cancel-delete">Cancel</button>
-            <button class="btn btn-confirm" id="confirm-delete">Ok</button>
+        <div class="form-btn">
+            <button class="btn btn-form cancel" id="cancel">Cancel</button>
+            <button class="btn btn-form save" type="button" id="save">
+                Save
+            </button>
         </div>
-        <div class="mention-container" id="mention-container"></div>
-        <script type="module" src="./scripts/index.js"></script>
-    </body>
+    </form>
+    <a href="./detail.html"></a>
+    <div class="overlay" id="overlay"></div>
+    <div class="confirmation-box" id="confirmation-box">
+        <h3 class="confirmation-title">
+            Are you sure to deleted this book
+        </h3>
+        <p class="confirmation-content">
+            This action can not undo, so please careful with this action
+        </p>
+        <button class="btn btn-cancel" id="cancel-delete">Cancel</button>
+        <button class="btn btn-confirm" id="confirm-delete">Ok</button>
+    </div>
+    <div class="mention-container" id="mention-container"></div>
+    <script type="module" src="./scripts/index.js"></script>
+</body>
+
 </html>

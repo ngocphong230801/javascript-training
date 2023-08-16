@@ -52,3 +52,11 @@
     left: 40;
     bottom: 40px;
 }
+
+.list-books .render-image {
+    width: 95px;
+    height: 116px;
+    position: absolute;
+    top: 76px;
+    right: 44px;
+}

@@ -3,7 +3,7 @@ import { getElementById, querySelector } from "../helpers/dom-helper";
 import storage from "../services/localStorage";
 import imgDelete from "../../assets/icon/delete.png";
 import imgDetail from "../../assets/icon/detail.jpg";
-import imgClose from "../../assets/icon/close.png"
+import imgClose from "../../assets/icon/close.png";
 
 class BookView {
   constructor() {
@@ -13,15 +13,22 @@ class BookView {
     this.confirmationBox = getElementById("confirmation-box");
     this.sortOrder = "ascending";
 
-    querySelector(".create").addEventListener("click", this.showValidationForm);
-    querySelector(".cancel").addEventListener("click", this.hideValidationForm);
-    querySelector(".save").addEventListener(
-      "click",
-      this.handleSaveButtonClick
-    );
-    querySelector(".ascending").addEventListener("click", this.handleAscendingClick);
-    querySelector(".descending").addEventListener("click", this.handleDescendingClick);
-    this.overlay.addEventListener("click", this.hideValidationForm.bind(this));
+    const InputImageUpload = document.querySelector("#input-select-file");
+    const ElementPreview = document.querySelector(".preview-image");
+    InputImageUpload.addEventListener("change", (e) => {
+      if (e.target.files[0]) {
+        console.log(ElementPreview);
+        console.log(URL.createObjectURL(e.target.files[0]));
+        ElementPreview.innerHTML = `  <img src="${URL.createObjectURL(e.target.files[0])}" alt="" / class = "preview-image-inner"> `;
+      }
+    });
+
+    querySelector(".create").addEventListener("click",this.showValidationForm);
+    querySelector(".cancel").addEventListener("click",this.hideValidationForm);
+    querySelector(".save").addEventListener("click",this.handleSaveButtonClick);
+    querySelector(".ascending").addEventListener("click",this.handleAscendingClick);
+    querySelector(".descending").addEventListener("click",this.handleDescendingClick);
+    this.overlay.addEventListener("click",this.hideValidationForm.bind(this));
 
     this.init();
   }
@@ -30,8 +37,8 @@ class BookView {
     this.hideValidationForm();
     this.showBooks();
     this.setupSearch();
-    querySelector(".btn-confirm").addEventListener("click", this.handleConfirmDelete);
-    querySelector(".btn-cancel").addEventListener("click", this.handleCancelDelete);
+    querySelector(".btn-confirm").addEventListener("click",this.handleConfirmDelete);
+    querySelector(".btn-cancel").addEventListener("click",this.handleCancelDelete);
   };
 
   showValidationForm = () => {
@@ -47,7 +54,8 @@ class BookView {
 
   showMention = (action, message) => {
     const mentionContainer = getElementById("mention-container");
-    const mentionClass = action === "created" ? "mention-success" : "mention-danger"
+    const mentionClass =
+      action === "created" ? "mention-success" : "mention-danger";
     mentionContainer.innerHTML = `
     <div class="mention ${mentionClass}">
     <h3 class="mention-title">Your actions executed successfully!</h3>
@@ -57,59 +65,81 @@ class BookView {
     `;
     setTimeout(() => {
       mentionContainer.innerHTML = "";
-    }, 2000)
+    }, 2000);
   };
 
-  handleSaveButtonClick = (event) => {
+  handleSaveButtonClick = async (event) => {
     event.preventDefault();
     if (validateForm(this.validationForm)) {
-      const formInputs = this.validationForm.querySelectorAll(".form-input");
+      const formInputs =
+        this.validationForm.querySelectorAll(".form-input");
       const updatedBookInfo = {};
 
+      const InputImageUpload =
+        document.querySelector("#input-select-file");
+
+      if (!InputImageUpload.files[0]) {
+        alert("Please post image");
+        return;
+      }
+
+      const API_KEY = "82001a9d3dcf15421a28667e049d69fd";
+
+      async function UploadImageAndSave() {
+        const formData = new FormData();
+        formData.append("key", API_KEY);
+        formData.append("image", InputImageUpload.files[0]);
+
+        try {
+          const response = await fetch(
+            "https://api.imgbb.com/1/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          const data = await response.json();
+          console.log(
+            "Image uploaded successfully:",
+            data?.data?.url
+          );
+          updatedBookInfo.image = data?.data?.url;
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      }
+
+      await UploadImageAndSave();
       formInputs.forEach((input) => {
         const fieldName = input.getAttribute("name");
         const fieldValue = input.value;
         updatedBookInfo[fieldName] = fieldValue;
       });
 
-      let image = getElementById('image').files[0];
-      let data = new FormData();
-      data.append('image', image);
+      const bookIndex = this.validationForm.dataset.bookIndex;
+      const savedBooks = storage.get("savedBooks");
 
-      fetch('https://api.imgbb.com/1/upload?key=82001a9d3dcf15421a28667e049d69fd', {
-        method: 'POST',
-        body: data
-      }).then(
-        response => {
-          return response.json();          
-        }
-      ).then(
-        data => {
-          let url = data.data.url;
-          updatedBookInfo['image'] = url;
+      if (
+        bookIndex !== undefined &&
+        savedBooks &&
+        savedBooks[bookIndex]
+      ) {
+        savedBooks[bookIndex] = {
+          ...savedBooks[bookIndex],
+          ...updatedBookInfo,
+        };
+        storage.save("savedBooks", savedBooks);
+      } else {
+        const existingData = savedBooks || [];
+        existingData.push(updatedBookInfo);
+        storage.save("savedBooks", existingData);
+      }
 
-          const bookIndex = this.validationForm.dataset.bookIndex;
-          const savedBooks = storage.get("savedBooks");
-
-          if (bookIndex !== undefined && savedBooks && savedBooks[bookIndex]) {
-            savedBooks[bookIndex] = {
-              ...savedBooks[bookIndex],
-              ...updatedBookInfo,
-            };
-            storage.save("savedBooks", savedBooks);
-          } else {
-            const existingData = savedBooks || [];
-            existingData.push(updatedBookInfo);
-            storage.save("savedBooks", existingData);
-          }
-
-          this.hideValidationForm();
-          this.validationForm.reset();
-          this.showMention("created", "Book created successfully!");
-          this.showBooks();
-        }
-      );
-      
+      this.hideValidationForm();
+      this.validationForm.reset();
+      this.showMention("created", "Book created successfully!");
+      this.showBooks();
     }
   };
 
@@ -143,24 +173,30 @@ class BookView {
 
     let bookListHtml = "";
     booksToShow.forEach((bookInfo, index) => {
+      console.log(bookInfo);
       bookListHtml += `
         <li class="book" data-book-index="${startIndex + index}">
           <h3 class="book-title">${bookInfo.bookname}</h3>
           <p class="book-author">${bookInfo.author}</p>
           <p class="book-date">${bookInfo.date}</p>
+          <div class="cus-wp-preview-and-nav">
+          <div>
           <p class="book-description">${bookInfo.description}</p>
           <a href="../../detail.html" class="book-detail-link">
-          <img src="${imgDetail}" alt="detail" class="detail" data-book-index="${startIndex + index
-        }">
-        </a>
+            <img src="${imgDetail}" alt="" class="detail" data-book-index="${startIndex + index
+        }" />
+          </a>
           <img src="${imgDelete}" alt="delete" class="delete" data-book-index="${startIndex + index
         }">
+          </div>
+          <img src="${bookInfo.image
+        }" alt="detail" class="render-image">
+            </div>
         </li>
       `;
     });
 
     this.bookListElement.innerHTML = bookListHtml;
-
     const deleteButtons = document.querySelectorAll(".delete");
     deleteButtons.forEach((deleteButton) => {
       deleteButton.addEventListener("click", this.handleDeleteBook);
@@ -321,9 +357,9 @@ class BookView {
       const sortedBooks = savedBooks.slice().sort((a, b) => {
         const bookNameA = a.bookname.toLowerCase();
         const bookNameB = b.bookname.toLowerCase();
-        return this.sortOrder === "ascending" ?
-          bookNameA.localeCompare(bookNameB) :
-          bookNameB.localeCompare(bookNameA);
+        return this.sortOrder === "ascending"
+          ? bookNameA.localeCompare(bookNameB)
+          : bookNameB.localeCompare(bookNameA);
       });
 
       this.displayAllBooks(sortedBooks);
