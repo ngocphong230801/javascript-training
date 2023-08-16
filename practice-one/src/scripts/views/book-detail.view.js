@@ -1,7 +1,7 @@
 import BookModel from "../models/book.model";
 import { querySelector, getElementById, getQueryParameter } from "../helpers";
 import { initializePage } from "../helpers/init-detail";
-import { toggleVisibility } from "../helpers/element-untils";
+import { toggleDisplay } from "../helpers/element-untils";
 
 class BookDetailPage {
     constructor() {
@@ -52,8 +52,8 @@ class BookDetailPage {
             getElementById("description").value = bookInfo.description;
             getElementById("preview-link-image").innerText = bookInfo.image;
 
-            toggleVisibility("validation-form", "block");
-            toggleVisibility("overlay", "block");
+            toggleDisplay("validation-form", true);
+            toggleDisplay("overlay", true);
         };
 
         editButton.addEventListener("click", showFormAndOverlay);
@@ -64,8 +64,8 @@ class BookDetailPage {
         const overlay = getElementById("overlay");
 
         const hideFormAndOverlay = () => {
-            toggleVisibility("validation-form", "none");
-            toggleVisibility("overlay", "none");
+            toggleDisplay("validation-form", false);
+            toggleDisplay("overlay", false);
         };
 
         cancelButton.addEventListener("click", hideFormAndOverlay);
@@ -88,8 +88,8 @@ class BookDetailPage {
 
             this.displayBookInfo(updatedBookInfo);
 
-            toggleVisibility("validation-form", "none");
-            toggleVisibility("overlay", "none");
+            toggleDisplay("validation-form", "none");
+            toggleDisplay("overlay", "none");
         });
     }
 
