@@ -102,8 +102,28 @@ class BookView {
                 }
             }
     
-            if (!isEditing) {
+            if (isEditing) {
+                const bookIndex = this.validationForm.dataset.bookIndex;
+                const savedBooks = storage.get("savedBooks");
+    
+                if (savedBooks && savedBooks[bookIndex]) {
+                    if (InputImageUpload.files[0]) {
+                        await UploadImageAndSave();
+                        savedBooks[bookIndex].image = updatedBookInfo.image;
+                    }
+    
+                    savedBooks[bookIndex] = {
+                        ...savedBooks[bookIndex],
+                        ...updatedBookInfo,
+                    };
+                    storage.save("savedBooks", savedBooks);
+                }
+            } else {
                 await UploadImageAndSave();
+                const existingData = savedBooks || [];
+                updatedBookInfo.image = updatedBookInfo.image;
+                existingData.push(updatedBookInfo);
+                storage.save("savedBooks", existingData);
             }
     
             const ElementPreview = this.validationForm.querySelector(".preview-image");
@@ -113,28 +133,6 @@ class BookView {
                 const fieldValue = input.value;
                 updatedBookInfo[fieldName] = fieldValue;
             });
-    
-            const bookIndex = this.validationForm.dataset.bookIndex;
-            const savedBooks = storage.get("savedBooks");
-    
-            if (bookIndex !== undefined && savedBooks && savedBooks[bookIndex]) {
-                if (updatedBookInfo.image) {
-                    savedBooks[bookIndex].image = updatedBookInfo.image;
-                }
-                
-                savedBooks[bookIndex] = {
-                    ...savedBooks[bookIndex],
-                    ...updatedBookInfo,
-                };
-                storage.save("savedBooks", savedBooks);
-            } else {
-                const existingData = savedBooks || [];
-                if (updatedBookInfo.image) {
-                    updatedBookInfo.image = updatedBookInfo.image;
-                }
-                existingData.push(updatedBookInfo);
-                storage.save("savedBooks", existingData);
-            }
     
             this.hideValidationForm();
             this.validationForm.reset();
@@ -147,8 +145,6 @@ class BookView {
         }
     };
     
-    
-
     setDisplay = (displayValue) => {
         this.validationForm.style.display = displayValue;
         this.overlay.style.display = displayValue;
