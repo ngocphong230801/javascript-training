@@ -68,26 +68,27 @@ class BookView {
 
     handleSaveButtonClick = async (event) => {
         event.preventDefault();
+    
         if (validateForm(this.validationForm)) {
             const formInputs =
                 this.validationForm.querySelectorAll(".form-input");
             const updatedBookInfo = {};
-
+    
             const InputImageUpload =
                 document.querySelector("#input-select-file");
-
+    
             if (!InputImageUpload.files[0]) {
                 alert("Please post image book");
                 return;
             }
-
+    
             const API_KEY = "82001a9d3dcf15421a28667e049d69fd";
-
+    
             async function UploadImageAndSave() {
                 const formData = new FormData();
                 formData.append("key", API_KEY);
                 formData.append("image", InputImageUpload.files[0]);
-
+    
                 try {
                     const response = await fetch(
                         "https://api.imgbb.com/1/upload",
@@ -96,7 +97,7 @@ class BookView {
                             body: formData,
                         }
                     );
-
+    
                     const data = await response.json();
                     console.log(
                         "Image uploaded successfully:",
@@ -107,7 +108,7 @@ class BookView {
                     console.error("Error uploading image:", error);
                 }
             }
-
+    
             await UploadImageAndSave();
             const ElementPreview = document.querySelector(".preview-image");
             ElementPreview.innerHTML = ``;
@@ -116,10 +117,10 @@ class BookView {
                 const fieldValue = input.value;
                 updatedBookInfo[fieldName] = fieldValue;
             });
-
+    
             const bookIndex = this.validationForm.dataset.bookIndex;
             const savedBooks = storage.get("savedBooks");
-
+    
             if (
                 bookIndex !== undefined &&
                 savedBooks &&
@@ -132,10 +133,10 @@ class BookView {
                 storage.save("savedBooks", savedBooks);
             } else {
                 const existingData = savedBooks || [];
-                existingData.push(updatedBookInfo);
+                existingData.unshift(updatedBookInfo);
                 storage.save("savedBooks", existingData);
             }
-
+    
             this.hideValidationForm();
             this.validationForm.reset();
             this.showMention("created", "Book created successfully!");
@@ -157,8 +158,24 @@ class BookView {
 
     showBooks = () => {
         const savedBooks = storage.get("savedBooks");
+        
         if (savedBooks) {
             this.displayAllBooks(savedBooks);
+    
+            const itemsPerPage = 6;
+            const totalBooks = savedBooks.length;
+            const totalPages = Math.ceil(totalBooks / itemsPerPage);
+    
+            const paginationLinks = document.querySelectorAll(".pagination");
+            paginationLinks.forEach((link, index) => {
+                if (totalPages > 1) {
+                    link.style.display = index < totalPages ? "block" : "none";
+                    link.dataset.page = index + 1;
+                    link.addEventListener("click", this.handlePaginationClick);
+                } else {
+                    link.style.display = "none";
+                }
+            });
         }
     };
 
