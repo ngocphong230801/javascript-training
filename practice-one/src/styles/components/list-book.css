@@ -3,6 +3,7 @@
     grid-template-columns: repeat(3,1fr);
     gap: 22px;
     list-style: none;
+    padding: 0;
 }
 
 .list-books .book {

@@ -15,6 +15,11 @@
     border-radius: 20px;
     padding: 17px 82px;
     background-color: var(--quinary-color);
+    border: none;
+}
+
+.card-container .filter:focus {
+    outline: none;
 }
 
 .card-container .search {
@@ -33,6 +38,14 @@
     font-weight: var(--font-weight-bold);
 }
 
+.card-container .ascending:focus {
+    color: var(--secondary-color);
+}
+
+.card-container .descending:focus {
+    color: var(--secondary-color);
+}
+
 .card-container .descending {
     position: absolute;
     left: 500px;
@@ -44,24 +57,26 @@
 .card-container .create {
     padding: 11px 47px 10px 47px;
     align-items: center;
+    cursor: pointer;
 }
 
 .card-container .page-navigation {
     display: flex;
-    gap: 10px;
-    margin-top: 60px;
-    margin-left: 40%;
+    gap: 16px;
+    position: fixed;
+    top: 784px;
+    left: 874px;
 }
 
 .card-container .pagination {
     border: 3px solid var(--secondary-color);
     background-color: var(--secondary-color);
-    padding: 0px 10px;
+    padding: 10px 16px;
     border-radius: 5px;
     font-size: var(--font-size-text-base);
 }
 
-.card-container .pagination:hover {
+.card-container .pagination:focus {
     background-color: var(--tertiary-color);
     color: var(--primary-color);
     border: solid var(--tertiary-color);
@@ -98,6 +113,7 @@
     height: 56px;
     align-items: center;
     gap: 15px;
+    cursor: pointer;
 }
 
 .card-container .delete-detail {
