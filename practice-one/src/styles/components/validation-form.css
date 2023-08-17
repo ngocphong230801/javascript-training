@@ -31,6 +31,7 @@
     background-color: var(--quinary-color);
     padding: 16px 5px;
     border: none;
+    text-indent: 10px;
 }
 
 .validation-form .form-input:focus {
@@ -65,6 +66,18 @@
 .validation-form .btn-form {
     width: 197px;
     height: 56px;
+}
+
+.validation-form .cancel {
+    position: absolute;
+    bottom: 34px;
+    right: 236px;
+}
+
+.validation-form .save {
+    position: absolute;
+    bottom: 34px;
+    right: 20px;
 }
 
 .validation-form .btn-form:hover {

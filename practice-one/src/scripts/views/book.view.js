@@ -5,6 +5,7 @@ import imgDelete from "../../assets/icon/delete.png";
 import imgDetail from "../../assets/icon/detail.jpg";
 import imgClose from "../../assets/icon/close.png";
 
+
 class BookView {
     constructor() {
         this.bookListElement = getElementById("list-books");
@@ -43,7 +44,7 @@ class BookView {
         this.setDisplay("block");
         this.clearErrorMessages();
         this.validationForm.reset();
-        delete this.validationForm.dataset.bookIndex;
+        delete this.validationForm.dataset.bookIndex;    
     };
 
     hideValidationForm = () => {
@@ -73,8 +74,7 @@ class BookView {
                 this.validationForm.querySelectorAll(".form-input");
             const updatedBookInfo = {};
 
-            const InputImageUpload =
-                document.querySelector("#input-select-file");
+            const InputImageUpload = querySelector("#input-select-file");
 
             if (!InputImageUpload.files[0]) {
                 alert("Please post image book");
@@ -98,13 +98,10 @@ class BookView {
                     );
 
                     const data = await response.json();
-                    console.log(
-                        "Image uploaded successfully:",
-                        data?.data?.url
-                    );
+
                     updatedBookInfo.image = data?.data?.url;
                 } catch (error) {
-                    console.error("Error uploading image:", error);
+                    alert("Error uploading image:", error);
                 }
             }
 

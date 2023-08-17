@@ -36,13 +36,17 @@ class BookModel {
     }
   };
 
-  deleteBookByInfo = (bookId) => {
+  deleteBookByInfo(bookId) {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
-      const filteredBooks = savedBooks.filter((book) => book.id !== bookId);
-      storage.save("savedBooks", filteredBooks);
+        const bookIndex = savedBooks.findIndex((book) => book.id === bookId);
+        if (bookIndex !== -1) {
+            savedBooks.splice(bookIndex, 1);
+            storage.save("savedBooks", savedBooks);
+        }
     }
   };
+
   updateBookByInfo = (bookId, updatedBookInfo) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
