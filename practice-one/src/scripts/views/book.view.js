@@ -44,6 +44,12 @@ class BookView {
         this.clearErrorMessages();
         this.validationForm.reset();
         delete this.validationForm.dataset.bookIndex;
+    
+        const ElementPreview = document.querySelector("#preview-image");
+        ElementPreview.innerHTML = "";
+    
+        const InputImageUpload = document.querySelector("#input-select-file");
+        InputImageUpload.value = "";
     };
 
     hideValidationForm = () => {
@@ -70,48 +76,51 @@ class BookView {
         event.preventDefault();
     
         if (validateForm(this.validationForm)) {
-            const formInputs =
-                this.validationForm.querySelectorAll(".form-input");
+            const formInputs = this.validationForm.querySelectorAll(".form-input");
             const updatedBookInfo = {};
     
-            const InputImageUpload =
-                document.querySelector("#input-select-file");
+            const InputImageUpload = document.querySelector("#input-select-file");
     
-            if (!InputImageUpload.files[0]) {
-                alert("Please post image book");
+            const existingImage = this.validationForm.dataset.bookIndex ?
+                storage.get("savedBooks")[this.validationForm.dataset.bookIndex].image :
+                null;
+
+            if (existingImage && !InputImageUpload.files[0]) {
+                updatedBookInfo.image = existingImage;
+            } else if (!InputImageUpload.files[0]) {
+                alert("Please upload book image");
                 return;
-            }
+            } else {
+                const API_KEY = "82001a9d3dcf15421a28667e049d69fd";
     
-            const API_KEY = "82001a9d3dcf15421a28667e049d69fd";
+                async function UploadImageAndSave() {
+                    const formData = new FormData();
+                    formData.append("key", API_KEY);
+                    formData.append("image", InputImageUpload.files[0]);
     
-            async function UploadImageAndSave() {
-                const formData = new FormData();
-                formData.append("key", API_KEY);
-                formData.append("image", InputImageUpload.files[0]);
+                    try {
+                        const response = await fetch(
+                            "https://api.imgbb.com/1/upload",
+                            {
+                                method: "POST",
+                                body: formData,
+                            }
+                        );
     
-                try {
-                    const response = await fetch(
-                        "https://api.imgbb.com/1/upload",
-                        {
-                            method: "POST",
-                            body: formData,
-                        }
-                    );
-    
-                    const data = await response.json();
-                    console.log(
-                        "Image uploaded successfully:",
-                        data?.data?.url
-                    );
-                    updatedBookInfo.image = data?.data?.url;
-                } catch (error) {
-                    console.error("Error uploading image:", error);
+                        const data = await response.json();
+                        console.log(
+                            "Image uploaded successfully:",
+                            data?.data?.url
+                        );
+                        updatedBookInfo.image = data?.data?.url;
+                    } catch (error) {
+                        console.error("Error uploading image:", error);
+                    }
                 }
+    
+                await UploadImageAndSave();
             }
     
-            await UploadImageAndSave();
-            const ElementPreview = document.querySelector(".preview-image");
-            ElementPreview.innerHTML = ``;
             formInputs.forEach((input) => {
                 const fieldName = input.getAttribute("name");
                 const fieldValue = input.value;
@@ -143,6 +152,7 @@ class BookView {
             this.showBooks();
         }
     };
+    
 
     setDisplay = (displayValue) => {
         this.validationForm.style.display = displayValue;
@@ -251,9 +261,18 @@ class BookView {
         const bookIndex = event.currentTarget.dataset.bookIndex;
         this.validationForm.dataset.bookIndex = bookIndex;
         const savedBooks = storage.get("savedBooks");
-
+    
         if (savedBooks && savedBooks[bookIndex]) {
             this.showBookOnForm(savedBooks[bookIndex]);
+            const bookImage = savedBooks[bookIndex].image;
+    
+            if (bookImage) {
+                const previewImage = document.querySelector("#preview-image");
+                previewImage.innerHTML = `<img src="${bookImage}" alt="" class ="preview-image-inner" />`;
+            } else {
+                const previewImage = document.querySelector("#preview-image");
+                previewImage.innerHTML = "";
+            }
         }
     };
 
