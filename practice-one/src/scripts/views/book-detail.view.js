@@ -74,22 +74,23 @@ class BookDetailPage {
 
     setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
-
+    
         saveButton.addEventListener("click", () => {
             const updatedBookInfo = {
                 bookname: getElementById("bookname").value,
                 author: getElementById("author").value,
                 date: getElementById("date").value,
                 description: getElementById("description").value,
+                image: bookInfo.image,
             };
-
+    
             const bookModel = new BookModel();
             bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
-
+    
             this.displayBookInfo(updatedBookInfo);
-
-            toggleDisplay("validation-form", "none");
-            toggleDisplay("overlay", "none");
+    
+            toggleDisplay("validation-form", false);
+            toggleDisplay("overlay", false);
         });
     }
 
