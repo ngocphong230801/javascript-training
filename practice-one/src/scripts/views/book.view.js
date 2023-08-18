@@ -12,6 +12,7 @@ class BookView {
         this.overlay = getElementById("overlay");
         this.confirmationBox = getElementById("confirmation-box");
         this.sortOrder = "ascending";
+        this.isFirstBookCreated = false;
 
         const InputImageUpload = document.querySelector("#input-select-file");
         const ElementPreview = document.querySelector("#preview-image");
@@ -28,15 +29,24 @@ class BookView {
         querySelector(".descending").addEventListener("click",this.handleDescendingClick);
         this.overlay.addEventListener("click",this.hideValidationForm.bind(this));
 
-        this.init();
+        document.addEventListener("DOMContentLoaded", () => {
+            this.init();
+        });
     }
 
     init = () => {
         this.hideValidationForm();
-        this.showBooks();
-        this.setupSearch();
-        querySelector(".btn-confirm").addEventListener("click",this.handleConfirmDelete);
-        querySelector(".btn-cancel").addEventListener("click",this.handleCancelDelete);
+        const savedBooks = storage.get("savedBooks");
+    
+        if (!savedBooks || savedBooks.length === 0) {
+            this.dataDefault();
+            this.noBooksMessage();
+        } else {
+            this.showBooks();
+            this.setupSearch();
+            querySelector(".btn-confirm").addEventListener("click", this.handleConfirmDelete);
+            querySelector(".btn-cancel").addEventListener("click", this.handleCancelDelete);
+        }
     };
 
     showValidationForm = () => {
@@ -144,6 +154,13 @@ class BookView {
                 const existingData = savedBooks || [];
                 existingData.unshift(updatedBookInfo);
                 storage.save("savedBooks", existingData);
+            }
+
+            if (!this.isFirstBookCreated) {
+                this.isFirstBookCreated = true;
+                window.location.reload();
+            } else {
+                this.showBooks();
             }
     
             this.hideValidationForm();
@@ -310,6 +327,13 @@ class BookView {
             storage.save("savedBooks", savedBooks);
             this.showBooks();
         }
+        
+        if (savedBooks.length === 0) {
+            window.location.reload();
+        } else {
+            this.showBooks();
+        }
+
         this.confirmationBox.style.display = "none";
         this.overlay.style.display = "none";
         this.showMention("deleted", "Book deleted successfully!");
@@ -396,6 +420,34 @@ class BookView {
 
             this.displayAllBooks(sortedBooks);
         }
+    };
+
+    dataDefault = () => {
+        const searchInput = querySelector(".filter-input");
+        searchInput.style.display = "none";
+    
+        const ascendingButton = querySelector(".ascending");
+        ascendingButton.style.display = "none";
+    
+        const descendingButton = querySelector(".descending");
+        descendingButton.style.display = "none";
+    
+        const paginationLinks = document.querySelectorAll(".page-navigation");
+        paginationLinks.forEach((link) => {
+            link.style.display = "none";
+        });
+        
+        this.showNoBooksMessage()
+    };
+
+    showNoBooksMessage = () => {
+        const noBooksMessage = getElementById("no-books-message");
+        noBooksMessage.style.display = "block";
+    };
+
+    hideNoBooksMessage = () => {
+        const noBooksMessage = getElementById("no-books-message");
+        noBooksMessage.style.display = "none";
     };
 }
 

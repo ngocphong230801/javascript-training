@@ -22,8 +22,10 @@
         </header>
         <div class="card-container">
             <div class="header-card-container">
-                <input type="text" placeholder="Search something..." class="filter" id="filter" />
-                <img src="./assets/icon/search.png" alt="search" class="search" />
+                <div class="filter-input">
+                    <input type="text" placeholder="Search something..." class="filter" id="filter" />
+                    <img src="./assets/icon/search.png" alt="search" class="search" />
+                </div>
                 <a href="#" class="ascending">Ascending</a>
                 <a href="#" class="descending">Descending</a>
                 <button type="button" class="btn create" id="create">
@@ -35,6 +37,10 @@
                 <a href="#" class="pagination">1</a>
                 <a href="#" class="pagination">2</a>
                 <a href="#" class="pagination">3</a>
+            </div>
+            <div id="no-books-message" class="no-books-message">
+                <h2 class="no-books-heading">No books have been created yet.</h2>
+                <p class="no-books-paragraph">Add a new book of yours.</p>
             </div>
         </div>
         <form class="validation-form" id="validation-form" onsubmit="return false;">
