@@ -43,6 +43,14 @@ class BookModel {
       storage.save("savedBooks", filteredBooks);
     }
   };
+
+  saveBookId = (bookId) => {
+    const bookIds = storage.get("bookIds") || [];
+    if (!bookIds.includes(bookId)) {
+        bookIds.push(bookId);
+        storage.save("bookIds", bookIds);
+    }
+  };
   updateBookByInfo = (bookId, updatedBookInfo) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {

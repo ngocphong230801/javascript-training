@@ -37,7 +37,7 @@ class BookView {
     init = () => {
         this.hideValidationForm();
         const savedBooks = storage.get("savedBooks");
-    
+
         if (!savedBooks || savedBooks.length === 0) {
             this.dataDefault();
             this.noBooksMessage();
@@ -54,10 +54,10 @@ class BookView {
         this.clearErrorMessages();
         this.validationForm.reset();
         delete this.validationForm.dataset.bookIndex;
-    
+
         const ElementPreview = document.querySelector("#preview-image");
         ElementPreview.innerHTML = "";
-    
+
         const InputImageUpload = document.querySelector("#input-select-file");
         InputImageUpload.value = "";
     };
@@ -84,13 +84,13 @@ class BookView {
 
     handleSaveButtonClick = async (event) => {
         event.preventDefault();
-    
+
         if (validateForm(this.validationForm)) {
             const formInputs = this.validationForm.querySelectorAll(".form-input");
             const updatedBookInfo = {};
-    
+
             const InputImageUpload = document.querySelector("#input-select-file");
-    
+
             const existingImage = this.validationForm.dataset.bookIndex ?
                 storage.get("savedBooks")[this.validationForm.dataset.bookIndex].image :
                 null;
@@ -102,12 +102,12 @@ class BookView {
                 return;
             } else {
                 const API_KEY = "82001a9d3dcf15421a28667e049d69fd";
-    
+
                 async function UploadImageAndSave() {
                     const formData = new FormData();
                     formData.append("key", API_KEY);
                     formData.append("image", InputImageUpload.files[0]);
-    
+
                     try {
                         const response = await fetch(
                             "https://api.imgbb.com/1/upload",
@@ -116,7 +116,7 @@ class BookView {
                                 body: formData,
                             }
                         );
-    
+
                         const data = await response.json();
                         console.log(
                             "Image uploaded successfully:",
@@ -127,33 +127,34 @@ class BookView {
                         console.error("Error uploading image:", error);
                     }
                 }
-    
+
                 await UploadImageAndSave();
             }
-    
+
             formInputs.forEach((input) => {
                 const fieldName = input.getAttribute("name");
                 const fieldValue = input.value;
                 updatedBookInfo[fieldName] = fieldValue;
             });
-    
+
             const bookIndex = this.validationForm.dataset.bookIndex;
             const savedBooks = storage.get("savedBooks");
-    
-            if (
-                bookIndex !== undefined &&
-                savedBooks &&
-                savedBooks[bookIndex]
-            ) {
-                savedBooks[bookIndex] = {
-                    ...savedBooks[bookIndex],
-                    ...updatedBookInfo,
-                };
+
+            if (bookIndex !== undefined && savedBooks && savedBooks[bookIndex]) {
+                const existingBook = savedBooks[bookIndex];
+                existingBook.image = updatedBookInfo.image;
+                existingBook.bookname = updatedBookInfo.bookname;
+                existingBook.author = updatedBookInfo.author;
+                existingBook.date = updatedBookInfo.date;
+                existingBook.description = updatedBookInfo.description;
                 storage.save("savedBooks", savedBooks);
             } else {
-                const existingData = savedBooks || [];
-                existingData.unshift(updatedBookInfo);
-                storage.save("savedBooks", existingData);
+                const newBook = {
+                    id: `book-${Date.now()}`,
+                    ...updatedBookInfo,
+                };
+                savedBooks.unshift(newBook);
+                storage.save("savedBooks", savedBooks);
             }
 
             if (!this.isFirstBookCreated) {
@@ -162,14 +163,13 @@ class BookView {
             } else {
                 this.showBooks();
             }
-    
+
             this.hideValidationForm();
             this.validationForm.reset();
             this.showMention("created", "Book created successfully!");
-            this.showBooks();
         }
     };
-    
+
 
     setDisplay = (displayValue) => {
         this.validationForm.style.display = displayValue;
@@ -185,14 +185,14 @@ class BookView {
 
     showBooks = () => {
         const savedBooks = storage.get("savedBooks");
-        
+
         if (savedBooks) {
             this.displayAllBooks(savedBooks);
-    
+
             const itemsPerPage = 6;
             const totalBooks = savedBooks.length;
             const totalPages = Math.ceil(totalBooks / itemsPerPage);
-    
+
             const paginationLinks = document.querySelectorAll(".pagination");
             paginationLinks.forEach((link, index) => {
                 if (totalPages > 1) {
@@ -217,8 +217,9 @@ class BookView {
 
         let bookListHtml = "";
         booksToShow.forEach((bookInfo, index) => {
+            const bookId = `book-${startIndex + index}`
             bookListHtml += `
-        <li class="book" data-book-index="${startIndex + index}">
+        <li id="${bookId}" class="book" data-book-index="${startIndex + index}">
           <h3 class="book-title">${bookInfo.bookname}</h3>
           <p class="book-author">${bookInfo.author}</p>
           <p class="book-date">${bookInfo.date}</p>
@@ -278,11 +279,11 @@ class BookView {
         const bookIndex = event.currentTarget.dataset.bookIndex;
         this.validationForm.dataset.bookIndex = bookIndex;
         const savedBooks = storage.get("savedBooks");
-    
+
         if (savedBooks && savedBooks[bookIndex]) {
             this.showBookOnForm(savedBooks[bookIndex]);
             const bookImage = savedBooks[bookIndex].image;
-    
+
             if (bookImage) {
                 const previewImage = document.querySelector("#preview-image");
                 previewImage.innerHTML = `<img src="${bookImage}" alt="" class ="preview-image-inner" />`;
@@ -327,7 +328,7 @@ class BookView {
             storage.save("savedBooks", savedBooks);
             this.showBooks();
         }
-        
+
         if (savedBooks.length === 0) {
             window.location.reload();
         } else {
@@ -425,18 +426,18 @@ class BookView {
     dataDefault = () => {
         const searchInput = querySelector(".filter-input");
         searchInput.style.display = "none";
-    
+
         const ascendingButton = querySelector(".ascending");
         ascendingButton.style.display = "none";
-    
+
         const descendingButton = querySelector(".descending");
         descendingButton.style.display = "none";
-    
+
         const paginationLinks = document.querySelectorAll(".page-navigation");
         paginationLinks.forEach((link) => {
             link.style.display = "none";
         });
-        
+
         this.showNoBooksMessage()
     };
 

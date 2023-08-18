@@ -81,6 +81,7 @@ class BookDetailPage {
                 author: getElementById("author").value,
                 date: getElementById("date").value,
                 description: getElementById("description").value,
+                image: bookInfo.image,
             };
 
             const bookModel = new BookModel();
@@ -88,8 +89,8 @@ class BookDetailPage {
 
             this.displayBookInfo(updatedBookInfo);
 
-            toggleDisplay("validation-form", "none");
-            toggleDisplay("overlay", "none");
+            toggleDisplay("validation-form", false);
+            toggleDisplay("overlay", false);
         });
     }
 
