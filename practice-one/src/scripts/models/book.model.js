@@ -1,6 +1,9 @@
+// Import the localStorage service.
 import storage from '../services/localStorage';
 
+// Class definition for the BookModel.
 class BookModel {
+  // Method to retrieve saved books from localStorage.
   getSavedBooks = () => {
     try {
       const savedBooks = storage.get("savedBooks");
@@ -11,6 +14,7 @@ class BookModel {
     }
   };
 
+  // Method to delete a book from saved books by index.
   deleteBook = (bookIndex) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks && savedBooks[bookIndex]) {
@@ -19,10 +23,12 @@ class BookModel {
     }
   };
 
+  // Method to set the current page in localStorage.
   setCurrentPage = (currentPage) => {
     storage.save("currentPage", currentPage);
   };
 
+  // Method to get filtered books based on a search term.
   getFilteredBooks = (searchTerm) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
@@ -36,6 +42,7 @@ class BookModel {
     }
   };
 
+  // Method to delete a book from saved books by book ID.
   deleteBookByInfo = (bookId) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
@@ -44,6 +51,7 @@ class BookModel {
     }
   };
 
+  // Method to save a book ID to localStorage.
   saveBookId = (bookId) => {
     const bookIds = storage.get("bookIds") || [];
     if (!bookIds.includes(bookId)) {
@@ -51,6 +59,8 @@ class BookModel {
         storage.save("bookIds", bookIds);
     }
   };
+
+  // Method to update a book's information by book ID.
   updateBookByInfo = (bookId, updatedBookInfo) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
@@ -62,6 +72,7 @@ class BookModel {
     }
   };
 
+  // Method to get a book from saved books by book ID.
   getBookById = (bookId) => {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
@@ -72,4 +83,5 @@ class BookModel {
   };
 }
 
+// Export the BookModel class as default.
 export default BookModel;

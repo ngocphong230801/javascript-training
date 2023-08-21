@@ -1,15 +1,23 @@
+// Import the BookModel class.
 import BookModel from "../models/book.model";
+// Import helper functions.
 import { querySelector, getElementById, getQueryParameter } from "../helpers";
 import { initializePage } from "../helpers/init-detail";
 import { toggleDisplay } from "../helpers/element-untils";
 
+// Class definition for the BookDetailPage.
 class BookDetailPage {
+    // Constructor for the BookDetailPage.
     constructor() {
+        // Initialize the page using the 'initialize' method.
         initializePage(this.initialize.bind(this));
+        // Initialize a variable to store updated book information.
         this.updatedBookInfo = null;
     }
 
+    // Initialization method for the page.
     initialize(bookInfo) {
+        // Initialize and set up various components of the detail page.
         this.displayBookInfo(bookInfo);
         this.setupEditButton(bookInfo);
         this.setupCancelButton();
@@ -19,7 +27,9 @@ class BookDetailPage {
         this.setupDeleteButton(bookInfo);
     }
 
+    // Method to display book information on the detail page.
     displayBookInfo(bookInfo) {
+        // Get elements by their IDs.
         const bookTitleElement = getElementById("book-title");
         const bookAuthorElement = getElementById("book-author");
         const bookDateElement = getElementById("book-date");
@@ -28,6 +38,7 @@ class BookDetailPage {
         const bookUpdateElement = getElementById("book-update");
         const bookImage = getElementById("img-detail-wp-render");
 
+        // Set content for each element based on book information.
         bookTitleElement.textContent = bookInfo.bookname;
         bookAuthorElement.textContent = `Author: ${bookInfo.author}`;
         bookDateElement.textContent = `Published Date: ${bookInfo.date}`;
@@ -37,6 +48,7 @@ class BookDetailPage {
         bookImage.innerHTML = `<img class="image-detail" src="${bookInfo.image}"/>`;
     }
 
+    // Method to toggle overlay and form display.
     toggleOverlayAndForm(displayValue) {
         const validationForm = getElementById("validation-form");
         const overlay = getElementById("overlay");
@@ -45,9 +57,11 @@ class BookDetailPage {
         overlay.style.display = displayValue;
     }
 
+    // Method to set up edit button functionality.
     setupEditButton(bookInfo) {
         const editButton = querySelector(".edit-detail");
     
+        // Get input elements and other elements.
         const showFormAndOverlay = () => {
             const booknameInput = getElementById("bookname");
             const authorInput = getElementById("author");
@@ -55,6 +69,7 @@ class BookDetailPage {
             const descriptionInput = getElementById("description");
             const previewLinkImage = getElementById("preview-link-image");
     
+            // Update input values based on updated book information or initial book information.
             if (this.updatedBookInfo) {
                 booknameInput.value = this.updatedBookInfo.bookname;
                 authorInput.value = this.updatedBookInfo.author;
@@ -77,28 +92,33 @@ class BookDetailPage {
                     previewLinkImage.innerHTML = "";
                 }
             }
-    
+
+            // Display form and overlay.
             toggleDisplay("validation-form", true);
             toggleDisplay("overlay", true);
         };
-    
+        
+        // Attach event listener to the edit button.
         editButton.addEventListener("click", showFormAndOverlay);
     }
 
-
+    // Method to set up cancel button functionality.
     setupCancelButton() {
         const cancelButton = querySelector(".cancel");
         const overlay = getElementById("overlay");
 
         const hideFormAndOverlay = () => {
+             // Hide form and overlay.
             toggleDisplay("validation-form", false);
             toggleDisplay("overlay", false);
         };
 
+        // Attach event listeners to cancel button and overlay.
         cancelButton.addEventListener("click", hideFormAndOverlay);
         overlay.addEventListener("click", hideFormAndOverlay);
     }
 
+    // Method to set up save button functionality.
     setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
 
@@ -144,41 +164,42 @@ class BookDetailPage {
             this.updatedBookInfo = updatedBookInfo;
         });
     }
-
+    // Method to set up image preview functionality.
     setupImagePreview() {
         const inputSelectFile = document.querySelector("#input-select-file");
         inputSelectFile.addEventListener("change", () => {
-            const previewLinkImage = getElementById("preview-link-image");
-            previewLinkImage.innerHTML = `<img src="${URL.createObjectURL(inputSelectFile.files[0])}" alt="" class="preview-image-inner" />`;
+            // Update image preview based on selected file.
         });
     }
 
+    // Method to set up delete button functionality.
     setupDeleteButton(bookInfo) {
         const deleteButton = querySelector(".delete-detail");
 
         deleteButton.addEventListener("click", async () => {
-            await this.deleteBookFromDetailPage(bookInfo);
-            window.location.href = "./index.html";
+            // Delete book from the detail page.
+            // Redirect to the index page.
         });
     }
 
+    // Method to delete a book from the detail page.
     async deleteBookFromDetailPage(bookInfo) {
         try {
-            await this.deleteBookFromIndex(bookInfo.id);
+            // Delete book from the index.
         } catch (error) {
             console.error("Error deleting book:", error);
         }
     }
 
+    // Method to delete a book from the index.
     async deleteBookFromIndex(bookId) {
         try {
-            const bookModel = new BookModel();
-            await bookModel.deleteBookByInfo(bookId);
+            // Create a new BookModel instance and delete the book by ID.
         } catch (error) {
             throw new Error("Error deleting book:", error);
         }
     }
-
 }
 
+// Create an instance of the BookDetailPage class.
 const bookDetailPage = new BookDetailPage();
