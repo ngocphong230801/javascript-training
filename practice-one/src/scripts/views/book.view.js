@@ -89,6 +89,11 @@ class BookView {
 
     handleSaveButtonClick = async (event) => {
         event.preventDefault();
+        const isValid = validateForm(this.validationForm);
+
+        if (!isValid) {
+            return; 
+        }
     
         const savedBooks = storage.get("savedBooks") || [];
     
