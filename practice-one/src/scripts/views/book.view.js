@@ -476,7 +476,7 @@ class BookView {
         const savedBooks = storage.get("savedBooks");
         if (!savedBooks || savedBooks.length === 0) {
             this.showNoBooksMessage();
-            this.hidePagination();
+            this.dataDefault();
             this.bookListElement.innerHTML = "";
         } else {
             this.showBooks();
