@@ -20,7 +20,10 @@ class BookModel {
   }
 
   init = () => {
-    this.saveSampleBooks();
+    const savedBooks = storage.get("savedBooks");
+    if (savedBooks === null) {
+      storage.save("savedBooks", defaultBooks);
+    }
   };
 
   saveSampleBooks = () => {
@@ -30,15 +33,17 @@ class BookModel {
     }
   };
 
-  // Method to remove sample books
   removeAllBooks = () => {
-    storage.remove("savedBooks");
+    storage.remove("savedBooks"); // Remove the savedBooks entry entirely
   };
-
+  
   // Method to retrieve saved books from localStorage.
   getSavedBooks = () => {
     try {
       const savedBooks = storage.get("savedBooks");
+      if (savedBooks === null || savedBooks === undefined) {
+        return defaultBooks;
+      }
       return savedBooks || [];
     } catch (error) {
       console.error("Error while retrieving saved books:", error);
