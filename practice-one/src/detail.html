@@ -62,11 +62,14 @@
                 </div>
                 <div class="image">
                     <p class="label">Image</p>
-                    <p id="preview-link-image" style="display: none;"></p>
-                    <button class="btn upload">
-                        <img src="./assets/icon/upload.png" alt="upload" id="image" />
-                        Upload
-                    </button>
+                    <div style="display: flex; gap: 10px; align-items: center">
+                        <div style="position: relative">
+                            <input type="file" id="input-select-file" class="input-select-file"/>
+                            <button class="btn upload">
+                            <img src="./assets/icon/upload.png" alt="upload" id="image" />Upload</button>
+                            <p id="preview-link-image" class="preview-link-image"></p>
+                        </div>
+                    </div>
                     <span id="image-error" class="error"></span>
                 </div>
                 <div class="description">
