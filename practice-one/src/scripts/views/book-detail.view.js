@@ -1,5 +1,6 @@
 // Import the BookModel class.
 import BookModel from "../models/book.model";
+import { validateForm } from "../helpers/validator";
 // Import helper functions.
 import { querySelector, getElementById, getQueryParameter } from "../helpers";
 import { initializePage } from "../helpers/init-detail";
@@ -123,6 +124,11 @@ class BookDetailPage {
         const saveButton = querySelector(".save");
 
         saveButton.addEventListener("click", async () => {
+            const isValid = validateForm(getElementById("validation-form"));
+        
+            if (!isValid) {
+                return; 
+            }
             const updatedBookInfo = {
                 bookname: getElementById("bookname").value,
                 author: getElementById("author").value,
