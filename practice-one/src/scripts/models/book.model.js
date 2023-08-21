@@ -1,8 +1,40 @@
 // Import the localStorage service.
 import storage from '../services/localStorage';
 
+
+const defaultBooks = [
+  {
+    id: "book-1",
+    bookname: "HTML/CSS",
+    author: "Phong Nguyen",
+    date: "23/08/2023",
+    description: "Books to help programmers better understand HTML/CSS",
+    image: "https://i.ibb.co/1QtGN3P/book-3.jpg",
+  },
+]
+
 // Class definition for the BookModel.
 class BookModel {
+  constructor() {
+    this.init();
+  }
+
+  init = () => {
+    this.saveSampleBooks();
+  };
+
+  saveSampleBooks = () => {
+    const savedBooks = storage.get("savedBooks");
+    if (!savedBooks || savedBooks.length === 0) {
+      storage.save("savedBooks", defaultBooks);
+    }
+  };
+
+  // Method to remove sample books
+  removeAllBooks = () => {
+    storage.remove("savedBooks");
+  };
+
   // Method to retrieve saved books from localStorage.
   getSavedBooks = () => {
     try {
@@ -33,8 +65,8 @@ class BookModel {
     const savedBooks = storage.get("savedBooks");
     if (savedBooks) {
       const filteredBooks = savedBooks.filter((bookInfo) => {
-        const bookName = bookInfo.bookname.toLowerCase();
-        return bookName.includes(searchTerm.toLowerCase());
+        const bookname = bookInfo.bookname.toLowerCase();
+        return bookname.includes(searchTerm.toLowerCase());
       });
       return filteredBooks;
     } else {

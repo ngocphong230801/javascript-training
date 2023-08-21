@@ -322,26 +322,22 @@ class BookView {
     handleConfirmDelete = () => {
         const bookIndex = this.confirmationBox.dataset.bookIndex;
         const savedBooks = storage.get("savedBooks");
-    
+
         if (savedBooks && savedBooks[bookIndex]) {
             savedBooks.splice(bookIndex, 1);
             storage.save("savedBooks", savedBooks);
-            
+
             const currentPage = parseInt(storage.get("currentPage")) || 1;
-            
+
             if ((bookIndex >= (currentPage - 1) * 6) && (bookIndex < currentPage * 6)) {
                 if (currentPage > 1) {
                     storage.save("currentPage", currentPage - 1);
                 }
             }
-    
-            this.showBooks();
+
+            this.checkAndDisplayBooks();
         }
-    
-        if (savedBooks.length === 0) {
-            window.location.reload();
-        }
-    
+
         this.confirmationBox.style.display = "none";
         this.overlay.style.display = "none";
         this.showMention("deleted", "Book deleted successfully!");
@@ -474,7 +470,18 @@ class BookView {
                 paginationContainer.appendChild(link);
             }
         }
-    };    
+    };
+    
+    checkAndDisplayBooks = () => {
+        const savedBooks = storage.get("savedBooks");
+        if (!savedBooks || savedBooks.length === 0) {
+            this.showNoBooksMessage();
+            this.hidePagination();
+            this.bookListElement.innerHTML = "";
+        } else {
+            this.showBooks();
+        }
+    };
 }
 
 export default BookView;
