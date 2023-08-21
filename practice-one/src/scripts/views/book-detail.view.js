@@ -16,6 +16,7 @@ class BookDetailPage {
         this.setupEditButton(bookInfo);
         this.setupSaveButton(bookInfo);
         this.setupImagePreview();
+        this.setupDeleteButton(bookInfo);
     }
 
     displayBookInfo(bookInfo) {
@@ -155,16 +156,29 @@ class BookDetailPage {
     setupDeleteButton(bookInfo) {
         const deleteButton = querySelector(".delete-detail");
 
-        deleteButton.addEventListener("click", () => {
-            this.deleteBookFromIndex(bookInfo.id);
+        deleteButton.addEventListener("click", async () => {
+            await this.deleteBookFromDetailPage(bookInfo);
             window.location.href = "./index.html";
         });
     }
 
-    deleteBookFromIndex(bookId) {
-        const bookModel = new BookModel();
-        bookModel.deleteBookByInfo(bookId);
+    async deleteBookFromDetailPage(bookInfo) {
+        try {
+            await this.deleteBookFromIndex(bookInfo.id);
+        } catch (error) {
+            console.error("Error deleting book:", error);
+        }
     }
+
+    async deleteBookFromIndex(bookId) {
+        try {
+            const bookModel = new BookModel();
+            await bookModel.deleteBookByInfo(bookId);
+        } catch (error) {
+            throw new Error("Error deleting book:", error);
+        }
+    }
+
 }
 
 const bookDetailPage = new BookDetailPage();
