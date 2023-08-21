@@ -175,6 +175,8 @@ class BookDetailPage {
         const inputSelectFile = document.querySelector("#input-select-file");
         inputSelectFile.addEventListener("change", () => {
             // Update image preview based on selected file.
+            const previewLinkImage = getElementById("preview-link-image");
+            previewLinkImage.innerHTML = `<img src="${URL.createObjectURL(inputSelectFile.files[0])}" alt="" class="preview-image-inner" />`;
         });
     }
 
@@ -183,24 +185,23 @@ class BookDetailPage {
         const deleteButton = querySelector(".delete-detail");
 
         deleteButton.addEventListener("click", async () => {
-            // Delete book from the detail page.
-            // Redirect to the index page.
+            await this.deleteBookFromDetailPage(bookInfo);
+            window.location.href = "./index.html";
         });
     }
 
-    // Method to delete a book from the detail page.
     async deleteBookFromDetailPage(bookInfo) {
         try {
-            // Delete book from the index.
+            await this.deleteBookFromIndex(bookInfo.id);
         } catch (error) {
             console.error("Error deleting book:", error);
         }
     }
 
-    // Method to delete a book from the index.
     async deleteBookFromIndex(bookId) {
         try {
-            // Create a new BookModel instance and delete the book by ID.
+            const bookModel = new BookModel();
+            await bookModel.deleteBookByInfo(bookId);
         } catch (error) {
             throw new Error("Error deleting book:", error);
         }

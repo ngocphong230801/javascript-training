@@ -208,7 +208,7 @@ class BookView {
 
     displayAllBooks = (books) => {
         const itemsPerPage = 6;
-        const maxPages = 3;
+        const maxPages = 100;
 
         const currentPage = parseInt(storage.get("currentPage")) || 1;
         const startIndex = (currentPage - 1) * itemsPerPage;
