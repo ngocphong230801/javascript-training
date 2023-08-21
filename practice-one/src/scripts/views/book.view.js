@@ -12,7 +12,7 @@ class BookView {
         this.overlay = getElementById("overlay");
         this.confirmationBox = getElementById("confirmation-box");
         this.sortOrder = "ascending";
-        this.isFirstBookCreated = false;
+        this.isFirstBookCreated = false
 
         const InputImageUpload = document.querySelector("#input-select-file");
         const ElementPreview = document.querySelector("#preview-image");
@@ -166,14 +166,23 @@ class BookView {
             savedBooks.unshift(newBook);
             storage.save("savedBooks", savedBooks);
         }
-    
-        if (!this.isFirstBookCreated) {
-            this.isFirstBookCreated = true;
-            window.location.reload();
-        } else {
-            this.showBooks();
-        }
-    
+
+        const searchInput = querySelector(".filter-input");
+        searchInput.style.display = "block";
+
+        const ascendingButton = querySelector(".ascending");
+        ascendingButton.style.display = "block";
+
+        const descendingButton = querySelector(".descending");
+        descendingButton.style.display = "block";
+
+        const paginationLinks = document.querySelectorAll(".page-navigation");
+        paginationLinks.forEach((link) => {
+            link.style.display = "none";
+        });
+
+        this.checkAndDisplayBooks(); 
+        this.hideNoBooksMessage();
         this.hideValidationForm();
         this.validationForm.reset();
         this.showMention("created", "Book created successfully!");
