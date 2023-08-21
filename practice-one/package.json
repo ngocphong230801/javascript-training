@@ -4,7 +4,7 @@
   "description": "Book Marker - A web application with HTML/CSS & Javascript",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "del -rf build && del -rf .parcel-cache && parcel build ./src/*.html --no-cache --no-source-maps --dist-dir dist"
+    "build": "rm -rf build && rm -rf .parcel-cache && parcel build ./src/*.html --no-cache --no-source-maps --dist-dir dist"
   },
   "keywords": [],
   "author": "Phong Nguyen",
