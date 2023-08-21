@@ -133,8 +133,8 @@
     font-weight: var(--font-weight-bold);
     display: block;
     padding: 0;
-    margin-top: 216px;
-    margin-left: 427px;
+    margin-top: 150px;
+    margin-left: 410px;
 }
 
 .card-container .no-books-paragraph {
@@ -143,5 +143,5 @@
     color: var(--color-text-primary);
     display: block;
     padding: 0;
-    margin-left: 577px;
+    margin-left: 560px;
 }
