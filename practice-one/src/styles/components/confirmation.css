@@ -35,6 +35,7 @@
     border-radius: 20px;
     margin-top: 73px;
     margin-left: 185px; 
+    cursor: pointer;
 }
 
 .confirmation-box .btn-confirm {
@@ -42,6 +43,7 @@
     height: 56px;
     border-radius: 20px;
     margin-left: 35px; 
+    cursor: pointer;
 }
 
 .confirmation-box .btn:hover {
