@@ -124,6 +124,7 @@ class BookDetailPage {
     }
 
 
+    // Method to set up save button functionality.
     setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
     
@@ -155,8 +156,7 @@ class BookDetailPage {
                     errorElement.style.display = "block";
                     return;
                 } else {
-                    const errorElement = getElementById("image-error"); // Đặt lại error element khi tệp hợp lệ
-                    errorElement.textContent = "";
+                    const errorElement = getElementById("image-error"); 
                     errorElement.style.display = "none";
                 }
     
@@ -196,6 +196,8 @@ class BookDetailPage {
         });
     }
     
+    
+    // Method to set up ImagePreview functionality.
     setupImagePreview() {
         const inputSelectFile = document.querySelector("#input-select-file");
         inputSelectFile.addEventListener("change", () => {
