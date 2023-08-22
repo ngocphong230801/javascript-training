@@ -77,12 +77,14 @@
     position: absolute;
     bottom: 34px;
     right: 236px;
+    cursor: pointer;
 }
 
 .validation-form .save {
     position: absolute;
     bottom: 34px;
     right: 20px;
+    cursor: pointer;
 }
 
 

@@ -17,17 +17,20 @@ class BookDetailPage {
     }
 
     // Initialization method for the page.
-    initialize(bookInfo) {
-        // Initialize and set up various components of the detail page.
-        this.displayBookInfo(bookInfo);
-        this.setupEditButton(bookInfo);
-        this.setupCancelButton();
-        this.setupEditButton(bookInfo);
-        this.setupSaveButton(bookInfo);
-        this.setupImagePreview();
-        this.setupDeleteButton(bookInfo);
+    initialize() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookInfoString = urlParams.get("bookInfo");
+    
+        if (bookInfoString) {
+            const bookInfo = JSON.parse(decodeURIComponent(bookInfoString));
+            this.displayBookInfo(bookInfo);
+            this.setupEditButton(bookInfo);
+            this.setupCancelButton();
+            this.setupSaveButton(bookInfo);
+            this.setupImagePreview();
+            this.setupDeleteButton(bookInfo);
+        }
     }
-
     // Method to display book information on the detail page.
     displayBookInfo(bookInfo) {
         // Get elements by their IDs.
@@ -114,21 +117,21 @@ class BookDetailPage {
             toggleDisplay("overlay", false);
         };
 
-        // Attach event listeners to cancel button and overlay.
         cancelButton.addEventListener("click", hideFormAndOverlay);
         overlay.addEventListener("click", hideFormAndOverlay);
     }
 
-    // Method to set up save button functionality.
+
     setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
-
+    
         saveButton.addEventListener("click", async () => {
             const isValid = validateForm(getElementById("validation-form"));
-        
+            
             if (!isValid) {
                 return; 
             }
+            
             const updatedBookInfo = {
                 bookname: getElementById("bookname").value,
                 author: getElementById("author").value,
@@ -136,41 +139,45 @@ class BookDetailPage {
                 description: getElementById("description").value,
                 image: bookInfo.image,
             };
-
+    
             const inputSelectFile = document.querySelector("#input-select-file");
-
+    
             if (inputSelectFile.files[0]) {
                 const formData = new FormData();
-                formData.append("key", "82001a9d3dcf15421a28667e049d69fd");
+                formData.append("key", "e5588d24c18bd98a9b9aa46ec2e1769a");
                 formData.append("image", inputSelectFile.files[0]);
-
+    
                 try {
                     const response = await fetch("https://api.imgbb.com/1/upload", {
                         method: "POST",
                         body: formData,
                     });
-
+    
                     const data = await response.json();
                     updatedBookInfo.image = data.data.url;
-
+    
                     const previewLinkImage = getElementById("preview-link-image");
                     previewLinkImage.innerHTML = `<img src="${data.data.url}" alt="" class="preview-image-inner" />`;
                 } catch (error) {
                     console.error("Error uploading image:", error);
                 }
             }
+    
 
             const bookModel = new BookModel();
             bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
 
             this.displayBookInfo(updatedBookInfo);
+    
 
-            toggleDisplay("validation-form", false);
-            toggleDisplay("overlay", false);
             this.updatedBookInfo = updatedBookInfo;
+            const bookInfoString = JSON.stringify(updatedBookInfo);
+            const encodedBookInfo = encodeURIComponent(bookInfoString);
+            const currentUrl = window.location.href.split("?")[0];
+            window.location.href = `${currentUrl}?bookInfo=${encodedBookInfo}`;
         });
     }
-    // Method to set up image preview functionality.
+
     setupImagePreview() {
         const inputSelectFile = document.querySelector("#input-select-file");
         inputSelectFile.addEventListener("change", () => {

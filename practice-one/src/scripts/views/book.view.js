@@ -112,7 +112,7 @@ class BookView {
             alert("Please upload book image");
             return;
         } else {
-            const API_KEY = "82001a9d3dcf15421a28667e049d69fd";
+            const API_KEY = "e5588d24c18bd98a9b9aa46ec2e1769a";
     
             async function UploadImageAndSave() {
                 const formData = new FormData();
