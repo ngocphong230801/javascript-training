@@ -14,6 +14,7 @@ class BookDetailPage {
         initializePage(this.initialize.bind(this));
         // Initialize a variable to store updated book information.
         this.updatedBookInfo = null;
+        this.formOpen = false;
     }
 
     // Initialization method for the page.
@@ -72,6 +73,7 @@ class BookDetailPage {
             const dateInput = getElementById("date");
             const descriptionInput = getElementById("description");
             const previewLinkImage = getElementById("preview-link-image");
+            this.formOpen = true;
     
             // Update input values based on updated book information or initial book information.
             if (this.updatedBookInfo) {
@@ -125,12 +127,14 @@ class BookDetailPage {
     setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
     
-        saveButton.addEventListener("click", async () => {
-            const isValid = validateForm(getElementById("validation-form"));
-            
+        saveButton.addEventListener("click", async (event) => {
+            event.preventDefault();
+            const isValid = await validateForm(getElementById("validation-form"));
+    
             if (!isValid) {
-                return; 
+                return;
             }
+    
             
             const updatedBookInfo = {
                 bookname: getElementById("bookname").value,
@@ -143,6 +147,19 @@ class BookDetailPage {
             const inputSelectFile = document.querySelector("#input-select-file");
     
             if (inputSelectFile.files[0]) {
+                const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+                const extension = inputSelectFile.files[0].name.split(".").pop().toLowerCase();
+                if (!allowedExtensions.includes(extension)) {
+                    const errorElement = getElementById("image-error");
+                    errorElement.textContent = "Please select a valid image file (jpg, jpeg, png, gif)";
+                    errorElement.style.display = "block";
+                    return;
+                } else {
+                    const errorElement = getElementById("image-error"); // Đặt lại error element khi tệp hợp lệ
+                    errorElement.textContent = "";
+                    errorElement.style.display = "none";
+                }
+    
                 const formData = new FormData();
                 formData.append("key", "e5588d24c18bd98a9b9aa46ec2e1769a");
                 formData.append("image", inputSelectFile.files[0]);
@@ -163,21 +180,22 @@ class BookDetailPage {
                 }
             }
     
-
             const bookModel = new BookModel();
             bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
-
+    
             this.displayBookInfo(updatedBookInfo);
     
-
             this.updatedBookInfo = updatedBookInfo;
             const bookInfoString = JSON.stringify(updatedBookInfo);
             const encodedBookInfo = encodeURIComponent(bookInfoString);
-            const currentUrl = window.location.href.split("?")[0];
-            window.location.href = `${currentUrl}?bookInfo=${encodedBookInfo}`;
+            const newUrl = `${window.location.href.split("?")[0]}?bookInfo=${encodedBookInfo}`;
+            history.pushState({}, "", newUrl);
+    
+            toggleDisplay("validation-form", false);
+            toggleDisplay("overlay", false);
         });
     }
-
+    
     setupImagePreview() {
         const inputSelectFile = document.querySelector("#input-select-file");
         inputSelectFile.addEventListener("change", () => {

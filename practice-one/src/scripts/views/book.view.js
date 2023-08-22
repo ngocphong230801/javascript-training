@@ -176,6 +176,11 @@ class BookView {
         const descendingButton = querySelector(".descending");
         descendingButton.style.display = "block";
 
+        const paginationLinks = document.querySelectorAll(".page-navigation");
+        paginationLinks.forEach((link) => {
+            link.style.display = "none";
+        });
+
         this.checkAndDisplayBooks(); 
         this.hideNoBooksMessage();
         this.hideValidationForm();
@@ -440,6 +445,11 @@ class BookView {
 
         const descendingButton = querySelector(".descending");
         descendingButton.style.display = "none";
+
+        const paginationLinks = document.querySelectorAll(".page-navigation");
+        paginationLinks.forEach((link) => {
+            link.style.display = "none";
+        });
 
         this.showNoBooksMessage()
     };
