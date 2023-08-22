@@ -45,11 +45,6 @@
     padding: 0;
 }
 
-.validation-form .description-input::placeholder {
-    position: absolute;
-    top: 15px;
-    left: 17px;
-}
 
 .validation-form .upload {
     font-size: var(--font-size-text-sm);

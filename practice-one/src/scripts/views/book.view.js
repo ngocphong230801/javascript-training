@@ -46,6 +46,7 @@ class BookView {
             this.setupSearch();
             querySelector(".btn-confirm").addEventListener("click", this.handleConfirmDelete);
             querySelector(".btn-cancel").addEventListener("click", this.handleCancelDelete);
+            getElementById("overlay").addEventListener("click", this.handleCancelDelete);
         }
     };
 
@@ -372,24 +373,30 @@ class BookView {
 
     handleSearch = () => {
         const searchTerm = getElementById("filter").value.toLowerCase();
-
-        const savedBooks = storage.get("savedBooks");
-        if (savedBooks) {
-            const filteredBooks = savedBooks.filter((bookInfo) => {
-                const bookName = bookInfo.bookname.toLowerCase();
-                return bookName.includes(searchTerm);
-            });
-
-            if (filteredBooks.length === 0) {
+    
+        // Clear any previously scheduled timeouts
+        clearTimeout(this.searchTimeout);
+    
+        // Schedule a new timeout to delay the search
+        this.searchTimeout = setTimeout(() => {
+            const savedBooks = storage.get("savedBooks");
+            if (savedBooks) {
+                const filteredBooks = savedBooks.filter((bookInfo) => {
+                    const bookName = bookInfo.bookname.toLowerCase();
+                    return bookName.includes(searchTerm);
+                });
+    
+                if (filteredBooks.length === 0) {
+                    this.displayNoResultsMessage();
+                    this.hidePagination();
+                } else {
+                    this.displayAllBooks(filteredBooks);
+                }
+            } else {
                 this.displayNoResultsMessage();
                 this.hidePagination();
-            } else {
-                this.displayAllBooks(filteredBooks);
             }
-        } else {
-            this.displayNoResultsMessage();
-            this.hidePagination();
-        }
+        }, 1000); 
     };
 
     displayNoResultsMessage = () => {
