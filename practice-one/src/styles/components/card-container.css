@@ -63,6 +63,12 @@
     top: 0px;
 }
 
+.card-container .create:hover {
+    background-color: var(--quinary-color);
+    color: var(--tertiary-color);
+    border: none;
+}
+
 .card-container .page-navigation {
     display: flex;
     gap: 16px;

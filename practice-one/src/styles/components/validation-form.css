@@ -71,6 +71,7 @@
 .validation-form .btn-form:hover {
     background-color: var(--quinary-color);
     color: var(--tertiary-color);
+    border: none;
 }
 
 .validation-form .cancel {
