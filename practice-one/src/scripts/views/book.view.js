@@ -13,6 +13,8 @@ class BookView {
         this.confirmationBox = getElementById("confirmation-box");
         this.sortOrder = "ascending";
         this.isFirstBookCreated = false;
+        this.filteredBooks = [];
+        this.isFiltered = false;
 
         const InputImageUpload = document.querySelector("#input-select-file");
         const ElementPreview = document.querySelector("#preview-image");
@@ -176,11 +178,6 @@ class BookView {
 
         const descendingButton = querySelector(".descending");
         descendingButton.style.display = "block";
-
-        const paginationLinks = document.querySelectorAll(".page-navigation");
-        paginationLinks.forEach((link) => {
-            link.style.display = "none";
-        });
 
         this.checkAndDisplayBooks(); 
         this.hideNoBooksMessage();
@@ -397,6 +394,8 @@ class BookView {
                     descendingButton.style.display = "none";
             
                 } else {
+                    this.isFiltered = true;
+                    this.filteredBooks = filteredBooks; 
                     this.displayAllBooks(filteredBooks);
                     
                     const ascendingButton = querySelector(".ascending");
@@ -434,12 +433,20 @@ class BookView {
         this.sortOrder = "ascending";
         this.applySorting();
         this.toggleSortButtonActiveState(".ascending");
+        if (this.isFiltered) {
+            this.filteredBooks.sort((a, b) => a.bookname.localeCompare(b.bookname));
+            this.displayAllBooks(this.filteredBooks);
+        }
     };
     
     handleDescendingClick = () => {
         this.sortOrder = "descending";
         this.applySorting();
         this.toggleSortButtonActiveState(".descending");
+        if (this.isFiltered) {
+            this.filteredBooks.sort((a, b) => b.bookname.localeCompare(a.bookname));
+            this.displayAllBooks(this.filteredBooks);
+        }
     };
     
     toggleSortButtonActiveState = (selector) => {
