@@ -11,7 +11,7 @@
 - Build tools & Env setup: Parcel.
 - Tech stack: HTML/CSS & Javascript.
 - Design pattern: MVC (Model - View - Controller).
-- During time: expect ~5 working days (Trainee will self re-estimation).
+- During time: expect ~5 working days.
 - Data store: Local storage.
 - User stories:
   - The user can add a new book into the system with base information (name, description, author, category, image, price).
@@ -39,7 +39,7 @@
 ## Information
 
 - Timeline:
-  - 7 working days (From Wednesday, July 19, 2023 to Friday, July 28, 2023).
+  - 7 working days
 - Editor: Visual Studio Code.
 
 ## Development Environment
