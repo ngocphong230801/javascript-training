@@ -32,3 +32,13 @@
     top: 261px;
     right: 255px;   
 }
+
+
+.preview-image-inner {
+    position: absolute;
+    top: -30px;
+    right: -160px;
+    width: 95px;
+    height: 110px;
+}
+

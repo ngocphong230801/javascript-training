@@ -12,7 +12,7 @@
         <!-- Header -->
         <header class="main-header">
             <div class="brand">
-                <a href="">
+                <a href="./index.html">
                     <img src="./assets/icon/Vector.png" alt="brand" />
                     <p class="brand-title">B</p>
                     <img src="./assets/icon/box.png" alt="box" class="brand-box" />
@@ -62,11 +62,14 @@
                 </div>
                 <div class="image">
                     <p class="label">Image</p>
-                    <p id="preview-link-image"></p>
-                    <button class="btn upload">
-                        <img src="./assets/icon/upload.png" alt="upload" id="image" />
-                        Upload
-                    </button>
+                    <div style="display: flex; gap: 10px; align-items: center">
+                        <div style="position: relative">
+                            <input type="file" id="input-select-file" class="input-select-file"/>
+                            <button class="btn upload">
+                            <img src="./assets/icon/upload.png" alt="upload" id="image" />Upload</button>
+                            <p id="preview-link-image" class="preview-link-image"></p>
+                        </div>
+                    </div>
                     <span id="image-error" class="error"></span>
                 </div>
                 <div class="description">

@@ -2,7 +2,8 @@
     padding: 23px 37px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--tertiary-color);
+    border-bottom: 1px solid var(--primary-color);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .main-header .brand {

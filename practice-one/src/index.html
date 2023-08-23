@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="description" content="This website introduces Book Maker brand" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="./assets/icon/Logo.ico">
         <!-- Styles index -->
         <link rel="stylesheet" href="./styles/index.css" />
         <title>Book Maker</title>
@@ -22,8 +23,10 @@
         </header>
         <div class="card-container">
             <div class="header-card-container">
-                <input type="text" placeholder="Search something..." class="filter" id="filter" />
-                <img src="./assets/icon/search.png" alt="search" class="search" />
+                <div class="filter-input">
+                    <input type="text" placeholder="Search something..." class="filter" id="filter" />
+                    <img src="./assets/icon/search.png" alt="search" class="search" />
+                </div>
                 <a href="#" class="ascending">Ascending</a>
                 <a href="#" class="descending">Descending</a>
                 <button type="button" class="btn create" id="create">
@@ -31,10 +34,10 @@
                 </button>
             </div>
             <ul id="list-books" class="list-books"></ul>
-            <div class="page-navigation">
-                <a href="#" class="pagination">1</a>
-                <a href="#" class="pagination">2</a>
-                <a href="#" class="pagination">3</a>
+            <div id="pagination-container" class="page-navigation"></div>
+            <div id="no-books-message" class="no-books-message">
+                <h2 class="no-books-heading">No books have been created yet.</h2>
+                <p class="no-books-paragraph">Add a new book of yours.</p>
             </div>
         </div>
         <form class="validation-form" id="validation-form" onsubmit="return false;">

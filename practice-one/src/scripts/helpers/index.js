@@ -1,8 +1,5 @@
-import { querySelector,getElementById } from "./dom-helper";
-import { getQueryParameter } from "./params";
+// Import all exports from the "dom-helper" module.
+export * from "./dom-helper";
 
-export {
-    querySelector,
-    getElementById,
-    getQueryParameter
-};
+// Import all exports from the "params" module.
+export * from "./params";
