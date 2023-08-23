@@ -288,15 +288,15 @@ class BookView {
     handleEditBook = (event) => {
         const bookIndex = event.currentTarget.dataset.bookIndex;
         this.validationForm.dataset.bookIndex = bookIndex;
-        const savedBooks = storage.get("savedBooks");
-
-        if (savedBooks && savedBooks[bookIndex]) {
-            this.showBookOnForm(savedBooks[bookIndex]);
-            const bookImage = savedBooks[bookIndex].image;
-
+        const sortedBooks = storage.get("savedBooks");
+    
+        if (sortedBooks && sortedBooks[bookIndex]) {
+            this.showBookOnForm(sortedBooks[bookIndex]);
+            const bookImage = sortedBooks[bookIndex].image;
+    
             if (bookImage) {
                 const previewImage = document.querySelector("#preview-image");
-                previewImage.innerHTML = `<img src="${bookImage}" alt="" class ="preview-image-inner" />`;
+                previewImage.innerHTML = `<img src="${bookImage}" alt="" class="preview-image-inner" />`;
             } else {
                 const previewImage = document.querySelector("#preview-image");
                 previewImage.innerHTML = "";
@@ -307,7 +307,7 @@ class BookView {
     showBookOnForm = (bookInfo) => {
         this.setDisplay("block");
         this.clearErrorMessages();
-
+    
         const formInputs = this.validationForm.querySelectorAll(".form-input");
         formInputs.forEach((input) => {
             const fieldName = input.getAttribute("name");
@@ -398,16 +398,16 @@ class BookView {
             
                 } else {
                     this.displayAllBooks(filteredBooks);
-                }
-            } else {
-                this.displayNoResultsMessage();
-                this.hidePagination();
-
-                const ascendingButton = querySelector(".ascending");
+                    
+                    const ascendingButton = querySelector(".ascending");
                     ascendingButton.style.display = "block";
             
                     const descendingButton = querySelector(".descending");
                     descendingButton.style.display = "block";
+                }
+            } else {
+                this.displayNoResultsMessage();
+                this.hidePagination();
             }
         }, 1000); 
     };
@@ -467,7 +467,7 @@ class BookView {
 
     applySorting = () => {
         const savedBooks = storage.get("savedBooks");
-
+    
         if (savedBooks) {
             const sortedBooks = savedBooks.slice().sort((a, b) => {
                 const bookNameA = a.bookname.toLowerCase();
@@ -476,7 +476,11 @@ class BookView {
                     ? bookNameA.localeCompare(bookNameB)
                     : bookNameB.localeCompare(bookNameA);
             });
-
+    
+            // Update the savedBooks with the sortedBooks
+            storage.save("savedBooks", sortedBooks);
+    
+            // Display the sorted books
             this.displayAllBooks(sortedBooks);
         }
     };
