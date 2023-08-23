@@ -12,7 +12,7 @@ class BookView {
         this.overlay = getElementById("overlay");
         this.confirmationBox = getElementById("confirmation-box");
         this.sortOrder = "ascending";
-        this.isFirstBookCreated = false
+        this.isFirstBookCreated = false;
 
         const InputImageUpload = document.querySelector("#input-select-file");
         const ElementPreview = document.querySelector("#preview-image");
@@ -177,6 +177,10 @@ class BookView {
         const descendingButton = querySelector(".descending");
         descendingButton.style.display = "block";
 
+        const paginationLinks = document.querySelectorAll(".page-navigation");
+        paginationLinks.forEach((link) => {
+            link.style.display = "none";
+        });
 
         this.checkAndDisplayBooks(); 
         this.hideNoBooksMessage();
@@ -385,12 +389,25 @@ class BookView {
                 if (filteredBooks.length === 0) {
                     this.displayNoResultsMessage();
                     this.hidePagination();
+
+                    const ascendingButton = querySelector(".ascending");
+                    ascendingButton.style.display = "none";
+            
+                    const descendingButton = querySelector(".descending");
+                    descendingButton.style.display = "none";
+            
                 } else {
                     this.displayAllBooks(filteredBooks);
                 }
             } else {
                 this.displayNoResultsMessage();
                 this.hidePagination();
+
+                const ascendingButton = querySelector(".ascending");
+                    ascendingButton.style.display = "block";
+            
+                    const descendingButton = querySelector(".descending");
+                    descendingButton.style.display = "block";
             }
         }, 1000); 
     };
@@ -416,11 +433,36 @@ class BookView {
     handleAscendingClick = () => {
         this.sortOrder = "ascending";
         this.applySorting();
+        this.toggleSortButtonActiveState(".ascending");
     };
-
+    
     handleDescendingClick = () => {
         this.sortOrder = "descending";
         this.applySorting();
+        this.toggleSortButtonActiveState(".descending");
+    };
+    
+    toggleSortButtonActiveState = (selector) => {
+        const sortButtons = document.querySelectorAll(".ascending, .descending");
+        const activeButton = document.querySelector(selector);
+    
+        if (activeButton.classList.contains("active")) {
+            activeButton.classList.remove("active");
+            this.sortOrder = "";
+            this.applySorting(); //
+        } else {
+            sortButtons.forEach((button) => {
+                button.classList.remove("active");
+            });
+            
+            activeButton.classList.add("active");
+            if (selector === ".ascending") {
+                this.sortOrder = "ascending";
+            } else {
+                this.sortOrder = "descending";
+            }
+            this.applySorting();
+        }
     };
 
     applySorting = () => {

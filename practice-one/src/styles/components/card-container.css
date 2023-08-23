@@ -38,11 +38,8 @@
     font-weight: var(--font-weight-bold);
 }
 
-.card-container .ascending:focus {
-    color: var(--secondary-color);
-}
-
-.card-container .descending:focus {
+.ascending.active,
+.descending.active {
     color: var(--secondary-color);
 }
 
