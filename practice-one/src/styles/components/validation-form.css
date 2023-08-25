@@ -42,13 +42,19 @@
 .validation-form .description-input {
     width: 759px;
     height: 118px;
+    display: block;
     padding: 0;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 100%;
+    border-radius: 20px;
 }
-
 
 .validation-form .upload {
     font-size: var(--font-size-text-sm);
     padding: 11px 47px;
+    display: flex;
+    gap: 10px;
 }
 
 .validation-form .form-btn {
