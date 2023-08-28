@@ -4,6 +4,8 @@ import storage from "../services/localStorage";
 import imgDelete from "../../assets/icon/delete.png";
 import imgDetail from "../../assets/icon/detail.jpg";
 import imgClose from "../../assets/icon/close.png";
+import AlertManager from "../helpers/alert";
+import { uploadImageAndSave } from "../helpers/upload-img";
 
 class BookView {
     constructor() {
@@ -92,19 +94,18 @@ class BookView {
 
     handleSaveButtonClick = async (event) => {
         event.preventDefault();
-        const isValid = validateForm(this.validationForm);
         
+        // Validate the form
+        const isValid = validateForm(this.validationForm);
         if (!isValid) {
-            return; 
+            return;
         }
     
         const savedBooks = storage.get("savedBooks") || [];
-    
         const formInputs = this.validationForm.querySelectorAll(".form-input");
         const updatedBookInfo = {};
     
         const InputImageUpload = document.querySelector("#input-select-file");
-    
         const existingImage = this.validationForm.dataset.bookIndex
             ? savedBooks[this.validationForm.dataset.bookIndex]?.image
             : null;
@@ -112,37 +113,16 @@ class BookView {
         if (existingImage && !InputImageUpload.files[0]) {
             updatedBookInfo.image = existingImage;
         } else if (!InputImageUpload.files[0]) {
-            alert("Please upload book image");
+          AlertManager .showImageInputRequired();
             return;
         } else {
-            const API_KEY = "e5588d24c18bd98a9b9aa46ec2e1769a";
-    
-            async function UploadImageAndSave() {
-                const formData = new FormData();
-                formData.append("key", API_KEY);
-                formData.append("image", InputImageUpload.files[0]);
-    
-                try {
-                    const response = await fetch(
-                        "https://api.imgbb.com/1/upload",
-                        {
-                            method: "POST",
-                            body: formData,
-                        }
-                    );
-    
-                    const data = await response.json();
-                    console.log(
-                        "Image uploaded successfully:",
-                        data?.data?.url
-                    );
-                    updatedBookInfo.image = data?.data?.url;
-                } catch (error) {
-                    console.error("Error uploading image:", error);
-                }
+            const uploadedImageUrl = await uploadImageAndSave(InputImageUpload.files[0]);
+            if (uploadedImageUrl) {
+                updatedBookInfo.image = uploadedImageUrl;
+            } else {
+                AlertManager    .showImageUploadError();
+                return;
             }
-    
-            await UploadImageAndSave();
         }
     
         formInputs.forEach((input) => {
@@ -169,16 +149,16 @@ class BookView {
             savedBooks.unshift(newBook);
             storage.save("savedBooks", savedBooks);
         }
-
+    
         const searchInput = querySelector(".filter-input");
         searchInput.style.display = "block";
-
+    
         const ascendingButton = querySelector(".ascending");
         ascendingButton.style.display = "block";
-
+    
         const descendingButton = querySelector(".descending");
         descendingButton.style.display = "block";
-
+    
         this.checkAndDisplayBooks(); 
         this.hideNoBooksMessage();
         this.hideValidationForm();

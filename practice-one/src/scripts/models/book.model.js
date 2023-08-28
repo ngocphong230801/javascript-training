@@ -9,7 +9,7 @@ const defaultBooks = [
     author: "Phong Nguyen",
     date: "23/08/2023",
     description: "Books to help programmers better understand HTML/CSS",
-    image: "https://i.ibb.co/1QtGN3P/book-3.jpg",
+    image: "https://i.ibb.co/wywwgZH/Icon-Solid-MVP.png",
   },
 ]
 

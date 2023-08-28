@@ -5,6 +5,8 @@ import { validateForm } from "../helpers/validator";
 import { querySelector, getElementById, getQueryParameter } from "../helpers";
 import { initializePage } from "../helpers/init-detail";
 import { toggleDisplay } from "../helpers/element-untils";
+import AlertManager from "../helpers/alert";
+import { uploadImageAndSave } from "../helpers/upload-img";
 
 // Class definition for the BookDetailPage.
 class BookDetailPage {
@@ -125,9 +127,9 @@ class BookDetailPage {
 
 
     // Method to set up save button functionality.
-    setupSaveButton(bookInfo) {
+    async setupSaveButton(bookInfo) {
         const saveButton = querySelector(".save");
-    
+        
         saveButton.addEventListener("click", async (event) => {
             event.preventDefault();
             const isValid = await validateForm(getElementById("validation-form"));
@@ -136,7 +138,6 @@ class BookDetailPage {
                 return;
             }
     
-            
             const updatedBookInfo = {
                 bookname: getElementById("bookname").value,
                 author: getElementById("author").value,
@@ -148,40 +149,20 @@ class BookDetailPage {
             const inputSelectFile = document.querySelector("#input-select-file");
     
             if (inputSelectFile.files[0]) {
-                const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
-                const extension = inputSelectFile.files[0].name.split(".").pop().toLowerCase();
-                if (!allowedExtensions.includes(extension)) {
-                    const errorElement = getElementById("image-error");
-                    errorElement.textContent = "Please select a valid image file (jpg, jpeg, png, gif)";
-                    errorElement.style.display = "block";
-                    return;
-                } else {
-                    const errorElement = getElementById("image-error"); 
-                    errorElement.style.display = "none";
-                }
+                const uploadedImageUrl = await uploadImageAndSave(inputSelectFile.files[0]);
     
-                const formData = new FormData();
-                formData.append("key", "e5588d24c18bd98a9b9aa46ec2e1769a");
-                formData.append("image", inputSelectFile.files[0]);
-    
-                try {
-                    const response = await fetch("https://api.imgbb.com/1/upload", {
-                        method: "POST",
-                        body: formData,
-                    });
-    
-                    const data = await response.json();
-                    updatedBookInfo.image = data.data.url;
-    
+                if (uploadedImageUrl) {
+                    updatedBookInfo.image = uploadedImageUrl;
                     const previewLinkImage = getElementById("preview-link-image");
-                    previewLinkImage.innerHTML = `<img src="${data.data.url}" alt="" class="preview-image-inner" />`;
-                } catch (error) {
-                    console.error("Error uploading image:", error);
+                    previewLinkImage.innerHTML = `<img src="${uploadedImageUrl}" alt="" class="preview-image-inner" />`;
+                } else {
+                    AlertManager.showImageUploadError();
+                    return;
                 }
             }
     
             const bookModel = new BookModel();
-            bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
+            await bookModel.updateBookByInfo(bookInfo.id, updatedBookInfo);
     
             this.displayBookInfo(updatedBookInfo);
     
@@ -221,7 +202,7 @@ class BookDetailPage {
         try {
             await this.deleteBookFromIndex(bookInfo.id);
         } catch (error) {
-            console.error("Error deleting book:", error);
+            AlertManager.showDeleteError();
         }
     }
 
