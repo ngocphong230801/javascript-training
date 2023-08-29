@@ -13,13 +13,13 @@
 - During time: expect ~5 working days.
 - Data store: Local storage.
 
-## Target
+## Targets
 
 - DOM manipulation.
 - Structure project following Module pattern.
 - ES6 features.
 
-## Technical
+## Technicals
 
 - HMLT5.
 - CSS3.
