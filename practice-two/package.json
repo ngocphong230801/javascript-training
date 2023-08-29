@@ -1,0 +1,15 @@
+{
+  "name": "practice-two",
+  "version": "1.0.0",
+  "description": "- Introduce:\r   -Todo List TypeScript - A web application with HTML/CSS & Javascript.\r - Plan: [Plan practice-two](https://docs.google.com/document/d/1BukEW-ojCIIrCoNDd3Wc151v-mD-rqhpC3R_fAAh4vc/edit).",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  }
+}
