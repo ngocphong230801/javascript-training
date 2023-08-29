@@ -1,0 +1,42 @@
+.mention {
+    width: 512px;
+    height: 114px;
+    border-radius: 15px;
+    border: 1px solid var(--quaternary-color);
+    position: fixed;
+    top: 780px;
+    right: 29px;
+}
+
+.mention-success {
+    background-color: rgba(106, 200, 60, 0.54);
+}
+
+.mention-danger {
+   background-color: rgba(200, 60, 60, 0.54);
+}
+
+.mention .mention-title {
+    color: var(--color-text-default);
+    font-size: var(--font-size-text-sm);
+    font-weight: var(--font-weight-bold);
+    display: block;
+    margin: 0;
+    padding: 15px 33px;
+    padding-bottom: 0;
+}
+
+.mention .mention-message{
+    color: var(--color-text-default);
+    font-size: var(--font-size-text-base);
+    font-weight: var(--font-weight-base);
+    display: block;
+    margin: 0;
+    padding: 10px 33px;
+}
+
+.mention .close-mention{
+    position: absolute;
+    top: 15px;
+    right: 12px;
+}

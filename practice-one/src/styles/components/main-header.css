@@ -1,0 +1,32 @@
+.main-header {
+    padding: 23px 37px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--primary-color);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.main-header .brand {
+    position: relative;
+}
+
+.main-header .brand-title {
+    color: var(--primary-color);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-text-lg);
+    text-transform: capitalize;
+    position: absolute;
+    top: -26px;
+    left: 33px;
+}
+
+.main-header .brand-box {
+   position: absolute;
+   top: 45px;
+   right: 36px;
+}
+
+.main-header .greeting {
+    font-size: var(--font-size-text-sm);
+    font-weight: var(--font-weight-base);
+}
