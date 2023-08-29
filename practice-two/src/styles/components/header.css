@@ -2,7 +2,7 @@
     text-align: center;
     margin-bottom: 40px;
     padding-top: 30px;
-    font-family: var(--fon);
+    font-family: var(--font-secondary);
 }
 
 .app-heading .heading-title {
