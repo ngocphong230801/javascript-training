@@ -8,5 +8,30 @@
         <link rel="stylesheet" href="./styles/index.css">
     </head>
     <body>
+        <main class="app">
+            <header class="app-heading">
+                <h1 class="heading-title">Todo list with TypeScript</h1>
+                <p class="heading-description">
+                    Build from <a href="https://www.typescriptlang.org/" class="underline-text" target="_blank">TypeScript</a>
+                    and <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" class="underline-text" target="_blank">MVC model</a>
+                </p>
+            </header>
+            <div class="app-todo-content">
+                <div class="content-input">
+                    <a href="#" class="check-all"><img src="./assets/check.png" alt="check"></a>
+                    <input id="task-input" class="task-input" type="text" placeholder="What will you focus on today?">
+                </div>
+                <ul class="list-task"></ul>
+                <div class="content-action">
+                    <p class="total-item"></p>
+                    <ul class="task-filter">
+                        <li class="task-filter-item"><a data-action="all" href="#/" class="selected item">All</a></li>
+                        <li class="task-filter-item"><a data-action="active" href="#/" class="active item">Active</a></li>
+                        <li class="task-filter-item"><a data-action="completed" href="#/" class="completed item">Completed</a></li>
+                    </ul>
+                    <a href=""><p class="clear-completed">Clear completed</p></a>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
