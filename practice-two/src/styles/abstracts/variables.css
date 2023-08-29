@@ -1,0 +1,30 @@
+:root {
+    /* Font */
+    --font-primary:  Arial, Helvetica, sans-serif; 
+    
+    /* Theme */
+    --primary-color: #fff;
+    --secondary-color: #000;
+
+     /* Text-color */
+    --color-text-default: #000;
+    --color-text-primary: #0170fe;
+    --color-text-secondary: #4c4c4c;
+    --color-text-tertiary: #155724;
+    --color-text-quaternary: #004085;
+
+
+    /* Text font size*/
+    --font-size-text-2xl: 22px;
+    --font-size-text-xl: 20px;
+    --font-size-text-lg: 18px;
+    --font-size-text-md: 16px;
+    --font-size-text-sm: 14px;
+    --font-size-text-base: 10px;
+
+    /* Font weight */
+    --font-weight-base: 400;
+    --font-weight-light: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "practice-two",
+  "version": "1.0.0",
+  "description": "Todo List TypeScript - A web application with HTML/CSS & Javascript",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "rm -rf build && rm -rf .parcel-cache && parcel build ./src/*.html --no-cache --no-source-maps --dist-dir dist"
+    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  }
+}
