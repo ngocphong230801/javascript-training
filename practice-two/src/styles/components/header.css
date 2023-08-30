@@ -1,0 +1,29 @@
+.app-heading {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 30px;
+    font-family: var(--font-secondary);
+}
+
+.app-heading .heading-title {
+    display: inline;
+    background-image: url(../../assets/hero-highlight.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-size-text-2xl);
+    margin-top: 30px;
+}
+
+.app .heading-description {
+    font-size: var(--font-size-text-md);
+    padding: 10px 0;
+    color:var(--color-text-primary);
+}
+
+.app-heading .underline-text {
+    text-decoration: underline;
+    color:var(--color-text-primary);
+    cursor: pointer;
+    outline: none;
+}

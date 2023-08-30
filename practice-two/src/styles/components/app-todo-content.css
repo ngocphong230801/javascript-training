@@ -1,0 +1,61 @@
+.app .app-todo-content {
+    width: 550px;
+    height: max-content;
+    margin: 0 auto;
+    background-color:var(--tertiary-color);
+    box-shadow: 0 2px 5px -3px grey;
+    border-radius: 10px;
+}
+
+.app-todo-content .content-input {
+    display: flex;
+    padding-top: 10px;
+}
+
+.app-todo-content .task-input {
+    border: none;
+    width: 100%;
+    background-color: rgba(0,0,0,0);
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.app-todo-content .task-input:focus {
+    outline: none;
+}
+
+.app-todo-content .check-all {
+    margin-left: 18px;
+    margin-top: 10px;
+}
+
+.app-todo-content .content-action {
+    display: flex;
+    justify-content: space-between;
+}
+
+.app-todo-content .task-filter {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin-right: 30px;
+    
+}
+
+.app-todo-content .task-filter-item {
+    margin: 0 10px;
+}
+
+.app-todo-content .task-filter-item .item {
+    color: var(--secondary-color);
+}
+
+.app-todo-content .task-filter-item:hover .item {
+    border: 1px solid var(--quaternary-color);
+}
+
+.app-todo-content .clear-completed {
+    padding-right: 20px;
+    color: var(--secondary-color);
+}
