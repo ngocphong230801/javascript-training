@@ -1,7 +1,7 @@
 // Import the required classes.
 import ListController from "./controller/list.controller";
 import ListView from "./views/list.view";
-import ListModel from "./models/list.model"
+import ListModel from "./models/list.model";
 
 
 // Define the App class.

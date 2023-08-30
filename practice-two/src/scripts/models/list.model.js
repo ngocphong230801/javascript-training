@@ -1,14 +1,14 @@
-class ListController {
-    constructor(listModel, listView) {
-        this.listModel = listModel;
-        this.listView = listView;
+import storage from "../services/localStorage";
 
+class ListModel {
+    constructor() {
         this.init();
     }
 
     init = () => {
-       
-    };
+        
+    }
+
 }
 
-export default ListController;
+export default ListModel
