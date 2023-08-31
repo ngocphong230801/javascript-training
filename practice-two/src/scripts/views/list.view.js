@@ -1,4 +1,4 @@
-import { submitInput } from "../helpers/submit";
+import { keys } from "../constants";
 import { getElementById,querySelector } from "../helpers/dom-elements";
 
 class ListView {
@@ -17,12 +17,12 @@ class ListView {
         `<li data-id="${task.id}" class="content-data">
             <i class="fa-regular fa-circle fa-xs"></i>
             <p class="task-content">${task.content}</p>
-            <i class="fa-solid fa-xmark close-task"></i>
+            <i class="fa-solid fa-xmark close-task"></i>    
         </li>`).join("");
     }
 
     handleTaskInput = (event) => {
-        if (event.key === submitInput) {
+        if (event.key === keys.Enter) {
             const newTask = event.target.value;
             event.target.value = "";
             this.onTaskAdded(newTask);

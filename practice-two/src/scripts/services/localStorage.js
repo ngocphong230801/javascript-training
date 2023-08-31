@@ -1,4 +1,4 @@
-import handleError from "../helpers/error-handler";
+import handleError from "../constants/messages";
 
 const storage = {
     getTasks: () => {
