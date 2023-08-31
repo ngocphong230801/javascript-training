@@ -1,10 +1,12 @@
+import handleError from "../helpers/error-handler";
+
 const storage = {
     getTasks: () => {
         try {
             const tasksJSON = localStorage.getItem('tasks');
             return tasksJSON ? JSON.parse(tasksJSON) : [];
         } catch (error) {
-            console.error('Error while getting tasks:', error);
+            handleError('getting tasks', error);
             return [];
         }
     },
@@ -13,7 +15,7 @@ const storage = {
         try {
             localStorage.setItem('tasks', JSON.stringify(tasks));
         } catch (error) {
-            console.error('Error while saving tasks:', error);
+            handleError('saving tasks', error);
         }
     }
 };
