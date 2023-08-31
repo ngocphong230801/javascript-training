@@ -3,13 +3,19 @@
     height: max-content;
     margin: 0 auto;
     background-color:var(--tertiary-color);
-    box-shadow: 0 2px 5px -3px grey;
     border-radius: 10px;
 }
 
 .app-todo-content .content-input {
     display: flex;
     padding-top: 10px;
+    box-shadow: 0 2px 5px -3px grey;
+}
+
+.app-todo-content .fa-check {
+    color: var(--color-icon-primary); 
+    margin-top: 10px;
+    margin-left: 20px;
 }
 
 .app-todo-content .task-input {
@@ -25,14 +31,10 @@
     outline: none;
 }
 
-.app-todo-content .check-all {
-    margin-left: 18px;
-    margin-top: 10px;
-}
-
 .app-todo-content .content-action {
     display: flex;
     justify-content: space-between;
+    box-shadow: 0 -2px 6px -4px grey;
 }
 
 .app-todo-content .task-filter {
@@ -58,4 +60,44 @@
 .app-todo-content .clear-completed {
     padding-right: 20px;
     color: var(--secondary-color);
+}
+
+.app-todo-content .list-task {
+    padding: 0;
+    margin: 0;
+}
+
+
+.app-todo-content .content-data {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 58px;
+}
+
+.app-todo-content .content-data:hover {
+    background-color: #dbdee5;
+}
+
+.app-todo-content .content-data:hover .close-task {
+    display: block;
+}
+
+.app-todo-content .close-task {
+    position: absolute;
+    right: 20px;
+    color: var(--color-icon-secondary);
+    cursor: pointer;
+    display: none;
+}
+
+.app-todo-content .fa-circle {
+    margin-left: 20px;
+    color: var(--color-icon-primary);
+    cursor: pointer;
+}
+
+.app-todo-content .task-content {
+    margin-left: 17px;
 }

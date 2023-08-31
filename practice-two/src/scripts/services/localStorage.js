@@ -1,16 +1,12 @@
-// Class definition for the LocalStorage utility.
-class LocalStorage {
-    constructor() {}
-    
-    save(key, data) {
-        localStorage.setItem(key, JSON.stringify(data));
-    }
+const storage = {
+    getTasks: () => {
+        const tasksJSON = localStorage.getItem('tasks');
+        return tasksJSON ? JSON.parse(tasksJSON) : [];
+    },
 
-    get(key) {
-        return JSON.parse(localStorage.getItem(key));
+    saveTasks: (tasks) => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-}
-
-const storage = new LocalStorage();
+};
 
 export default storage;

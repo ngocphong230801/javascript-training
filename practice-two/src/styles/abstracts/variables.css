@@ -10,6 +10,11 @@
     --tertiary-color: #fbfbfb;
     --quaternary-color: #eed5d6;
 
+    /* Color-icon */
+
+    --color-icon-primary: green;
+    --color-icon-secondary: red;
+
      /* Text-color */
     --color-text-default: #000;
     --color-text-primary: #0170fe;
