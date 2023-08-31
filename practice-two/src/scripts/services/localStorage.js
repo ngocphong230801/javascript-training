@@ -1,11 +1,20 @@
 const storage = {
     getTasks: () => {
-        const tasksJSON = localStorage.getItem('tasks');
-        return tasksJSON ? JSON.parse(tasksJSON) : [];
+        try {
+            const tasksJSON = localStorage.getItem('tasks');
+            return tasksJSON ? JSON.parse(tasksJSON) : [];
+        } catch (error) {
+            console.error('Error while getting tasks:', error);
+            return [];
+        }
     },
 
     saveTasks: (tasks) => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        try {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        } catch (error) {
+            console.error('Error while saving tasks:', error);
+        }
     }
 };
 

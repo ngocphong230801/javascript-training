@@ -1,7 +1,10 @@
+import { submitInput } from "../helpers/submit";
+import { getElementById,querySelector } from "../helpers/dom-elements";
+
 class ListView {
     constructor() {
-        this.taskList = document.querySelector(".list-task");
-        this.taskInput = document.getElementById("task-input");
+        this.taskList = querySelector(".list-task");
+        this.taskInput = getElementById("task-input");
         this.init();
     }
 
@@ -19,7 +22,7 @@ class ListView {
     }
 
     handleTaskInput = (event) => {
-        if (event.key === "Enter") {
+        if (event.key === submitInput) {
             const newTask = event.target.value;
             event.target.value = "";
             this.onTaskAdded(newTask);
