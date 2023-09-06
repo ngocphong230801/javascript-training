@@ -26,16 +26,17 @@ class ListView {
         `<li data-index="${index}" class="content-data">
             <i class="fa-regular fa-circle fa-xs"></i>
             <p class="task-content">${task.content}</p>
+            <p class="task-timestamp">Update at: ${task.updatedAt} - Create at: ${task.createdAt}</p>
             <i class="fa-solid fa-xmark close-task"></i>
         </li>`).join("");
-
+    
         if (tasks.length === 0) {
             querySelector('.content-action').style.display = 'none';
         } else {
             querySelector('.content-action').style.display = 'flex';
         }
     }
-
+    
     handleTaskInput = (event) => {
         if (event.key === keys.Enter) {
             const newTask = event.target.value.trim();
@@ -91,7 +92,7 @@ class ListView {
     }
     
     showEditInput = (initialValue, taskContentElement) => {
-        const inputElement = createElement('input');
+        const inputElement = document.createElement('input');
         inputElement.type = 'text';
         inputElement.value = initialValue;
     
@@ -118,7 +119,6 @@ class ListView {
             this.taskIndexToEdit = taskIndex;
         }
     }
-    
     
     closeEditInput = (inputElement) => {
         if (inputElement) {

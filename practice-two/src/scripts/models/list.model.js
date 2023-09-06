@@ -11,7 +11,9 @@ class ListModel {
     }
 
     addTask = (task) => {
-        const newTask = { id: this.lastTaskId++, content: task };
+        const currentTime = new Date();
+        const formattedTime = `${currentTime.toLocaleTimeString()}, ${currentTime.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}`;
+        const newTask = { id: this.lastTaskId++, content: task, createdAt: formattedTime, updatedAt: formattedTime };
         this.tasks.unshift(newTask);
         storage.saveTasks(this.tasks);
     }
@@ -23,7 +25,10 @@ class ListModel {
 
     editTask = (taskIndex, editedTask) => {
         if (taskIndex >= 0 && taskIndex < this.tasks.length) {
+            const currentTime = new Date();
+            const formattedTime = `${currentTime.toLocaleTimeString()}, ${currentTime.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}`;
             this.tasks[taskIndex].content = editedTask;
+            this.tasks[taskIndex].updatedAt = formattedTime;
             storage.saveTasks(this.tasks);
         }
     }

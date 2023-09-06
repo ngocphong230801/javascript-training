@@ -110,3 +110,10 @@
 .app-todo-content .input-edit:focus {
     outline: none;
 }
+
+.app-todo-content .task-timestamp {
+    font-size: var(--font-size-text-base);
+    position: absolute;
+    right: 10px;
+    top: 35px;
+}
