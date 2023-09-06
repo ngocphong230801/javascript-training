@@ -28,6 +28,12 @@ class ListView {
             <p class="task-content">${task.content}</p>
             <i class="fa-solid fa-xmark close-task"></i>
         </li>`).join("");
+
+        if (tasks.length === 0) {
+            querySelector('.content-action').style.display = 'none';
+        } else {
+            querySelector('.content-action').style.display = 'flex';
+        }
     }
 
     handleTaskInput = (event) => {
@@ -85,36 +91,42 @@ class ListView {
     }
     
     showEditInput = (initialValue, taskContentElement) => {
-        const inputElement = document.createElement('input');
+        const inputElement = createElement('input');
         inputElement.type = 'text';
         inputElement.value = initialValue;
     
         inputElement.classList.add('input-edit');
-        taskContentElement.textContent = '';
-        taskContentElement.appendChild(inputElement);
+        if (taskContentElement) {
+            taskContentElement.textContent = '';
+            taskContentElement.appendChild(inputElement);
     
-        inputElement.addEventListener('blur', () => {
-            this.closeEditInput(inputElement);
-        });
-    
-        inputElement.addEventListener('keyup', (event) => {
-            if (event.key === keys.Enter) {
-                const editedTask = event.target.value;
-                this.onTaskEdited(this.taskIndexToEdit, editedTask);
+            inputElement.addEventListener('blur', () => {
                 this.closeEditInput(inputElement);
-            }
-        });
+            });
     
-        inputElement.focus();
+            inputElement.addEventListener('keyup', (event) => {
+                if (event.key === keys.Enter) {
+                    const editedTask = event.target.value;
+                    this.onTaskEdited(this.taskIndexToEdit, editedTask);
+                    this.closeEditInput(inputElement);
+                }
+            });
     
-        const taskIndex = taskContentElement.parentElement.dataset.index;
-        this.taskIndexToEdit = taskIndex;
+            inputElement.focus();
+    
+            const taskIndex = taskContentElement.parentElement.dataset.index;
+            this.taskIndexToEdit = taskIndex;
+        }
     }
     
     
     closeEditInput = (inputElement) => {
-        const parentElement = inputElement.parentElement;
-        parentElement.textContent = inputElement.value;
+        if (inputElement) {
+            const parentElement = inputElement.parentElement;
+            if (parentElement) {
+                parentElement.textContent = inputElement.value;
+            }
+        }
     }
     
     setTaskAddedHandler = (callback) => {
