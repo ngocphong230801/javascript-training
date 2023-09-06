@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Google+Sans+Display:400,500');
 
 :root {
     /* Font */
     --font-primary:  Arial, Helvetica, sans-serif; 
-    --font-secondary: 'Open Sans', sans-serif;
+    --font-secondary: Google Sans Display ,Arial,Helvetica,sans-serif;
     /* Theme */
     --primary-color: #fff;
     --secondary-color: #000;

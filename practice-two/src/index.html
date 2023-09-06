@@ -6,6 +6,7 @@
         <meta name="description" content="A Todo list web application build from TypeScript and MVC model">
         <title>Todo List TypeScript</title>
         <link rel="stylesheet" href="./styles/index.css">
+        <link rel="shortcut icon" href="./assets/favicon.8602d591.ico" type="image/x-icon">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     </head>
     <body>
@@ -33,7 +34,18 @@
                     <a href=""><p class="clear-completed">Clear completed</p></a>
                 </div>
             </div>
+            <div id="confirm-dialog" class="confirm-dialog">
+                <div class="confirm-heading">
+                    <h2 class="confirm-heading-title">Confirm</h2>
+                    <p class="confirm-heading-description">Are you sure? This action will be to remove this item and can't undo it!</p>
+                </div>
+                <div class="confirm-action">
+                    <button id="confirm-cancel" class="confirm-cancel btn">Cancel</button>
+                    <button id="confirm-yes" class="confirm-yes btn">Yes</button>
+                </div>
+            </div>
         </main>
+        <div class="overlay" id="overlay"></div>
         <script type="module" src="./scripts/index.js"></script>
     </body>
 </html>

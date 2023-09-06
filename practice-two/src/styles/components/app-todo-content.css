@@ -78,6 +78,7 @@
 
 .app-todo-content .content-data:hover {
     background-color: #dbdee5;
+    cursor: pointer;
 }
 
 .app-todo-content .content-data:hover .close-task {
@@ -100,4 +101,12 @@
 
 .app-todo-content .task-content {
     margin-left: 17px;
+}
+
+.app-todo-content .input-edit {
+    width: 450px;
+}
+
+.app-todo-content .input-edit:focus {
+    outline: none;
 }
