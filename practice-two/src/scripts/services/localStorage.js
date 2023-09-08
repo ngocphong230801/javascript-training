@@ -1,16 +1,23 @@
-// Class definition for the LocalStorage utility.
-class LocalStorage {
-    constructor() {}
-    
-    save(key, data) {
-        localStorage.setItem(key, JSON.stringify(data));
-    }
+import handleError from "../constants/messages";
 
-    get(key) {
-        return JSON.parse(localStorage.getItem(key));
-    }
-}
+const storage = {
+    getTasks: () => {
+        try {
+            const tasksJSON = localStorage.getItem('tasks');
+            return tasksJSON ? JSON.parse(tasksJSON) : [];
+        } catch (error) {
+            handleError('getting tasks', error);
+            return [];
+        }
+    },
 
-const storage = new LocalStorage();
+    saveTasks: (tasks) => {
+        try {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        } catch (error) {
+            handleError('saving tasks', error);
+        }
+    }
+};
 
 export default storage;
