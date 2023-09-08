@@ -19,16 +19,18 @@ class ListView {
         this.confirmYesBtn.addEventListener('click', this.handleConfirmDelete);
         this.confirmCancelBtn.addEventListener('click', this.handleCancelDelete);
         this.taskList.addEventListener('dblclick', this.handleContentDataDoubleClick);
+        this.taskList.addEventListener('click', this.handleContentDataClick);
     }
 
     renderTasks = (tasks) => {
         this.taskList.innerHTML = tasks.map((task, index) => 
         `<li data-index="${index}" class="content-data">
-            <i class="fa-regular fa-circle fa-xs"></i>
+            <i class="fa-regular fa-circle fa-sm task-icon" ></i>
             <p class="task-content">${task.content}</p>
+            <i class="fa-solid fa-check checkmark fa-2xs" style="display: none;"></i>
             <p class="task-timestamp">Update at: ${task.updatedAt} - Create at: ${task.createdAt}</p>
             <i class="fa-solid fa-xmark close-task"></i>
-        </li>`).join("");
+         </li>`).join("");
     
         if (tasks.length === 0) {
             querySelector('.content-action').style.display = 'none';
@@ -128,7 +130,29 @@ class ListView {
             }
         }
     }
-    
+
+    handleContentDataClick = (event) => {
+        const clickedElement = event.target;
+
+        if (clickedElement.classList.contains('task-icon')) {
+            clickedElement.classList.toggle('clicked');
+
+            const checkmark = clickedElement.parentElement.querySelector('.checkmark');
+            const taskContentElement = clickedElement.parentElement.querySelector('.task-content');
+
+            if (checkmark && taskContentElement) {
+                if (clickedElement.classList.contains('clicked')) {
+                    taskContentElement.style.textDecoration = 'line-through';
+                    checkmark.style.display = 'inline-block';
+                } else {
+                    taskContentElement.style.textDecoration = 'none';
+                    checkmark.style.display = 'none';
+                }
+            }
+        }
+    }
+
+
     setTaskAddedHandler = (callback) => {
         this.onTaskAdded = callback;
     }
