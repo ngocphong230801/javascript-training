@@ -1,103 +1,158 @@
 .app .app-todo-content {
-    width: 550px;
-    height: max-content;
-    margin: 0 auto;
-    background-color:var(--tertiary-color);
-    border-radius: 10px;
+  width: 550px;
+  height: max-content;
+  margin: 0 auto;
+  background-color: var(--tertiary-color);
+  border-radius: 10px;
+  font-family: var(--font-secondary);
 }
 
 .app-todo-content .content-input {
-    display: flex;
-    padding-top: 10px;
-    box-shadow: 0 2px 5px -3px grey;
+  display: flex;
+  padding-top: 10px;
+  box-shadow: 0 2px 5px -3px grey;
 }
 
 .app-todo-content .fa-check {
-    color: var(--color-icon-primary); 
-    margin-top: 10px;
-    margin-left: 20px;
+  color: var(--color-icon-primary);
+  margin-top: 10px;
+  margin-left: 20px;
+  cursor: pointer;
 }
 
 .app-todo-content .task-input {
-    border: none;
-    width: 100%;
-    background-color: rgba(0,0,0,0);
-    padding-left: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  border: none;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  padding-left: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .app-todo-content .task-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .app-todo-content .content-action {
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 -2px 6px -4px grey;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 -2px 6px -4px grey;
 }
 
 .app-todo-content .task-filter {
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
-    margin-right: 30px;
-    
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin-left: 10px;
 }
 
 .app-todo-content .task-filter-item {
-    margin: 0 10px;
+  margin: 0 10px;
+  font-size: var(--font-size-text-md);
 }
 
 .app-todo-content .task-filter-item .item {
-    color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 .app-todo-content .task-filter-item:hover .item {
-    border: 1px solid var(--quaternary-color);
+  border: 1px solid var(--quaternary-color);
 }
 
 .app-todo-content .clear-completed {
-    padding-right: 20px;
-    color: var(--secondary-color);
+  padding-right: 20px;
+  color: var(--secondary-color);
 }
 
 .app-todo-content .list-task {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
+  max-height: 50vh;
+  overflow: auto;
 }
 
-
 .app-todo-content .content-data {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 58px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 58px;
+}
+
+.app-todo-content .content-data:not(:last-child) {
+  border-bottom: 1px solid var(--boder-color-primary);
 }
 
 .app-todo-content .content-data:hover {
-    background-color: #dbdee5;
+  background-color: var( --background-data-primary);
+  cursor: pointer;
 }
 
 .app-todo-content .content-data:hover .close-task {
-    display: block;
+  display: block;
 }
 
 .app-todo-content .close-task {
-    position: absolute;
-    right: 20px;
-    color: var(--color-icon-secondary);
-    cursor: pointer;
-    display: none;
+  position: absolute;
+  right: 20px;
+  color: var(--color-icon-secondary);
+  cursor: pointer;
+  display: none;
 }
 
 .app-todo-content .fa-circle {
-    margin-left: 20px;
-    color: var(--color-icon-primary);
-    cursor: pointer;
+  margin-left: 20px;
+  color: var(--color-icon-primary);
+  cursor: pointer;
 }
 
 .app-todo-content .task-content {
-    margin-left: 17px;
+  margin-left: 25px;
+}
+
+.app-todo-content .input-edit {
+  width: 440px;
+}
+
+.app-todo-content .input-edit:focus {
+  outline: none;
+}
+
+.app-todo-content .task-timestamp {
+  font-size: var(--font-size-text-base);
+  position: absolute;
+  right: 10px;
+  top: 35px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--webkit-scrollbar-default);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--webkit-scrollbar-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--webkit-scrollbar-secondary);
+}
+
+.task-icon.clicked+.task-content {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.app-todo-content .task-icon {
+  z-index: 1000;
+}
+
+.app-todo-content .checkmark {
+  position: absolute;
+  left: 2.2px;
+  top: 18px;
+  z-index: 900;
 }

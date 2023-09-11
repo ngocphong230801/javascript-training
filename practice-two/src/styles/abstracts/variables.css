@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Google+Sans+Display:400,500');
 
 :root {
     /* Font */
     --font-primary:  Arial, Helvetica, sans-serif; 
-    --font-secondary: 'Open Sans', sans-serif;
+    --font-secondary: Google Sans Display ,Arial,Helvetica,sans-serif;
     /* Theme */
     --primary-color: #fff;
     --secondary-color: #000;
@@ -36,4 +36,21 @@
     --font-weight-light: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+
+    /* Webkit-scrollbar */
+    --webkit-scrollbar-default :#dbdee5;
+    --webkit-scrollbar-primary: #34A853;
+    --webkit-scrollbar-secondary: #4285F4;
+
+    /* Background data */
+    --background-data-primary: #dbdee5;
+
+    /* Mention color */
+    --background-mention-primary: #cce5ff;
+    --backgound-mention-secondary: #d4edda;
+
+    /* Boder color */
+    --boder-color-primary: #d6d6d6;
+    --boder-color-secondary: #155724;
+    --boder-color-tertiary: #004085;
 }
