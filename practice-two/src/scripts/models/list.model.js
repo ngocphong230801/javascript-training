@@ -3,6 +3,7 @@ import storage from "../services/localStorage";
 class ListModel {
     constructor() {
         this.init();
+        this.currentView = 'all';
     }
 
     init = () => {
@@ -13,8 +14,74 @@ class ListModel {
     addTask = (task) => {
         const currentTime = new Date();
         const formattedTime = `${currentTime.toLocaleTimeString()}, ${currentTime.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}`;
-        const newTask = { id: this.lastTaskId++, content: task, createdAt: formattedTime, updatedAt: formattedTime };
+        const newTask = { id: this.lastTaskId++, content: task, createdAt: formattedTime, updatedAt: formattedTime, isCompleted: false };
         this.tasks.unshift(newTask);
+        storage.saveTasks(this.tasks);
+    }
+
+    checkAllToggleTask() {
+        const checkTaskNotCompleted = this.tasks.find(t => !t.isCompleted);
+
+        if(checkTaskNotCompleted) {
+            this.tasks.forEach(task => task.isCompleted = true);
+        }else{
+            this.tasks.forEach(task => task.isCompleted = false);
+        }
+        storage.saveTasks(this.tasks);
+        
+    }
+
+    clearCompleted = () => {
+        const checkTaskActiveExit = this.tasks.find(t => t.isCompleted);
+
+        if(!checkTaskActiveExit){
+            return;
+        } 
+        this.tasks.forEach(task => task.isCompleted = false);
+        storage.saveTasks(this.tasks);
+    }
+    
+    filterTask = (actionFilter, renderTasks) => {
+      let taskFilters = null;
+
+      switch(actionFilter) {
+        case 'all' :{
+            taskFilters = this.tasks;
+            break;
+        }
+
+        case 'active' :{
+            taskFilters = this.tasks.filter(task =>!task.isCompleted);
+            break;
+        }
+
+        case 'completed' :{
+            taskFilters = this.tasks.filter(task => task.isCompleted);
+            break;
+        }
+        
+        default: {
+            taskFilters = this.tasks;
+            break;
+        }
+      }
+      renderTasks(taskFilters);
+    }
+    
+    toggleTask = (id, type) => {
+        if(type  === 'active') {
+            this.tasks.forEach(task => {
+                if(task.id == id) {
+                    task.isCompleted = true;
+                }
+            })
+        }else{
+            this.tasks.forEach(task => {
+                if(task.id == id) {
+                    task.isCompleted = false;
+                }
+            })
+        }
         storage.saveTasks(this.tasks);
     }
 
@@ -33,6 +100,9 @@ class ListModel {
         }
     }
     
+    setCurrentView(view) {
+        this.currentView = view;
+    } 
 }
 
 export default ListModel;

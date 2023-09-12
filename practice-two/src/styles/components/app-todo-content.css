@@ -157,3 +157,8 @@
   z-index: 900;
   
 }
+
+.app-todo-content .total-item {
+  display: block;
+  padding-left: 15px;
+}
