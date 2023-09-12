@@ -51,6 +51,14 @@ class ListView {
         } else {
             querySelector('.content-action').style.display = 'flex';
         }
+        const hasCompletedTasks = allTask.some(task => task.isCompleted);
+        
+        if (hasCompletedTasks) {
+            querySelector('.clear-completed').style.display = 'block';
+        } else {
+            querySelector('.clear-completed').style.display = 'none';
+        }
+
     }
 
     handleToggleAllItems = () => {
