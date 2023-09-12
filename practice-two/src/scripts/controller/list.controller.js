@@ -15,12 +15,12 @@ class ListController {
   }
 
   init = () => {
-      this.listView.renderTasks(this.listModel.tasks);
+      this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
   };
 
   handleClearAllCompleted = () => {
     this.listModel.clearCompleted();
-    this.listView.renderTasks(this.listModel.tasks);
+    this.listView.renderTasks(this.listModel.tasks,this.listModel.tasks);
   }
 
   handleFilterTask = (actionFilter)  =>{
@@ -29,27 +29,27 @@ class ListController {
 
   handleCheckAllToggleTask = () => {
     this.listModel.checkAllToggleTask();
-    this.listView.renderTasks(this.listModel.tasks);
+    this.listView.renderTasks(this.listModel.tasks,this.listModel.tasks);
   }
 
   handleToggleCompleted = (id, type) => {
     this.listModel.toggleTask(id, type)
-    this.listView.renderTasks(this.listModel.tasks);
+    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
   }
 
   handleTaskAdded = (task) => {
       this.listModel.addTask(task);
-      this.listView.renderTasks(this.listModel.tasks);
+      this.listView.renderTasks(this.listModel.tasks,this.listModel.tasks);
   }
 
   handleTaskRemoved = (taskIndex) => {
     this.listModel.removeTaskByIndex(taskIndex);
-    this.listView.renderTasks(this.listModel.tasks);
+    this.listView.renderTasks(this.listModel.tasks,this.listModel.tasks);
   }
   
   handleTaskEdited = (taskIndex, editedTask) => {
     this.listModel.editTask(taskIndex, editedTask);
-    this.listView.renderTasks(this.listModel.tasks);
+    this.listView.renderTasks(this.listModel.tasks,this.listModel.tasks);
   }
 }
 

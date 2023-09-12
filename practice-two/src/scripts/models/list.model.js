@@ -3,7 +3,6 @@ import storage from "../services/localStorage";
 class ListModel {
     constructor() {
         this.init();
-        this.currentView = 'all';
     }
 
     init = () => {
@@ -32,12 +31,7 @@ class ListModel {
     }
 
     clearCompleted = () => {
-        const checkTaskActiveExit = this.tasks.find(t => t.isCompleted);
-
-        if(!checkTaskActiveExit){
-            return;
-        } 
-        this.tasks.forEach(task => task.isCompleted = false);
+        this.tasks = this.tasks.filter(task => !task.isCompleted);
         storage.saveTasks(this.tasks);
     }
     
@@ -65,7 +59,7 @@ class ListModel {
             break;
         }
       }
-      renderTasks(taskFilters);
+      renderTasks(taskFilters, this.tasks)
     }
     
     toggleTask = (id, type) => {
@@ -100,9 +94,6 @@ class ListModel {
         }
     }
     
-    setCurrentView(view) {
-        this.currentView = view;
-    } 
 }
 
 export default ListModel;
