@@ -227,7 +227,32 @@ class ListView {
             }
         }
     }
+
+    showFilterNotification = (filterType) => {
+        let message = "";
+        switch (filterType) {
+            case 'all':
+                message = "all tasks.";
+                break;
+            case 'active':
+                message = "active tasks.";
+                break;
+            case 'completed':
+                message = "completed tasks.";
+                break;
+            default:
+                message = " all tasks.";
+                break;
+        }
+        this.showNotification(`Your action has been executed! The ${message}are showing.`);
+    }
     
+    handleFilerTask(elementFilter) {
+        const dataFilter = elementFilter.getAttribute('data-action');
+        this.onTaskFilter(dataFilter);
+        this.showFilterNotification(dataFilter);
+    }
+
     setTaskAddedHandler = (callback) => {
         this.onTaskAdded = callback;
     }
