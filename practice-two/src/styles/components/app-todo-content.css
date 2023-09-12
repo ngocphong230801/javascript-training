@@ -9,13 +9,13 @@
 
 .app-todo-content .content-input {
   display: flex;
-  padding-top: 10px;
+  height: 52px;
   box-shadow: 0 2px 5px -3px grey;
 }
 
 .app-todo-content .fa-check {
   color: var(--color-icon-primary);
-  margin-top: 10px;
+  margin-top: 17px;
   margin-left: 20px;
   cursor: pointer;
 }
@@ -158,7 +158,7 @@
 .app-todo-content .checkmark {
   position: absolute;
   left: 2.2px;
-  top: 18px;
+  top: 12px;
   z-index: 900;
   
 }

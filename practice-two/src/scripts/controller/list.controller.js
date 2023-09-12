@@ -38,9 +38,10 @@ class ListController {
   }
 
   handleTaskAdded = (task) => {
-      this.listModel.addTask(task);
-      this.listView.renderTasks(this.listModel.tasks,this.listModel.tasks);
-  }
+    this.listModel.addTask(task);
+    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    this.listView.showNotificationDialog();
+}
 
   handleTaskRemoved = (taskIndex) => {
     this.listModel.removeTaskByIndex(taskIndex);

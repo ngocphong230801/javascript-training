@@ -14,8 +14,14 @@ class ListView {
         this.totalItem = querySelector('.total-item')
         this.checkAllToggleItems = querySelector('.check-all')
         this.clearAllComplete = querySelector('.clear-completed');
+        this.loadingElement = querySelector(".app__loading");
         
         this.init();
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                this.loadingElement.style.display = "none";
+            }, 1000);
+        });
     }
 
     init = () => {
@@ -191,6 +197,15 @@ class ListView {
                 }
             }
         }
+    }
+
+    showNotificationDialog = () => {
+        const notificationDialog = getElementById('notification-dialog');
+        notificationDialog.style.display = 'block';
+
+        setTimeout(() => {
+            notificationDialog.style.display = 'none';
+        }, 2000);
     }
 
     setTaskAddedHandler = (callback) => {
