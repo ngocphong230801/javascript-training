@@ -15,8 +15,11 @@ class ListView {
         this.checkAllToggleItems = querySelector('.check-all')
         this.clearAllComplete = querySelector('.clear-completed');
         this.loadingElement = querySelector(".app__loading");
-        
+        this.notificationDialog = getElementById('notification-dialog');
+        this.notificationContent = querySelector('.notification-content');
+        this.closeNotificationBtn = getElementById('close-notification');
         this.init();
+        this.taskStatusMap = new Map()
         window.addEventListener("load", () => {
             setTimeout(() => {
                 this.loadingElement.style.display = "none";
@@ -36,6 +39,7 @@ class ListView {
         })
         this.checkAllToggleItems.addEventListener('click', this.handleToggleAllItems);
         this.clearAllComplete.addEventListener('click', this.handleClearAllComplete);
+        this.closeNotificationBtn.addEventListener('click', this.handleCloseNotification);
     }
 
     renderTasks = (tasks, allTask) => {
@@ -65,7 +69,29 @@ class ListView {
             querySelector('.clear-completed').style.display = 'none';
         }
 
+        if (this.notificationVisible) {
+            this.showNotification(this.notificationMessage);
+        }
+
     }
+
+    showNotification = (message) => {
+        this.notificationContent.textContent = message;
+        this.notificationDialog.style.display = "block";
+
+        setTimeout(() => {
+            this.hideNotification();
+        }, 2000); 
+    }
+
+    hideNotification = () => {
+        this.notificationDialog.style.display = "none";
+    }
+
+    handleCloseNotification = () => {
+        this.hideNotification();
+    }
+
 
     handleToggleAllItems = () => {
         this.onSetCheckAllToggleTask()
@@ -174,40 +200,34 @@ class ListView {
         const clickedElement = event.target;
 
         if (clickedElement.classList.contains('task-icon')) {
-            clickedElement.classList.toggle('clicked');
+            const taskDataId = clickedElement.parentElement.dataset.id;
 
-            const checkmark = clickedElement.parentElement.querySelector('.checkmark');
-            const taskContentElement = clickedElement.parentElement.querySelector('.task-content');
+            if (taskDataId) {
+                const currentStatus = this.taskStatusMap.get(taskDataId);
+                const newStatus = currentStatus === 'active' ? 'unactive' : 'active';
+                this.taskStatusMap.set(taskDataId, newStatus);
 
-            const dataID = clickedElement?.parentElement?.dataset?.id
+                clickedElement.classList.toggle('clicked');
+                const checkmark = clickedElement.parentElement.querySelector('.checkmark');
+                const taskContentElement = clickedElement.parentElement.querySelector('.task-content');
 
-            if(!dataID) {
-                return;
-            }
-
-            if (checkmark && taskContentElement) {
-                if (clickedElement.classList.contains('clicked')) {
-                    taskContentElement.style.textDecoration = 'line-through';
-                    checkmark.style.display = 'inline-block';
-                    this.onToggleCompleted(dataID, 'active');
-                } else {
-                    taskContentElement.style.textDecoration = 'none';
-                    checkmark.style.display = 'none';
-                    this.onToggleCompleted(dataID, 'unactive');
+                if (checkmark && taskContentElement) {
+                    if (newStatus === 'active') {
+                        taskContentElement.style.textDecoration = 'line-through';
+                        checkmark.style.display = 'inline-block';
+                        this.onToggleCompleted(taskDataId, 'active');
+                        this.showNotification("Your action has been executed! A task was checked done successfully.");
+                    } else {
+                        taskContentElement.style.textDecoration = 'none';
+                        checkmark.style.display = 'none';
+                        this.onToggleCompleted(taskDataId, 'unactive');
+                        this.showNotification("Your action has been executed! A task was unchecked done successfully.");
+                    }
                 }
             }
         }
     }
-
-    showNotificationDialog = () => {
-        const notificationDialog = getElementById('notification-dialog');
-        notificationDialog.style.display = 'block';
-
-        setTimeout(() => {
-            notificationDialog.style.display = 'none';
-        }, 2000);
-    }
-
+    
     setTaskAddedHandler = (callback) => {
         this.onTaskAdded = callback;
     }
