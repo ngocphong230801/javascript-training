@@ -26,8 +26,8 @@ class ListView {
         });
         this.filter.forEach((elementFilter) => {
             elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
+            this.init();
         });
-        this.init();
     }
 
     init = () => {
@@ -80,7 +80,7 @@ class ListView {
 
     showNotification = (message) => {
         this.notificationContent.textContent = message;
-        this.notificationDialog.style.display = "block";
+        toggleDisplay("notification-dialog", true);
 
         setTimeout(() => {
             this.hideNotification();
@@ -88,7 +88,7 @@ class ListView {
     }
 
     hideNotification = () => {
-        this.notificationDialog.style.display = "none";
+        toggleDisplay("notification-dialog", false);
     }
 
     handleCloseNotification = () => {
@@ -211,7 +211,7 @@ class ListView {
 
             if (taskDataId) {
                 const currentStatus = this.taskStatusMap.get(taskDataId);
-                const newStatus = currentStatus === 'checked' ? 'unchecked' : 'checked';
+                const newStatus = currentStatus === 'active' ? 'unactive' : 'active';
                 this.taskStatusMap.set(taskDataId, newStatus);
 
                 clickedElement.classList.toggle('clicked');
@@ -219,15 +219,15 @@ class ListView {
                 const taskContentElement = clickedElement.parentElement.querySelector('.task-content');
 
                 if (checkmark && taskContentElement) {
-                    if (newStatus === 'checked') {
+                    if (newStatus === 'active') {
                         taskContentElement.style.textDecoration = 'line-through';
                         checkmark.style.display = 'inline-block';
-                        this.onToggleCompleted(taskDataId, 'checked');
+                        this.onToggleCompleted(taskDataId, 'active');
                         this.showNotification("Your action has been executed! A task was checked done successfully.");
                     } else {
                         taskContentElement.style.textDecoration = 'none';
                         checkmark.style.display = 'none';
-                        this.onToggleCompleted(taskDataId, 'unchecked');
+                        this.onToggleCompleted(taskDataId, 'unactive');
                         this.showNotification("Your action has been executed! A task was unchecked done successfully.");
                     }
                 }
@@ -242,8 +242,8 @@ class ListView {
                 message = "all tasks.";
                 this.notificationDialog.classList.add('action-mode');
                 break;
-            case 'checked':
-                message = "checked tasks.";
+            case 'active':
+                message = "active tasks.";
                 this.notificationDialog.classList.add('action-mode');
                 break;
             case 'completed':
