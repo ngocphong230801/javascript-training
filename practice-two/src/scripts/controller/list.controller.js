@@ -1,3 +1,5 @@
+import { querySelectorAll } from "../helpers/dom-elements";
+
 class ListController {
   constructor(listModel, listView) {
     this.listModel = listModel;
@@ -16,7 +18,50 @@ class ListController {
 
   init = () => {
     this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+
+    this.handleReloadWindows();
   };
+
+  handleReloadWindows = () => {
+    const status = window.location.hash;
+    let elements = querySelectorAll('.task-filter-item > a')
+
+    elements.forEach(function(element) {
+      element.classList.remove('active-btn')
+    })
+
+    const handleActiveElement = (elements, action) => {
+      elements.forEach(function(element) {
+        if(element.dataset.action === action) {
+          element.classList.add('active-btn')
+        }
+      })
+     } 
+    
+    switch(status) {
+        case '#all' : {
+            console.log(this)
+            this.handleFilterTask('all');
+            handleActiveElement(elements, 'all')
+            break;
+        }
+        case '#active' : {
+            this.handleFilterTask('active');
+            handleActiveElement(elements, 'active')
+            break;
+        }
+        case '#completed' : {
+            this.handleFilterTask('completed');
+            handleActiveElement(elements, 'completed')
+            break;
+        }
+        default : {
+            this.handleFilterTask('all');
+            break;
+        }
+    }
+    
+}
 
   showNotification = (message) => {
     this.listModel.notificationVisible = true;
@@ -49,8 +94,7 @@ class ListController {
   }
 
   handleToggleCompleted = (id, type) => {
-    this.listModel.toggleTask(id, type);
-    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    this.listModel.toggleTask(id, type, this.listView.renderTasks);
   }
 
   handleTaskAdded = (task) => {

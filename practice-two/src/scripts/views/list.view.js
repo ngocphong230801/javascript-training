@@ -43,15 +43,15 @@ class ListView {
         this.filter.forEach((elementFilter) => {
             elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
         })
+
     }
 
     renderTasks = (tasks, allTask) => {
-
         const countNoChecked = allTask.filter(i => !i.isCompleted).length;
         this.totalItem.innerHTML = `${countNoChecked} item left`
         
         this.taskList.innerHTML = tasks.map((task, index) => 
-        `<li data-index="${index}" data-id="${task.id}" class="content-data">
+        `<li data-index="${index}" data-id="${task.id}" data-checked="${task.isCompleted ? "true": "false"}" class="content-data">
             <i class="fa-regular fa-circle fa-sm task-icon ${task.isCompleted ? " clicked" : ""}" ></i>
             <p class="task-content" style="${task.isCompleted ? "text-decoration: line-through;" : "text-decoration: none;"}">${task.content}</p>
             <i class="fa-solid fa-check checkmark fa-2xs" style="${task.isCompleted ? "display: inline-block;" : "display: none;"}"></i>
@@ -110,9 +110,9 @@ class ListView {
         this.onTaskFilter(dataFilter);
         this.showFilterNotification(dataFilter);
         this.filter.forEach((element) => {
-            element.blur();
+            element.classList.remove('active-btn')
         });
-        elementFilter.focus();
+        elementFilter.classList.add('active-btn');
     }
 
     handleTaskInput = (event) => {
@@ -209,16 +209,17 @@ class ListView {
 
         if (clickedElement.classList.contains('task-icon')) {
             const taskDataId = clickedElement.parentElement.dataset.id;
+            const currentStatus = clickedElement.parentElement.dataset.checked;
 
-            if (taskDataId) {
-                const currentStatus = this.taskStatusMap.get(taskDataId);
-                const newStatus = currentStatus === 'active' ? 'unactive' : 'active';
-                this.taskStatusMap.set(taskDataId, newStatus);
+            if (taskDataId && currentStatus) {
+                const newStatus = currentStatus === 'true' ? 'unactive' : 'active';
 
                 clickedElement.classList.toggle('clicked');
                 const checkmark = clickedElement.parentElement.querySelector('.checkmark');
                 const taskContentElement = clickedElement.parentElement.querySelector('.task-content');
 
+               
+                console.log(currentStatus == 'active')
                 if (checkmark && taskContentElement) {
                     if (newStatus === 'active') {
                         taskContentElement.style.textDecoration = 'line-through';

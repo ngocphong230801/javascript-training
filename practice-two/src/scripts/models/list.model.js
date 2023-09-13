@@ -35,7 +35,6 @@ class ListModel {
         this.tasks = this.tasks.filter(task => !task.isCompleted);
         storage.saveTasks(this.tasks);
     }
-
     filterTask = (actionFilter, renderTasks) => {
         let taskFilters = null;
 
@@ -63,19 +62,30 @@ class ListModel {
         renderTasks(taskFilters, this.tasks)
     }
 
-    toggleTask = (id, type) => {
+    toggleTask = (id, type, renderTasks) => {
         if (type === 'active') {
             this.tasks.forEach(task => {
                 if (task.id == id) {
                     task.isCompleted = true;
                 }
             })
+         
         } else {
             this.tasks.forEach(task => {
                 if (task.id == id) {
                     task.isCompleted = false;
                 }
             })
+        }
+
+        if(window.location.hash === '#completed') {
+            this.filterTask('completed', renderTasks)
+        }
+        else if(window.location.hash === '#active') {
+            this.filterTask('active', renderTasks)
+        }
+        else{
+            renderTasks(this.tasks, this.tasks)
         }
         storage.saveTasks(this.tasks);
     }
