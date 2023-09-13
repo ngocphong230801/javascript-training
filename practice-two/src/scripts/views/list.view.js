@@ -25,6 +25,9 @@ class ListView {
                 this.loadingElement.style.display = "none";
             }, 1000);
         });
+        this.filter.forEach((elementFilter) => {
+            elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
+        });
     }
 
     init = () => {
@@ -81,7 +84,7 @@ class ListView {
 
         setTimeout(() => {
             this.hideNotification();
-        }, 2000); 
+        }, 3000); 
     }
 
     hideNotification = () => {
@@ -104,7 +107,11 @@ class ListView {
 
     handleFilerTask(elementFilter) {
         const dataFilter = elementFilter.getAttribute('data-action');
-        this.onTaskFilter(dataFilter)
+        this.onTaskFilter(dataFilter);
+        this.filter.forEach((element) => {
+            element.blur();
+        });
+        elementFilter.focus();
     }
 
     handleTaskInput = (event) => {
@@ -233,15 +240,19 @@ class ListView {
         switch (filterType) {
             case 'all':
                 message = "all tasks.";
+                this.notificationDialog.classList.add('action-mode');
                 break;
             case 'active':
                 message = "active tasks.";
+                this.notificationDialog.classList.add('action-mode');
                 break;
             case 'completed':
                 message = "completed tasks.";
+                this.notificationDialog.classList.add('action-mode');
                 break;
             default:
                 message = " all tasks.";
+                this.notificationDialog.classList.add('action-mode');
                 break;
         }
         this.showNotification(`Your action has been executed! The ${message}are showing.`);
@@ -280,7 +291,6 @@ class ListView {
     setClearAllCompleted = (callback) => { 
         this.onClearAllComplete = callback;
     }
-
 }
 
 export default ListView;

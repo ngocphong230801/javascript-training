@@ -59,9 +59,10 @@
   outline: none;
 }
 
-.app-todo-content .task-filter-item:active .item {
+.app-todo-content .task-filter-item .item:focus {
   border: 1px solid var(--quaternary-color);
   padding: 5px;
+  outline: none;
 }
 
 .app-todo-content .clear-completed {

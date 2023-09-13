@@ -23,6 +23,7 @@
     color: #155724;
     width: 300px;
     margin-left: 20px;
+    line-height: 23px;
 }
 
 .app .fa-circle-xmark {
@@ -30,4 +31,9 @@
    right: 25px;
    bottom: 40px;
    cursor: pointer;
+   display: none;
+}
+
+.app .notification-dialog:hover .fa-circle-xmark {
+    display: block;
 }
