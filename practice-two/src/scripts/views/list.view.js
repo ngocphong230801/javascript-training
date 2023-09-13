@@ -19,11 +19,11 @@ class ListView {
         this.notificationContent = querySelector('.notification-content');
         this.closeNotificationBtn = getElementById('close-notification');
         this.taskStatusMap = new Map()
-        window.addEventListener("load", () => {
-            setTimeout(() => {
-                this.loadingElement.style.display = "none";
-            }, 1000);
+        window.addEventListener("load", async () => {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            this.loadingElement.style.display = "none";
         });
+
         this.filter.forEach((elementFilter) => {
             elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
             this.init();
@@ -80,7 +80,7 @@ class ListView {
 
     showNotification = (message) => {
         this.notificationContent.textContent = message;
-        toggleDisplay("notification-dialog", true);
+        this.notificationDialog.style.display = "block";
 
         setTimeout(() => {
             this.hideNotification();
@@ -88,7 +88,7 @@ class ListView {
     }
 
     hideNotification = () => {
-        toggleDisplay("notification-dialog", false);
+        this.notificationDialog.style.display = "none";
     }
 
     handleCloseNotification = () => {
@@ -108,6 +108,7 @@ class ListView {
     handleFilerTask(elementFilter) {
         const dataFilter = elementFilter.getAttribute('data-action');
         this.onTaskFilter(dataFilter);
+        this.showFilterNotification(dataFilter);
         this.filter.forEach((element) => {
             element.blur();
         });
@@ -258,12 +259,6 @@ class ListView {
         this.showNotification(`Your action has been executed! The ${message}are showing.`);
     }
     
-    handleFilerTask(elementFilter) {
-        const dataFilter = elementFilter.getAttribute('data-action');
-        this.onTaskFilter(dataFilter);
-        this.showFilterNotification(dataFilter);
-    }
-
     setTaskAddedHandler = (callback) => {
         this.onTaskAdded = callback;
     }
