@@ -211,7 +211,7 @@ class ListView {
 
             if (taskDataId) {
                 const currentStatus = this.taskStatusMap.get(taskDataId);
-                const newStatus = currentStatus === 'active' ? 'unactive' : 'active';
+                const newStatus = currentStatus === 'checked' ? 'unchecked' : 'checked';
                 this.taskStatusMap.set(taskDataId, newStatus);
 
                 clickedElement.classList.toggle('clicked');
@@ -219,15 +219,15 @@ class ListView {
                 const taskContentElement = clickedElement.parentElement.querySelector('.task-content');
 
                 if (checkmark && taskContentElement) {
-                    if (newStatus === 'active') {
+                    if (newStatus === 'checked') {
                         taskContentElement.style.textDecoration = 'line-through';
                         checkmark.style.display = 'inline-block';
-                        this.onToggleCompleted(taskDataId, 'active');
+                        this.onToggleCompleted(taskDataId, 'checked');
                         this.showNotification("Your action has been executed! A task was checked done successfully.");
                     } else {
                         taskContentElement.style.textDecoration = 'none';
                         checkmark.style.display = 'none';
-                        this.onToggleCompleted(taskDataId, 'unactive');
+                        this.onToggleCompleted(taskDataId, 'unchecked');
                         this.showNotification("Your action has been executed! A task was unchecked done successfully.");
                     }
                 }
@@ -242,8 +242,8 @@ class ListView {
                 message = "all tasks.";
                 this.notificationDialog.classList.add('action-mode');
                 break;
-            case 'active':
-                message = "active tasks.";
+            case 'checked':
+                message = "checked tasks.";
                 this.notificationDialog.classList.add('action-mode');
                 break;
             case 'completed':
