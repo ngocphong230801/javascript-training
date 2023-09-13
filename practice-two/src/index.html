@@ -27,9 +27,9 @@
                 <div class="content-action">
                     <p class="total-item"></p>
                     <ul class="task-filter">
-                        <li class="task-filter-item"><a data-action="all" href="#/" class="selected item">All</a></li>
-                        <li class="task-filter-item"><a data-action="active" href="#/" class="active item">Active</a></li>
-                        <li class="task-filter-item"><a data-action="completed" href="#/" class="completed item">Completed</a></li>
+                        <li class="task-filter-item"><a data-action="all" href="#all" class="selected item all active-btn" tabindex="0">All</a></li>
+                        <li class="task-filter-item"><a data-action="active" href="#active" class="active item selected" tabindex="0">Active</a></li>
+                        <li class="task-filter-item"><a data-action="completed" href="#completed" class="completed item selected" tabindex="0">Completed</a></li>
                     </ul>
                     <a href=""><p class="clear-completed">Clear completed</p></a>
                 </div>
@@ -44,7 +44,21 @@
                     <button id="confirm-yes" class="confirm-yes btn">Yes</button>
                 </div>
             </div>
+            <div id="notification-dialog" class="notification-dialog">
+                <p class="notification-content">Mention</p>
+                <i class="fa-solid fa-circle-xmark close-notification-btn" id="close-notification"></i>
+            </div>
         </main>
+        <div class="app__loading loading">
+            <div class="preloader">
+              <div class="preloader__absolute">
+                <div class="preloader__item"></div>
+                <div class="preloader__item"></div>
+                <div class="preloader__item"></div>
+                <div class="preloader__item"></div>
+              </div>
+            </div>
+          </div>
         <div class="overlay" id="overlay"></div>
         <script type="module" src="./scripts/index.js"></script>
     </body>
