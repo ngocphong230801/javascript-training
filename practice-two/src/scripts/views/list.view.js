@@ -80,7 +80,7 @@ class ListView {
 
     showNotification = (message) => {
         this.notificationContent.textContent = message;
-        this.notificationDialog.style.display = "block";
+        toggleDisplay('notification-dialog', true);
 
         setTimeout(() => {
             this.hideNotification();
@@ -88,7 +88,7 @@ class ListView {
     }
 
     hideNotification = () => {
-        this.notificationDialog.style.display = "none";
+        toggleDisplay('notification-dialog', false);
     }
 
     handleCloseNotification = () => {
