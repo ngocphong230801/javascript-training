@@ -11,16 +11,16 @@
     width: 400;
     height: 76px;
     border-radius: 2px;
-    background-color: #d4edda;
-    border: 1px solid #155724;
+    background-color: var(--backgound-mention-secondary);
+    border: 1px solid var(--boder-color-secondary);
     position: absolute;
     bottom: 20px;
     right: 20px;
 }
 
 .app .notification-content {
-    font-size: 16px;
-    color: #155724;
+    font-size: var(--font-size-text-md);
+    color: var(--boder-color-secondary);
     width: 300px;
     margin-left: 20px;
     line-height: 23px;

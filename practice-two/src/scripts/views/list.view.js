@@ -18,16 +18,16 @@ class ListView {
         this.notificationDialog = getElementById('notification-dialog');
         this.notificationContent = querySelector('.notification-content');
         this.closeNotificationBtn = getElementById('close-notification');
-        this.init();
         this.taskStatusMap = new Map()
         window.addEventListener("load", () => {
             setTimeout(() => {
-                this.loadingElement.style.display = "none";
+                toggleDisplay("loadingElement", false);
             }, 1000);
         });
         this.filter.forEach((elementFilter) => {
             elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
         });
+        this.init();
     }
 
     init = () => {
@@ -80,7 +80,7 @@ class ListView {
 
     showNotification = (message) => {
         this.notificationContent.textContent = message;
-        this.notificationDialog.style.display = "block";
+        toggleDisplay("notification-dialog", true);
 
         setTimeout(() => {
             this.hideNotification();
@@ -88,7 +88,7 @@ class ListView {
     }
 
     hideNotification = () => {
-        this.notificationDialog.style.display = "none";
+        toggleDisplay("notification-dialog", false);
     }
 
     handleCloseNotification = () => {
