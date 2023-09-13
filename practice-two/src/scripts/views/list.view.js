@@ -21,7 +21,7 @@ class ListView {
         this.taskStatusMap = new Map()
         window.addEventListener("load", () => {
             setTimeout(() => {
-                toggleDisplay("loadingElement", false);
+                this.loadingElement.style.display = "none";
             }, 1000);
         });
         this.filter.forEach((elementFilter) => {
@@ -80,7 +80,7 @@ class ListView {
 
     showNotification = (message) => {
         this.notificationContent.textContent = message;
-        toggleDisplay("notification-dialog", true);
+        this.notificationDialog.style.display = "block";
 
         setTimeout(() => {
             this.hideNotification();
@@ -88,7 +88,7 @@ class ListView {
     }
 
     hideNotification = () => {
-        toggleDisplay("notification-dialog", false);
+        this.notificationDialog.style.display = "none";
     }
 
     handleCloseNotification = () => {
