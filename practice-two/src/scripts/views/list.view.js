@@ -26,8 +26,8 @@ class ListView {
 
         this.filter.forEach((elementFilter) => {
             elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
-            this.init();
         });
+        this.init();
     }
 
     init = () => {
@@ -37,12 +37,12 @@ class ListView {
         this.confirmCancelBtn.addEventListener('click', this.handleCancelDelete);
         this.taskList.addEventListener('dblclick', this.handleContentDataDoubleClick);
         this.taskList.addEventListener('click', this.handleContentDataClick);
-        this.filter.forEach((elementFilter) => {
-            elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
-        })
         this.checkAllToggleItems.addEventListener('click', this.handleToggleAllItems);
         this.clearAllComplete.addEventListener('click', this.handleClearAllComplete);
         this.closeNotificationBtn.addEventListener('click', this.handleCloseNotification);
+        this.filter.forEach((elementFilter) => {
+            elementFilter.addEventListener('click', () => this.handleFilerTask(elementFilter));
+        })
     }
 
     renderTasks = (tasks, allTask) => {
