@@ -48,15 +48,27 @@ class ListView {
 
     renderTasks = (tasks, allTask) => {
         const countNoChecked = allTask.filter(i => !i.isCompleted).length;
-        this.totalItem.innerHTML = `${countNoChecked} item left`
+        let itemText = `${countNoChecked} item`;
+
+        if (countNoChecked !== 1) {
+            itemText += "s";
+        }
+        
+        itemText += " left"; 
+        
+        if (countNoChecked === 0) {
+            itemText = "0 item left";
+        }
+        
+        this.totalItem.innerHTML = itemText;
         
         this.taskList.innerHTML = tasks.map((task, index) => 
         `<li data-index="${index}" data-id="${task.id}" data-checked="${task.isCompleted ? "true": "false"}" class="content-data">
-            <i class="fa-regular fa-circle fa-sm task-icon ${task.isCompleted ? " clicked" : ""}" ></i>
+            <i class="fa fa-circle-o task-icon ${task.isCompleted ? " clicked" : ""}" ></i>
             <p class="task-content" style="${task.isCompleted ? "text-decoration: line-through;" : "text-decoration: none;"}">${task.content}</p>
-            <i class="fa-solid fa-check checkmark fa-2xs" style="${task.isCompleted ? "display: inline-block;" : "display: none;"}"></i>
+            <i class="fa fa-check-circle-o checkmark" style="${task.isCompleted ? "display: inline-block;" : "display: none; width: 10px;"}"></i>
             <p class="task-timestamp">Update at: ${task.updatedAt} - Create at: ${task.createdAt}</p>
-            <i class="fa-solid fa-xmark close-task"></i>
+            <i class="fa fa-times close-task"></i>
          </li>`).join("");
     
         if (allTask.length === 0) {

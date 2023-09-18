@@ -85,23 +85,32 @@ class ListController {
 
   handleCheckAllToggleTask = () => {
     this.listModel.checkAllToggleTask();
-    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    this.listModel.filterTask('active', this.listView.renderTasks);
     if (this.listModel.notificationVisible) {
-      this.hideNotification();
+        this.hideNotification();
     } else {
-      this.showNotification("Your action has been executed! All of the tasks are checked as completed.");
+        this.showNotification("Your action has been executed! All of the tasks are checked as completed.");
     }
   }
 
   handleToggleCompleted = (id, type) => {
     this.listModel.toggleTask(id, type, this.listView.renderTasks);
   }
-
+  
   handleTaskAdded = (task) => {
     this.listModel.addTask(task);
-    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+
+    const currentFilter = window.location.hash;
+    
+    if (currentFilter === "#active") {
+        this.listModel.filterTask('active', this.listView.renderTasks);
+    } else {
+        this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    }
+
     this.showNotification("Your action has been executed! A task was added successfully.");
   }
+
 
   handleTaskEdited = (taskIndex, editedTask) => {
     this.listModel.editTask(taskIndex, editedTask);
