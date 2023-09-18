@@ -22,6 +22,7 @@ class ListModel {
 
     checkAllToggleTask() {
         const checkTaskNotCompleted = this.tasks.find(t => !t.isCompleted);
+
         if (checkTaskNotCompleted) {
             this.tasks.forEach(task => task.isCompleted = true);
         } else {
@@ -29,37 +30,36 @@ class ListModel {
         }
         storage.saveTasks(this.tasks);
     }
-    
+
     clearCompleted = () => {
         this.tasks = this.tasks.filter(task => !task.isCompleted);
         storage.saveTasks(this.tasks);
     }
+    filterTask = (actionFilter, renderTasks) => {
+        let taskFilters = null;
 
-   filterTask = (actionFilter, renderTasks) => {
-    let taskFilters = null;
+        switch (actionFilter) {
+            case 'all': {
+                taskFilters = this.tasks;
+                break;
+            }
 
-    switch (actionFilter) {
-        case 'all': {
-            taskFilters = this.tasks;
-            break;
+            case 'active': {
+                taskFilters = this.tasks.filter(task => !task.isCompleted);
+                break;
+            }
+
+            case 'completed': {
+                taskFilters = this.tasks.filter(task => task.isCompleted);
+                break;
+            }
+
+            default: {
+                taskFilters = this.tasks;
+                break;
+            }
         }
-
-        case 'active': {
-            taskFilters = this.tasks.filter(task => !task.isCompleted);
-            break;
-        }
-
-        case 'completed': {
-            taskFilters = this.tasks.filter(task => task.isCompleted);
-            break;
-        }
-
-        default: {
-            taskFilters = this.tasks;
-            break;
-        }
-    }
-    renderTasks(taskFilters, this.tasks)
+        renderTasks(taskFilters, this.tasks)
     }
 
     toggleTask = (id, type, renderTasks) => {

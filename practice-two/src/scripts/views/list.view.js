@@ -53,13 +53,12 @@ class ListView {
         if (countNoChecked !== 1) {
             itemText += "s";
         }
-        
         itemText += " left"; 
         
         if (countNoChecked === 0) {
             itemText = "0 item left";
         }
-        
+    
         this.totalItem.innerHTML = itemText;
         
         this.taskList.innerHTML = tasks.map((task, index) => 
