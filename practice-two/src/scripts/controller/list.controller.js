@@ -85,13 +85,32 @@ class ListController {
 
   handleCheckAllToggleTask = () => {
     this.listModel.checkAllToggleTask();
-    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
-    if (this.listModel.notificationVisible) {
-      this.hideNotification();
+
+    // Check the current filter status to determine which tasks to render
+    const currentFilter = window.location.hash.substring(1); // Remove the '#' from the hash
+
+    if (currentFilter === 'active') {
+        const activeTasks = this.listModel.tasks.filter(task => !task.isCompleted);
+        this.listView.renderTasks(activeTasks, this.listModel.tasks);
+    } else if (currentFilter === 'completed') {
+        const completedTasks = this.listModel.tasks.filter(task => task.isCompleted);
+        this.listView.renderTasks(completedTasks, this.listModel.tasks);
     } else {
-      this.showNotification("Your action has been executed! All of the tasks are checked as completed.");
+        this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    }
+
+    if (this.listModel.notificationVisible) {
+        this.hideNotification();
+    } else {
+        if (currentFilter === 'active') {
+            this.showNotification("Your action has been executed! All completed tasks are checked.");
+        } else {
+            this.showNotification("Your action has been executed! All of the tasks are unchecked as completed.");
+        }
     }
   }
+
+
 
   handleToggleCompleted = (id, type) => {
     this.listModel.toggleTask(id, type, this.listView.renderTasks);
@@ -99,9 +118,20 @@ class ListController {
 
   handleTaskAdded = (task) => {
     this.listModel.addTask(task);
-    this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    const currentFilter = window.location.hash.substring(1);
+
+    if (currentFilter === 'active') {
+        const activeTasks = this.listModel.tasks.filter(task => !task.isCompleted);
+        this.listView.renderTasks(activeTasks, this.listModel.tasks);
+    } else if (currentFilter === 'completed') {
+        const completedTasks = this.listModel.tasks.filter(task => task.isCompleted);
+        this.listView.renderTasks(completedTasks, this.listModel.tasks);
+    } else {
+        this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
+    }
     this.showNotification("Your action has been executed! A task was added successfully.");
   }
+
 
   handleTaskEdited = (taskIndex, editedTask) => {
     this.listModel.editTask(taskIndex, editedTask);

@@ -173,7 +173,43 @@
 
 @media screen and (max-width:576px) {
   .app .app-todo-content {
+    width: 450px;
+  }
+
+  .content-action {
+    gap: 5px;
+  }
+
+  .app-todo-content .clear-completed {
+    margin-left: 0;
+    align-items: center;
+  }
+
+  .task-filter {
+    padding: 0;
+    align-items: center;
+  }
+}
+
+
+@media screen and (max-width:485px) {
+  .app .app-todo-content {
     width: 400px;
-    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width:400px) {
+  .app .app-todo-content {
+    width: 350px;
+  }
+
+  .content-action {
+    gap: 2px;
+  }
+
+  .app-todo-content .clear-completed {
+    margin-top: 25px;
+    margin-right: 2px;
+    align-items: center;
   }
 }
