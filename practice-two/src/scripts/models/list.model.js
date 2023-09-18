@@ -22,7 +22,6 @@ class ListModel {
 
     checkAllToggleTask() {
         const checkTaskNotCompleted = this.tasks.find(t => !t.isCompleted);
-    
         if (checkTaskNotCompleted) {
             this.tasks.forEach(task => task.isCompleted = true);
         } else {
