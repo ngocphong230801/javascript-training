@@ -1,9 +1,5 @@
 import { keys } from "../constants";
-import {
-    getElementById,
-    querySelector,
-    querySelectorAll,
-} from "../helpers/dom-elements";
+import {getElementById,querySelector,querySelectorAll,} from "../helpers/dom-elements";
 import { toggleDisplay } from "../helpers/display-elements";
 
 class ListView {
@@ -42,27 +38,12 @@ class ListView {
         this.taskInput.addEventListener("keyup", this.handleTaskInput);
         this.taskList.addEventListener("click", this.handleDeleteTask);
         this.confirmYesBtn.addEventListener("click", this.handleConfirmDelete);
-        this.confirmCancelBtn.addEventListener(
-            "click",
-            this.handleCancelDelete
-        );
-        this.taskList.addEventListener(
-            "dblclick",
-            this.handleContentDataDoubleClick
-        );
+        this.confirmCancelBtn.addEventListener("click",this.handleCancelDelete);
+        this.taskList.addEventListener("dblclick",this.handleContentDataDoubleClick);
         this.taskList.addEventListener("click", this.handleContentDataClick);
-        this.checkAllToggleItems.addEventListener(
-            "click",
-            this.handleToggleAllItems
-        );
-        this.clearAllComplete.addEventListener(
-            "click",
-            this.handleClearAllComplete
-        );
-        this.closeNotificationBtn.addEventListener(
-            "click",
-            this.handleCloseNotification
-        );
+        this.checkAllToggleItems.addEventListener("click",this.handleToggleAllItems);
+        this.clearAllComplete.addEventListener("click",this.handleClearAllComplete);
+        this.closeNotificationBtn.addEventListener("click",this.handleCloseNotification);
         this.filter.forEach((elementFilter) => {
             elementFilter.addEventListener("click", () =>
                 this.handleFilerTask(elementFilter)
@@ -122,34 +103,14 @@ class ListView {
 
         this.totalItem.innerHTML = itemText;
 
-        this.taskList.innerHTML = tasks
-            .map(
-                (task, index) =>
-                    `<li data-index="${index}" data-id="${
-                        task.id
-                    }" data-checked="${
-                        task.isCompleted ? "true" : "false"
-                    }" class="content-data">
-            <i class="fa fa-circle-o task-icon ${
-                task.isCompleted ? " clicked" : ""
-            }" ></i>
-            <p class="task-content" style="${
-                task.isCompleted
-                    ? "text-decoration: line-through;"
-                    : "text-decoration: none;"
-            }">${task.content}</p>
-            <i class="fa fa-check-circle-o checkmark" style="${
-                task.isCompleted
-                    ? "display: inline-block;"
-                    : "display: none; width: 10px;"
-            }"></i>
-            <p class="task-timestamp">Update at: ${
-                task.updatedAt
-            } - Create at: ${task.createdAt}</p>
-            <i class="fa fa-times close-task"></i>
-         </li>`
-            )
-            .join("");
+        this.taskList.innerHTML = tasks.map((task, index) =>
+            `<li data-index="${index}" data-id="${ task.id}" data-checked="${task.isCompleted ? "true" : "false"}" class="content-data">
+                <i class="fa fa-circle-o task-icon ${task.isCompleted ? " clicked" : ""}" ></i>
+                <p class="task-content" style="${task.isCompleted? "text-decoration: line-through;": "text-decoration: none;"}">${task.content}</p>
+                <i class="fa fa-check-circle-o checkmark" style="${task.isCompleted ? "display: inline-block;": "display: none; width: 10px;"}"></i>
+                <p class="task-timestamp">Update at: ${task.updatedAt} - Create at: ${task.createdAt}</p>
+                <i class="fa fa-times close-task"></i>
+            </li>` ).join("");
 
         if (allTask.length === 0) {
             querySelector(".content-action").style.display = "none";

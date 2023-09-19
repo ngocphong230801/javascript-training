@@ -17,10 +17,17 @@ class ListModel {
 
     addTask = (task) => {
         const currentTime = new Date();
-        const formattedTime = `${currentTime.toLocaleTimeString()}, ${currentTime.toLocaleDateString(
+        const hours = currentTime.getHours();
+        const formattedHours = (hours % 24) || 24;
+    
+        const minutes = currentTime.getMinutes();
+        const seconds = currentTime.getSeconds();
+
+        const formattedTime = `${formattedHours}:${minutes}:${seconds.toString().padStart(2, '0')}, ${currentTime.toLocaleDateString(
             "en-US",
             { year: "numeric", month: "short", day: "numeric" }
         )}`;
+        
         const newTask = {
             id: this.lastTaskId++,
             content: task,
@@ -32,6 +39,7 @@ class ListModel {
         storage.saveTasks(this.tasks);
     };
 
+    
     checkAllToggleTask() {
         const checkTaskNotCompleted = this.tasks.find((t) => !t.isCompleted);
 
@@ -103,14 +111,19 @@ class ListModel {
         this.tasks.splice(taskIndex, 1);
         storage.saveTasks(this.tasks);
     };
-
     editTask = (taskIndex, editedTask) => {
         if (taskIndex >= 0 && taskIndex < this.tasks.length) {
             const currentTime = new Date();
-            const formattedTime = `${currentTime.toLocaleTimeString()}, ${currentTime.toLocaleDateString(
+            const hours = currentTime.getHours();
+            const formattedHours = (hours % 24) || 24;
+            const minutes = currentTime.getMinutes();
+            const seconds = currentTime.getSeconds();
+    
+            const formattedTime = `${formattedHours}:${minutes}:${seconds.toString().padStart(2, '0')}, ${currentTime.toLocaleDateString(
                 "en-US",
                 { year: "numeric", month: "short", day: "numeric" }
             )}`;
+            
             this.tasks[taskIndex].content = editedTask;
             this.tasks[taskIndex].updatedAt = formattedTime;
             storage.saveTasks(this.tasks);
