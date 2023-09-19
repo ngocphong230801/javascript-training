@@ -37,3 +37,12 @@
 .app .notification-dialog:hover .fa-close {
     display: block;
 }
+
+.app .notification-content--filter {
+   background-color: var(--background-mention-primary);
+   border: 1px solid var(--boder-color-tertiary);
+}
+
+.app .notification-content--filter .notification-content {
+    color: var(--color-text-quaternary);
+}
