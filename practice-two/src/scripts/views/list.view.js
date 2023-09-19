@@ -54,7 +54,7 @@ class ListView {
     handleReloadWindows = () => {
         const status = window.location.hash;
         let message = "";
-
+    
         switch (status) {
             case "#all": {
                 message = " all tasks.";
@@ -77,14 +77,16 @@ class ListView {
                 break;
             }
         }
-
+    
         this.notificationDialog.classList.add("notification-content--filter");
-        this.notificationContent.textContent = `Your action has been executed! The ${message}are showing.`;
+        this.notificationContent.textContent = `Your action has been executed! The ${message} are showing.`;
         toggleDisplay("notification-dialog", true);
-        this.idTimerReload = setTimeout(() => {
+    
+        setTimeout(() => {
             this.hideNotification();
         }, 3000);
     };
+    
 
     renderTasks = (tasks, allTask) => {
         clearTimeout(this.idTimerReload);
