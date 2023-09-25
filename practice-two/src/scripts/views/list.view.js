@@ -57,22 +57,22 @@ class ListView {
     
         switch (status) {
             case "#all": {
-                message = " all tasks.";
+                message = " all tasks";
                 this.notificationDialog.classList.add("action-mode");
                 break;
             }
             case "#active": {
-                message = "active tasks.";
+                message = "active tasks";
                 this.notificationDialog.classList.add("action-mode");
                 break;
             }
             case "#completed": {
-                message = "completed tasks.";
+                message = "completed tasks";
                 this.notificationDialog.classList.add("action-mode");
                 break;
             }
             default: {
-                message = " all tasks.";
+                message = " all tasks";
                 this.notificationDialog.classList.add("action-mode");
                 break;
             }
