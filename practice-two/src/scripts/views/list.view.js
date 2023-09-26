@@ -1,26 +1,191 @@
 import { keys } from "../constants";
+import {getElementById,querySelector,querySelectorAll,} from "../helpers/dom-elements";
 import { toggleDisplay } from "../helpers/display-elements";
 
 class ListView {
     constructor() {
         this.taskList = querySelector(".list-task");
         this.taskInput = getElementById("task-input");
+        this.confirmDialog = getElementById("confirm-dialog");
+        this.confirmYesBtn = getElementById("confirm-yes");
+        this.confirmCancelBtn = getElementById("confirm-cancel");
+        this.overlay = getElementById("overlay");
+        this.filter = querySelectorAll(".task-filter-item > a");
+        this.totalItem = querySelector(".total-item");
+        this.checkAllToggleItems = querySelector(".check-all");
+        this.clearAllComplete = querySelector(".clear-completed");
+        this.loadingElement = querySelector(".app__loading");
+        this.notificationDialog = getElementById("notification-dialog");
+        this.notificationContent = querySelector(".notification-content");
+        this.closeNotificationBtn = getElementById("close-notification");
+        this.taskStatusMap = new Map();
+        window.addEventListener("load", async () => {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            this.loadingElement.style.display = "none";
+        });
+
+        this.filter.forEach((elementFilter) => {
+            elementFilter.addEventListener("click", () =>
+                this.handleFilerTask(elementFilter)
+            );
+        });
+        this.handleReloadWindows();
 
         this.init();
     }
 
     init = () => {
         this.taskInput.addEventListener("keyup", this.handleTaskInput);
+        this.taskList.addEventListener("click", this.handleDeleteTask);
+        this.confirmYesBtn.addEventListener("click", this.handleConfirmDelete);
+        this.confirmCancelBtn.addEventListener("click",this.handleCancelDelete);
+        this.taskList.addEventListener("dblclick",this.handleContentDataDoubleClick);
+        this.taskList.addEventListener("click", this.handleContentDataClick);
+        this.checkAllToggleItems.addEventListener("click",this.handleToggleAllItems);
+        this.clearAllComplete.addEventListener("click",this.handleClearAllComplete);
+        this.closeNotificationBtn.addEventListener("click",this.handleCloseNotification);
+        this.filter.forEach((elementFilter) => {
+            elementFilter.addEventListener("click", () =>
+                this.handleFilerTask(elementFilter)
+            );
+        });
+    };
 
-    }
+    handleReloadWindows = () => {
+        const status = window.location.hash;
+        let message = "";
     
+        switch (status) {
+            case "#all": {
+                message = " all tasks";
+                this.notificationDialog.classList.add("action-mode");
+                break;
+            }
+            case "#active": {
+                message = "active tasks";
+                this.notificationDialog.classList.add("action-mode");
+                break;
+            }
+            case "#completed": {
+                message = "completed tasks";
+                this.notificationDialog.classList.add("action-mode");
+                break;
+            }
+            default: {
+                message = " all tasks";
+                this.notificationDialog.classList.add("action-mode");
+                break;
+            }
+        }
+    
+        this.notificationDialog.classList.add("notification-content--filter");
+        this.notificationContent.textContent = `Your action has been executed! The ${message} are showing.`;
+        toggleDisplay("notification-dialog", true);
+    
+        setTimeout(() => {
+            this.hideNotification();
+        }, 3000);
+    };
+    
+
+    renderTasks = (tasks, allTask) => {
+        clearTimeout(this.idTimerReload);
+        clearTimeout(this.idTimer);
+        const countNoChecked = allTask.filter((i) => !i.isCompleted).length;
+        let itemText = `${countNoChecked} item`;
+
+        if (countNoChecked !== 1) {
+            itemText += "s";
+        }
+        itemText += " left";
+
+        if (countNoChecked === 0) {
+            itemText = "0 item left";
+        }
+
+        this.totalItem.innerHTML = itemText;
+
+        this.taskList.innerHTML = tasks.map((task, index) =>
+            `<li data-index="${index}" data-id="${ task.id}" data-checked="${task.isCompleted ? "true" : "false"}" class="content-data">
+                <i class="fa fa-circle-o task-icon ${task.isCompleted ? " clicked" : ""}" ></i>
+                <p class="task-content" style="${task.isCompleted? "text-decoration: line-through;": "text-decoration: none;"}">${task.content}</p>
+                <i class="fa fa-check-circle-o checkmark" style="${task.isCompleted ? "display: inline-block;": "display: none; width: 10px;"}"></i>
+                <p class="task-timestamp">Update at: ${task.updatedAt} - Create at: ${task.createdAt}</p>
+                <i class="fa fa-times close-task"></i>
+            </li>` ).join("");
+
+        if (allTask.length === 0) {
+            querySelector(".content-action").style.display = "none";
+        } else {
+            querySelector(".content-action").style.display = "flex";
+        }
+        const hasCompletedTasks = allTask.some((task) => task.isCompleted);
+
+        if (hasCompletedTasks) {
+            querySelector(".clear-completed").style.display = "block";
+        } else {
+            querySelector(".clear-completed").style.display = "none";
+        }
+
+        if (this.notificationVisible) {
+            this.showNotification(this.notificationMessage);
+        }
+    };
+
+    showNotification = (message, type = "") => {
+        if (type == "filter") {
+            this.notificationDialog.classList.add(
+                "notification-content--filter"
+            );
+        } else {
+            this.notificationDialog.classList.remove(
+                "notification-content--filter"
+            );
+        }
+
+        this.notificationContent.textContent = message;
+        toggleDisplay("notification-dialog", true);
+
+        this.idTimer = setTimeout(() => {
+            this.hideNotification();
+        }, 3000);
+    };
+
+    hideNotification = () => {
+        clearTimeout(this.idTimer);
+        toggleDisplay("notification-dialog", false);
+    };
+
+    handleCloseNotification = () => {
+        this.hideNotification();
+    };
+
+    handleToggleAllItems = () => {
+        this.onSetCheckAllToggleTask();
+    };
+
+    handleClearAllComplete = (e) => {
+        e.preventDefault();
+        this.onClearAllComplete();
+    };
+
+    handleFilerTask(elementFilter) {
+        const dataFilter = elementFilter.getAttribute("data-action");
+        this.onTaskFilter(dataFilter);
+        this.showFilterNotification(dataFilter);
+        this.filter.forEach((element) => {
+            element.classList.remove("active-btn");
+        });
+        elementFilter.classList.add("active-btn");
+    }
+
     handleTaskInput = (event) => {
         if (event.key === keys.Enter) {
             const newTask = event.target.value.trim();
             if (newTask !== "") {
                 event.target.value = "";
                 this.onTaskAdded(newTask);
-
+            }
         }
     };
 
@@ -172,7 +337,31 @@ class ListView {
 
     setTaskAddedHandler = (callback) => {
         this.onTaskAdded = callback;
+    };
 
+    setTaskRemovedHandler = (callback) => {
+        this.onTaskRemoved = callback;
+    };
+
+    setTaskEditedHandler = (callback) => {
+        this.onTaskEdited = callback;
+    };
+
+    setToggleCompleted = (callback) => {
+        this.onToggleCompleted = callback;
+    };
+
+    setTaskFilter = (callback) => {
+        this.onTaskFilter = callback;
+    };
+
+    setCheckAllToggleTask = (callback) => {
+        this.onSetCheckAllToggleTask = callback;
+    };
+
+    setClearAllCompleted = (callback) => {
+        this.onClearAllComplete = callback;
+    };
 }
 
 export default ListView;
