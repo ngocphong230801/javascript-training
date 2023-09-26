@@ -1,3 +1,4 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 .app .app-todo-content {
   width: 550px;
   height: max-content;
@@ -9,13 +10,13 @@
 
 .app-todo-content .content-input {
   display: flex;
-  padding-top: 10px;
+  height: 52px;
   box-shadow: 0 2px 5px -3px grey;
 }
 
 .app-todo-content .fa-check {
   color: var(--color-icon-primary);
-  margin-top: 10px;
+  margin-top: 17px;
   margin-left: 20px;
   cursor: pointer;
 }
@@ -35,32 +36,37 @@
 
 .app-todo-content .content-action {
   display: flex;
-  justify-content: space-between;
   box-shadow: 0 -2px 6px -4px grey;
 }
 
 .app-todo-content .task-filter {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   list-style: none;
-  margin-left: 10px;
+  margin-left: 30px;
 }
 
 .app-todo-content .task-filter-item {
-  margin: 0 10px;
   font-size: var(--font-size-text-md);
+  margin: 0 2px;
 }
 
 .app-todo-content .task-filter-item .item {
   color: var(--secondary-color);
+  border: 1px solid rgba(0,0,0,0);
+  border-radius: 2px;
+  padding: 5px;
+  outline: none;
 }
 
-.app-todo-content .task-filter-item:hover .item {
+.app-todo-content .task-filter-item .item.active-btn {
   border: 1px solid var(--quaternary-color);
+  padding: 5px;
+  outline: none;
 }
 
 .app-todo-content .clear-completed {
-  padding-right: 20px;
+  margin-left: 65px;
   color: var(--secondary-color);
 }
 
@@ -80,11 +86,11 @@
 }
 
 .app-todo-content .content-data:not(:last-child) {
-  border-bottom: 1px solid var(--boder-color-primary);
+  border-bottom: 1px solid #d6d6d6;
 }
 
 .app-todo-content .content-data:hover {
-  background-color: var( --background-data-primary);
+  background-color: #dbdee5;
   cursor: pointer;
 }
 
@@ -130,37 +136,80 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--webkit-scrollbar-default);
+  background: #dbdee5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--webkit-scrollbar-primary);
+  background: #34a853;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--webkit-scrollbar-secondary);
+  background: #4285f4;
 }
 
-.task-icon.clicked+.task-content {
-  text-decoration: line-through;
-  opacity: 0.5;
+.task-icon.clicked + .task-content {
+    text-decoration: line-through;
+    opacity: 0.5;
 }
 
 .app-todo-content .task-icon {
   z-index: 1000;
+  margin-left: 20px;
+  text-align: center;
+  color: green;
 }
 
 .app-todo-content .checkmark {
   position: absolute;
-  left: 2.2px;
-  top: 18px;
-  z-index: 900;
+  left: 20px;
+  z-index: 900; 
+  color: green;
 }
 
+.app-todo-content .total-item {
+  display: block;
+  padding-left: 15px;
+}
 
 @media screen and (max-width:576px) {
   .app .app-todo-content {
+    width: 450px;
+  }
+
+  .content-action {
+    gap: 5px;
+  }
+
+  .app-todo-content .clear-completed {
+    margin-left: 0;
+    align-items: center;
+  }
+
+  .task-filter {
+    padding: 0;
+    align-items: center;
+  }
+}
+
+
+@media screen and (max-width:485px) {
+  .app .app-todo-content {
     width: 400px;
-    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width:400px) {
+  .app .app-todo-content {
+    width: 350px;
+  }
+
+  .content-action {
+    gap: 2px;
+  }
+
+  .app-todo-content .clear-completed {
+    margin-top: 25px;
+    margin-right: 2px;
+    align-items: center;
   }
 }

@@ -11,3 +11,4 @@ export const getElementById = (id) => document.getElementById(id);
  * @returns {Element} - The element retrieved using the provided selector.
  */
 export const querySelector = (id) => document.querySelector(id);
+export const querySelectorAll = (id) => document.querySelectorAll(id);
