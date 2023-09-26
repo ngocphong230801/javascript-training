@@ -123,26 +123,7 @@ class ListController {
         this.listModel.addTask(task);
         const currentFilter = window.location.hash.substring(1);
 
-        if (currentFilter === "active") {
-            const activeTasks = this.listModel.tasks.filter(
-                (task) => !task.isCompleted
-            );
-            this.listView.renderTasks(activeTasks, this.listModel.tasks);
-        } else if (currentFilter === "completed") {
-            const completedTasks = this.listModel.tasks.filter(
-                (task) => task.isCompleted
-            );
-            this.listView.renderTasks(completedTasks, this.listModel.tasks);
-        } else {
-            this.listView.renderTasks(
-                this.listModel.tasks,
-                this.listModel.tasks
-            );
-        }
-        this.showNotification(
-            "Your action has been executed! A task was added successfully."
-        );
-    };
+
 
     handleTaskEdited = (taskIndex, editedTask) => {
         this.listModel.editTask(taskIndex, editedTask);
@@ -152,17 +133,7 @@ class ListController {
         );
     };
 
-    handleHideNotification = () => {
-        this.hideNotification();
-    };
 
-    handleTaskRemoved = (taskIndex) => {
-        this.listModel.removeTaskByIndex(taskIndex);
-        this.listView.renderTasks(this.listModel.tasks, this.listModel.tasks);
-        this.showNotification(
-            "Your action has been executed! A task was deleted successfully."
-        );
-    };
 }
 
 export default ListController;
